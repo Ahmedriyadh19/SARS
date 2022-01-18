@@ -136,7 +136,7 @@ class LoginPage extends State {
                           textStyle: MaterialStateProperty.all(
                               const TextStyle(fontSize: 15))),
                       onPressed: () => {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (_) => const MainPageBuilder(),
                         ))
                       },
@@ -159,7 +159,7 @@ class LoginPage extends State {
                           backgroundColor: MaterialStateProperty.all(
                               const Color.fromARGB(0, 0, 57, 60)),
                           padding: MaterialStateProperty.all(
-                              const EdgeInsets.only(left: 103, right: 103)),
+                              const EdgeInsets.only(left: 105, right: 105)),
                           textStyle: MaterialStateProperty.all(
                               const TextStyle(fontSize: 15))),
                       onPressed: () => {

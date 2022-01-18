@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sars/View/Main%20Pages/login_page.dart';
-import 'package:sars/View/Main%20Pages/main_page.dart';
-import 'package:sars/View/Main%20Pages/registration_page.dart';
 
 class HoldAppPage extends State {
   bool passwordVis = true;

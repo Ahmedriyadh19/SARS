@@ -43,8 +43,9 @@ class MainPage extends State {
         appBar: AppBar(
           elevation: 20,
           backgroundColor: const Color.fromARGB(255, 0, 173, 181),
-          title: Container(
-            padding: const EdgeInsets.only(left: 90),
+          title: Center(
+
+           // padding: const EdgeInsets.only(left: 90),
             child: Text(
               appBarTitle,
               style: const TextStyle(
@@ -74,8 +75,8 @@ class MainPage extends State {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color.fromRGBO(0, 173, 181, 1),
-              Color.fromRGBO(0, 57, 60, 1),
+              Color.fromRGBO(0, 173, 181, 0.4),
+              Color.fromRGBO(0, 57, 60, 0.4),
             ],
           )),
           child: Column(
