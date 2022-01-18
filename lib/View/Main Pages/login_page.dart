@@ -106,14 +106,133 @@ class LoginPage extends State {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    const Text(
+
+                    InkWell(
+                      child: const Text(
+                        'Forget Password',
+                        style:
+                            TextStyle(color: Color.fromARGB(255, 87, 188, 237)),
+                      ),
+                      hoverColor: Colors.yellow,
+                      onTap: () => {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          elevation: 10,
+                          builder: (_) {
+                            return Container(
+                                decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color.fromRGBO(0, 173, 181, 1),
+                                    Color.fromRGBO(0, 57, 60, 1),
+                                  ],
+                                )),
+                                alignment: Alignment.center,
+                                child: SingleChildScrollView(
+                                    child: Center(
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            width: 350,
+                                            height: 300,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(45),
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
+                                            child: SingleChildScrollView(
+                                                child: Column(
+                                            
+                                              children: [
+                                                const Text(
+                                                  'Forget Password',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                
+                                                Container(
+                                                  margin:
+                                                      const EdgeInsets.all(12),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              169,
+                                                              225,
+                                                              228)),
+                                                  child: const TextField(
+                                                    decoration: InputDecoration(
+                                                      icon: Icon(
+                                                        Icons.email_rounded,
+                                                        color: Colors.black,
+                                                      ),
+                                                      labelText: 'Email',
+                                                      hintText:
+                                                          'Enter Your Email',
+                                                      labelStyle: TextStyle(
+                                                          color: Colors.black),
+                                                      iconColor: Colors.black,
+                                                      /* focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.black, width: 2.0),
+                                borderRadius: BorderRadius.circular(10),
+                              )*/
+                                                    ),
+                                                    keyboardType: TextInputType
+                                                        .emailAddress,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 50, right: 50),
+                                                  child: ElevatedButton(
+                                                    child:
+                                                        const Text('Submit!'),
+                                                    style: ButtonStyle(
+                                                        elevation:
+                                                            MaterialStateProperty.all(
+                                                                30),
+                                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                            RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        10.0),
+                                                                side: const BorderSide(
+                                                                    color: Color.fromARGB(
+                                                                        255,
+                                                                        141,
+                                                                        218,
+                                                                        221)))),
+                                                        backgroundColor:
+                                                            MaterialStateProperty.all(
+                                                                const Color.fromARGB(0, 0, 57, 60)),
+                                                        padding: MaterialStateProperty.all(const EdgeInsets.only(left: 50, right: 50)),
+                                                        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
+                                                    onPressed: () {},
+                                                  ),
+                                                ),
+                                              ],
+                                            ))))));
+                          },
+                        )
+                      },
+                    ),
+                    /*const Text(
                       'Forget Password',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Color.fromRGBO(170, 189, 190, 1)),
-                    ),
+                    ),*/
                     const SizedBox(height: 20),
                     ElevatedButton(
                       child: const Text(
