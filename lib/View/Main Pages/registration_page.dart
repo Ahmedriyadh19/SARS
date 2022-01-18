@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 
+class RegistrationBuild extends StatefulWidget {
+  const RegistrationBuild({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => Registration();
+}
+
 class Registration extends State {
-  bool passwordVis;
-  bool passwordVis2 ;
-  Function() setVisibility;
-  Function() setVisibility2;
+  bool passwordVis = true;
+  bool passwordVis2 = true;
 
-  Registration({
-    required this.passwordVis,
-    required this.passwordVis2,
-    required this.setVisibility,
-    required this.setVisibility2,
-  });
-
-/*
   setVisibility() {
     setState(() {
       passwordVis = !passwordVis;
@@ -24,7 +21,7 @@ class Registration extends State {
     setState(() {
       passwordVis2 = !passwordVis2;
     });
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {

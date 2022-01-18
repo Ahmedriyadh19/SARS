@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sars/View/Main%20Pages/main_page.dart';
+import 'package:sars/View/Main%20Pages/registration_page.dart';
 
 class LoginPage extends State {
   bool passwordVis;
   Function() switchVisble;
-  Function() goToMain;
-  Function() goToReg;
 
   LoginPage({
     required this.passwordVis,
     required this.switchVisble,
-    required this.goToMain,
-    required this.goToReg,
   });
 
   @override
@@ -18,8 +16,8 @@ class LoginPage extends State {
     return SingleChildScrollView(
       child: Center(
           child: Column(
-             // shrinkWrap: true,
-             // padding: const EdgeInsets.only(left: 40, right: 40),
+              // shrinkWrap: true,
+              // padding: const EdgeInsets.only(left: 40, right: 40),
               children: [
             Container(
               alignment: Alignment.center,
@@ -38,7 +36,7 @@ class LoginPage extends State {
                       height: 100,
                       filterQuality: FilterQuality.high,
                     )),
-                  
+
                     Text(
                       'Welcome to SARS',
                       textAlign: TextAlign.center,
@@ -118,7 +116,10 @@ class LoginPage extends State {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      child: const Text('Login',textAlign: TextAlign.center,),
+                      child: const Text(
+                        'Login',
+                        textAlign: TextAlign.center,
+                      ),
                       style: ButtonStyle(
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -134,11 +135,18 @@ class LoginPage extends State {
                               const EdgeInsets.only(left: 112, right: 112)),
                           textStyle: MaterialStateProperty.all(
                               const TextStyle(fontSize: 15))),
-                      onPressed: goToMain,
+                      onPressed: () => {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => const MainPageBuilder(),
+                        ))
+                      },
                     ),
                     //const SizedBox(height: 10),
                     ElevatedButton(
-                      child: const Text('Register',textAlign: TextAlign.center,),
+                      child: const Text(
+                        'Register',
+                        textAlign: TextAlign.center,
+                      ),
                       style: ButtonStyle(
                           elevation: MaterialStateProperty.all(30),
                           shape:
@@ -154,7 +162,11 @@ class LoginPage extends State {
                               const EdgeInsets.only(left: 103, right: 103)),
                           textStyle: MaterialStateProperty.all(
                               const TextStyle(fontSize: 15))),
-                      onPressed: goToReg,
+                      onPressed: () => {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => const RegistrationBuild(),
+                        ))
+                      },
                     ),
                   ],
                 ),

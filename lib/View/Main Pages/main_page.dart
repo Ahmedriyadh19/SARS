@@ -4,11 +4,28 @@ import 'package:sars/View/Branch%20Pages/notification_page.dart';
 import 'package:sars/View/Branch%20Pages/profile.dart';
 import 'package:sars/View/Branch%20Pages/ticket.dart';
 
-class MainPage extends State {
-  int selectedPageIndex;
-  Function(int i) getSelectedPage;
+class MainPageBuilder extends StatefulWidget {
+  const MainPageBuilder({Key? key}) : super(key: key);
 
-  MainPage({required this.selectedPageIndex, required this.getSelectedPage});
+  @override
+  State<StatefulWidget> createState() => MainPage();
+}
+
+class MainPage extends State {
+  static String appBarTitle = 'Notification';
+  int selectedPageIndex = 0;
+  List<String> appBarTitles = [
+    NotificationPage().getAppTitle(),
+    HistoryPage().getAppTitle(),
+    TicketPage().getAppTitle(),
+    ProfilePage().getAppTitle()
+  ];
+  void getSelectedPage(int i) {
+    setState(() {
+      selectedPageIndex = i;
+      appBarTitle = appBarTitles[i];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +40,48 @@ class MainPage extends State {
       initialIndex: 0,
       length: 4,
       child: Scaffold(
-        body: Column(
-          
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: [bodys[selectedPageIndex]],
+        appBar: AppBar(
+          elevation: 20,
+          backgroundColor: const Color.fromARGB(255, 0, 173, 181),
+          title: Container(
+            padding: const EdgeInsets.only(left: 90),
+            child: Text(
+              appBarTitle,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      offset: Offset(5.0, 5.0),
+                      blurRadius: 20,
+                      color: Colors.white,
+                    ),
+                    Shadow(
+                      offset: Offset(5.0, 5.0),
+                      blurRadius: 20,
+                      color: Colors.white,
+                    ),
+                  ]),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromRGBO(0, 173, 181, 1),
+              Color.fromRGBO(0, 57, 60, 1),
+            ],
+          )),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [bodys[selectedPageIndex]],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: selectedPageIndex,
@@ -62,51 +117,3 @@ class MainPage extends State {
     );
   }
 }
-/*
-  Scaffold(
-        appBar: AppBar(
-          actions:  [
-            Container(
-              padding:const EdgeInsets.only(right: 20),
-              child: const Icon(Icons.person)
-            )
-          ],
-          elevation: 20,
-          backgroundColor: const Color.fromARGB(255, 0, 173, 181),
-          title: Container(
-            padding: const EdgeInsets.only(left: 90),
-            child: const Text(
-              'Main Page',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(5.0, 5.0),
-                      blurRadius: 20,
-                      color: Colors.white,
-                    ),
-                    Shadow(
-                      offset: Offset(5.0, 5.0),
-                      blurRadius: 20,
-                      color: Colors.white,
-                    ),
-                  ]),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-        body: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color.fromRGBO(0, 173, 181, 1),
-              Color.fromRGBO(0, 57, 60, 1),
-            ],
-          )),
-          alignment: Alignment.center,
-        ))
-    ;
-*/
