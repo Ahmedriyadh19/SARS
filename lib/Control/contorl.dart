@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sars/View/Main%20Pages/hold_app_page.dart';
 
-class ControlLess extends StatelessWidget {
-  const ControlLess({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

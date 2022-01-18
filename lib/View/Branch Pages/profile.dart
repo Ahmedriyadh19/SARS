@@ -11,7 +11,9 @@ class ProfilePage extends State {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text('Profile'),
-       const SizedBox(height: 400,),
+        const SizedBox(
+          height: 400,
+        ),
         ElevatedButton(
           child: const Text(
             'Logout',
@@ -24,8 +26,8 @@ class ProfilePage extends State {
                       side: const BorderSide(
                           color: Color.fromARGB(255, 141, 218, 221)))),
               elevation: MaterialStateProperty.all(30),
-              backgroundColor:
-                  MaterialStateProperty.all(const Color.fromARGB(100, 0, 57, 60)),
+              backgroundColor: MaterialStateProperty.all(
+                  const Color.fromARGB(0, 0, 57, 60)),
               padding: MaterialStateProperty.all(
                   const EdgeInsets.only(left: 112, right: 112)),
               textStyle:

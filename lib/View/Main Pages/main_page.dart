@@ -75,8 +75,8 @@ class MainPage extends State {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color.fromRGBO(0, 173, 181, 0.4),
-              Color.fromRGBO(0, 57, 60, 0.4),
+              Color.fromRGBO(0, 173, 181, 1),
+              Color.fromRGBO(0, 57, 60, 1),
             ],
           )),
           child: Column(
