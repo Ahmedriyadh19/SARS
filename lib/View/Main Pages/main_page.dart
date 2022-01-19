@@ -94,25 +94,25 @@ class MainPage extends State {
             unselectedItemColor: const Color.fromARGB(255, 141, 218, 221),
             items: const [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.access_alarm),
+                  icon: Icon(Icons.notifications),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),
                   label: 'Notification',
                   tooltip: 'Notification'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.access_alarm),
+                  icon: Icon(Icons.history),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),
                   label: 'History',
                   tooltip: 'History'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.access_alarm),
+                  icon: Icon(Icons.add_box),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),
                   label: 'Tickit',
                   tooltip: 'Tickit'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.access_alarm),
+                  icon: Icon(Icons.settings),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),
-                  label: 'Profile',
-                  tooltip: 'Profile'),
+                  label: 'Settings',
+                  tooltip: 'Settings'),
             ]),
       ),
     );

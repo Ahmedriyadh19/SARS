@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class HistoryPage extends State {
-  static String appBarTitle = 'History';
+  static String title = 'History';
 
-  String getAppTitle() => appBarTitle;
+  String getAppTitle() => title;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [Text('History')],
+      children:  [Text(title)],
     );
   }
 }

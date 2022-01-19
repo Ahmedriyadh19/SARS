@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TicketPage extends State {
-  static String appBarTitle = 'Ticket';
-  String getAppTitle() => appBarTitle;
+  static String title = 'Ticket';
+  String getAppTitle() => title;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [Text('Ticket')],
+      children:  [Text(title)],
     );
   }
 }

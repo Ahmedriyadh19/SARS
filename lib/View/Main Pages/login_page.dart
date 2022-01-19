@@ -61,11 +61,7 @@ class LoginPage extends State {
                           hintText: 'Enter Your User Name',
                           labelStyle: TextStyle(color: Colors.black),
                           iconColor: Colors.black,
-                          /* focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Colors.black, width: 2.0),
-                              borderRadius: BorderRadius.circular(10),
-                            )*/
+                        
                         ),
                         keyboardType: TextInputType.name,
                       ),
@@ -85,11 +81,7 @@ class LoginPage extends State {
                             hintText: 'pasword',
                             labelStyle: const TextStyle(color: Colors.black),
                             iconColor: Colors.black,
-                            //focusColor: Colors.amber,
-                            /* focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.black, width: 2.0),
-                                borderRadius: BorderRadius.circular(10.0)),*/
+            
                             suffixIcon: IconButton(
                                 onPressed: switchVisble,
                                 icon: passwordVis
@@ -152,8 +144,7 @@ class LoginPage extends State {
                                                       color: Colors.white,
                                                       fontWeight:
                                                           FontWeight.bold),
-                                                ),
-                                                
+                                                ),                                                
                                                 Container(
                                                   margin:
                                                       const EdgeInsets.all(12),
@@ -178,12 +169,7 @@ class LoginPage extends State {
                                                           'Enter Your Email',
                                                       labelStyle: TextStyle(
                                                           color: Colors.black),
-                                                      iconColor: Colors.black,
-                                                      /* focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.black, width: 2.0),
-                                borderRadius: BorderRadius.circular(10),
-                              )*/
+                                                      iconColor: Colors.black,                                                   
                                                     ),
                                                     keyboardType: TextInputType
                                                         .emailAddress,
@@ -220,19 +206,16 @@ class LoginPage extends State {
                                                   ),
                                                 ),
                                               ],
-                                            ))))));
+                                            )
+                                            )
+                                            )
+                                            )
+                                            )
+                                            );
                           },
                         )
                       },
                     ),
-                    /*const Text(
-                      'Forget Password',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(170, 189, 190, 1)),
-                    ),*/
                     const SizedBox(height: 20),
                     ElevatedButton(
                       child: const Text(

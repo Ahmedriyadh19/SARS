@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:sars/Control/contorl.dart';
 
 class ProfilePage extends State {
-  static String appBarTitle = 'Profile';
-  String getAppTitle() => appBarTitle;
+  static String title = 'Settings';
+  String getAppTitle() => title;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Profile'),
+         Text(title),
         const SizedBox(
           height: 400,
         ),
