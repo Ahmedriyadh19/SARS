@@ -84,6 +84,11 @@ class Registration extends State {
                               color: const Color.fromARGB(255, 169, 225, 228)),
                           child: const TextField(
                             decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
                               icon: Icon(
                                 Icons.person_rounded,
                                 color: Colors.black,
@@ -108,6 +113,11 @@ class Registration extends State {
                               color: const Color.fromARGB(255, 169, 225, 228)),
                           child: const TextField(
                             decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
                               icon: Icon(
                                 Icons.email_rounded,
                                 color: Colors.black,
@@ -126,12 +136,17 @@ class Registration extends State {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: const Color.fromARGB(255, 169, 225, 228)),
                           child: TextField(
                             decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
                                 icon: const Icon(
                                   Icons.lock_rounded,
                                   color: Colors.black,
@@ -162,12 +177,17 @@ class Registration extends State {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: const Color.fromARGB(255, 169, 225, 228)),
                           child: TextField(
                             decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
                                 icon: const Icon(
                                   Icons.lock_rounded,
                                   color: Colors.black,
@@ -177,7 +197,7 @@ class Registration extends State {
                                 labelStyle:
                                     const TextStyle(color: Colors.black),
                                 iconColor: Colors.black,
-                              
+
                                 /* focusedBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
                                       color: Colors.black, width: 2.0),
@@ -204,6 +224,11 @@ class Registration extends State {
                               color: const Color.fromARGB(255, 169, 225, 228)),
                           child: const TextField(
                             decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
                               icon: Icon(
                                 Icons.phone_android,
                                 color: Colors.black,
@@ -228,6 +253,11 @@ class Registration extends State {
                               color: const Color.fromARGB(255, 169, 225, 228)),
                           child: const TextField(
                             decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
                               icon: Icon(
                                 Icons.location_city_rounded,
                                 color: Colors.black,

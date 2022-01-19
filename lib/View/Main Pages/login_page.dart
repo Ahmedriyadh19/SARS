@@ -53,6 +53,11 @@ class LoginPage extends State {
                           color: const Color.fromARGB(255, 169, 225, 228)),
                       child: const TextField(
                         decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                           icon: Icon(
                             Icons.person_rounded,
                             color: Colors.black,
@@ -61,18 +66,22 @@ class LoginPage extends State {
                           hintText: 'Enter Your User Name',
                           labelStyle: TextStyle(color: Colors.black),
                           iconColor: Colors.black,
-                        
                         ),
                         keyboardType: TextInputType.name,
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.all(15),
+                      margin: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: const Color.fromARGB(255, 169, 225, 228)),
                       child: TextField(
                         decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
                             icon: const Icon(
                               Icons.lock_rounded,
                               color: Colors.black,
@@ -81,7 +90,6 @@ class LoginPage extends State {
                             hintText: 'Password',
                             labelStyle: const TextStyle(color: Colors.black),
                             iconColor: Colors.black,
-            
                             suffixIcon: IconButton(
                                 onPressed: switchVisible,
                                 icon: passwordVis
@@ -137,58 +145,61 @@ class LoginPage extends State {
                                                     .withOpacity(0.1)),
                                             child: SingleChildScrollView(
                                               child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
                                                 children: [
-                                              const Text(
-                                                'Forget Password',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),                                                
-                                              Container(
-                                                margin:
-                                                    const EdgeInsets.all(12),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                    color:
-                                                        const Color.fromARGB(
-                                                            255,
-                                                            169,
-                                                            225,
-                                                            228)),
-                                                child: const TextField(
-                                                  decoration: InputDecoration(
-                                                    icon: Icon(
-                                                      Icons.email_rounded,
-                                                      color: Colors.black,
-                                                    ),
-                                                    labelText: 'Email',
-                                                    hintText:
-                                                        'Enter Your Email',
-                                                    labelStyle: TextStyle(
-                                                        color: Colors.black),
-                                                    iconColor: Colors.black,                                                   
+                                                  const Text(
+                                                    'Forget Password',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
-                                                  keyboardType: TextInputType
-                                                      .emailAddress,
-                                                ),
-                                              ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.only(
-                                                        left: 50, right: 50),
-                                                child: ElevatedButton(
-                                                  child:
-                                                      const Text('Submit !'),
-                                                  style: ButtonStyle(
-                                                      elevation:
-                                                          MaterialStateProperty.all(
-                                                              30),
-                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.all(
+                                                            12),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        color: const Color
+                                                                .fromARGB(255,
+                                                            169, 225, 228)),
+                                                    child: const TextField(
+                                                      decoration:
+                                                          InputDecoration(
+                                                        icon: Icon(
+                                                          Icons.email_rounded,
+                                                          color: Colors.black,
+                                                        ),
+                                                        labelText: 'Email',
+                                                        hintText:
+                                                            'Enter Your Email',
+                                                        labelStyle: TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                        iconColor: Colors.black,
+                                                      ),
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .emailAddress,
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 50,
+                                                            right: 50),
+                                                    child: ElevatedButton(
+                                                      child: const Text(
+                                                          'Submit !'),
+                                                      style: ButtonStyle(
+                                                          elevation:
+                                                              MaterialStateProperty
+                                                                  .all(30),
+                                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                                                               borderRadius:
                                                                   BorderRadius.circular(
                                                                       10.0),
@@ -198,21 +209,17 @@ class LoginPage extends State {
                                                                       141,
                                                                       218,
                                                                       221)))),
-                                                      backgroundColor:
-                                                          MaterialStateProperty.all(
-                                                              const Color.fromARGB(0, 0, 57, 60)),
-                                                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 50, right: 50)),
-                                                      textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
-                                                  onPressed: () {},
-                                                ),
-                                              ),
+                                                          backgroundColor:
+                                                              MaterialStateProperty.all(
+                                                                  const Color.fromARGB(0, 0, 57, 60)),
+                                                          padding: MaterialStateProperty.all(const EdgeInsets.only(left: 50, right: 50)),
+                                                          textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
+                                                      onPressed: () {},
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
-                                            )
-                                            )
-                                            )
-                                            )
-                                            );
+                                            )))));
                           },
                         )
                       },
