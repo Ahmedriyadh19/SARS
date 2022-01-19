@@ -177,7 +177,7 @@ class Registration extends State {
                                 labelStyle:
                                     const TextStyle(color: Colors.black),
                                 iconColor: Colors.black,
-                                //focusColor: Colors.amber,
+                              
                                 /* focusedBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
                                       color: Colors.black, width: 2.0),
