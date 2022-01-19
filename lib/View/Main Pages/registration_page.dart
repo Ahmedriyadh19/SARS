@@ -137,7 +137,7 @@ class Registration extends State {
                                   color: Colors.black,
                                 ),
                                 labelText: "Password",
-                                hintText: 'pasword',
+                                hintText: 'Password',
                                 labelStyle:
                                     const TextStyle(color: Colors.black),
                                 iconColor: Colors.black,
@@ -173,7 +173,7 @@ class Registration extends State {
                                   color: Colors.black,
                                 ),
                                 labelText: "Confirm Password",
-                                hintText: 'Confirm pasword',
+                                hintText: 'Confirm Password',
                                 labelStyle:
                                     const TextStyle(color: Colors.black),
                                 iconColor: Colors.black,

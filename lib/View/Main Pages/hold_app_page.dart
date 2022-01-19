@@ -29,7 +29,7 @@ class HoldAppPage extends State {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              LoginPage(passwordVis: passwordVis, switchVisble: setVisibility)
+              LoginPage(passwordVis: passwordVis, switchVisible: setVisibility)
                   .build(context)
             ],
           ),

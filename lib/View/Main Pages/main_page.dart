@@ -29,7 +29,7 @@ class MainPage extends State {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> bodys = [
+    List<Widget> bodies = [
       NotificationPage().build(context),
       HistoryPage().build(context),
       TicketPage().build(context),
@@ -81,7 +81,7 @@ class MainPage extends State {
           )),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [bodys[selectedPageIndex]],
+            children: [bodies[selectedPageIndex]],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -106,8 +106,8 @@ class MainPage extends State {
               BottomNavigationBarItem(
                   icon: Icon(Icons.add_box),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),
-                  label: 'Tickit',
-                  tooltip: 'Tickit'),
+                  label: 'Ticket',
+                  tooltip: 'Ticket'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),

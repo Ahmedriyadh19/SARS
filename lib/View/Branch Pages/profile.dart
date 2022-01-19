@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sars/Control/contorl.dart';
+import 'package:sars/Control/control.dart';
 
 class ProfilePage extends State {
   static String title = 'Settings';

@@ -4,11 +4,11 @@ import 'package:sars/View/Main%20Pages/registration_page.dart';
 
 class LoginPage extends State {
   bool passwordVis;
-  Function() switchVisble;
+  Function() switchVisible;
 
   LoginPage({
     required this.passwordVis,
-    required this.switchVisble,
+    required this.switchVisible,
   });
 
   @override
@@ -78,12 +78,12 @@ class LoginPage extends State {
                               color: Colors.black,
                             ),
                             labelText: "Password",
-                            hintText: 'pasword',
+                            hintText: 'Password',
                             labelStyle: const TextStyle(color: Colors.black),
                             iconColor: Colors.black,
             
                             suffixIcon: IconButton(
-                                onPressed: switchVisble,
+                                onPressed: switchVisible,
                                 icon: passwordVis
                                     ? const Icon(
                                         Icons.visibility,
@@ -105,11 +105,12 @@ class LoginPage extends State {
                         style:
                             TextStyle(color: Color.fromARGB(255, 87, 188, 237)),
                       ),
-                      hoverColor: Colors.yellow,
+                      //hoverColor: Colors.yellow,
                       onTap: () => {
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
+                          backgroundColor: Colors.black.withOpacity(0.5),
                           elevation: 10,
                           builder: (_) {
                             return Container(
@@ -118,8 +119,8 @@ class LoginPage extends State {
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    Color.fromRGBO(0, 173, 181, 1),
-                                    Color.fromRGBO(0, 57, 60, 1),
+                                    Color.fromRGBO(0, 173, 181, 0.6),
+                                    Color.fromRGBO(0, 57, 60, 0.6),
                                   ],
                                 )),
                                 alignment: Alignment.center,
@@ -128,85 +129,85 @@ class LoginPage extends State {
                                         child: Container(
                                             alignment: Alignment.center,
                                             width: 350,
-                                            height: 300,
+                                            height: 290,
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(45),
                                                 color: Colors.black
                                                     .withOpacity(0.1)),
                                             child: SingleChildScrollView(
-                                                child: Column(
-                                            
-                                              children: [
-                                                const Text(
-                                                  'Forget Password',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),                                                
-                                                Container(
-                                                  margin:
-                                                      const EdgeInsets.all(12),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              169,
-                                                              225,
-                                                              228)),
-                                                  child: const TextField(
-                                                    decoration: InputDecoration(
-                                                      icon: Icon(
-                                                        Icons.email_rounded,
-                                                        color: Colors.black,
-                                                      ),
-                                                      labelText: 'Email',
-                                                      hintText:
-                                                          'Enter Your Email',
-                                                      labelStyle: TextStyle(
-                                                          color: Colors.black),
-                                                      iconColor: Colors.black,                                                   
+                                              child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                children: [
+                                              const Text(
+                                                'Forget Password',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),                                                
+                                              Container(
+                                                margin:
+                                                    const EdgeInsets.all(12),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    color:
+                                                        const Color.fromARGB(
+                                                            255,
+                                                            169,
+                                                            225,
+                                                            228)),
+                                                child: const TextField(
+                                                  decoration: InputDecoration(
+                                                    icon: Icon(
+                                                      Icons.email_rounded,
+                                                      color: Colors.black,
                                                     ),
-                                                    keyboardType: TextInputType
-                                                        .emailAddress,
+                                                    labelText: 'Email',
+                                                    hintText:
+                                                        'Enter Your Email',
+                                                    labelStyle: TextStyle(
+                                                        color: Colors.black),
+                                                    iconColor: Colors.black,                                                   
                                                   ),
+                                                  keyboardType: TextInputType
+                                                      .emailAddress,
                                                 ),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 50, right: 50),
-                                                  child: ElevatedButton(
-                                                    child:
-                                                        const Text('Submit!'),
-                                                    style: ButtonStyle(
-                                                        elevation:
-                                                            MaterialStateProperty.all(
-                                                                30),
-                                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                            RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        10.0),
-                                                                side: const BorderSide(
-                                                                    color: Color.fromARGB(
-                                                                        255,
-                                                                        141,
-                                                                        218,
-                                                                        221)))),
-                                                        backgroundColor:
-                                                            MaterialStateProperty.all(
-                                                                const Color.fromARGB(0, 0, 57, 60)),
-                                                        padding: MaterialStateProperty.all(const EdgeInsets.only(left: 50, right: 50)),
-                                                        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
-                                                    onPressed: () {},
-                                                  ),
+                                              ),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.only(
+                                                        left: 50, right: 50),
+                                                child: ElevatedButton(
+                                                  child:
+                                                      const Text('Submit !'),
+                                                  style: ButtonStyle(
+                                                      elevation:
+                                                          MaterialStateProperty.all(
+                                                              30),
+                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      10.0),
+                                                              side: const BorderSide(
+                                                                  color: Color.fromARGB(
+                                                                      255,
+                                                                      141,
+                                                                      218,
+                                                                      221)))),
+                                                      backgroundColor:
+                                                          MaterialStateProperty.all(
+                                                              const Color.fromARGB(0, 0, 57, 60)),
+                                                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 50, right: 50)),
+                                                      textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
+                                                  onPressed: () {},
                                                 ),
-                                              ],
-                                            )
+                                              ),
+                                                ],
+                                              ),
                                             )
                                             )
                                             )

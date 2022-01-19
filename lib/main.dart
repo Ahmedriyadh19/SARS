@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sars/Control/contorl.dart';
+import 'package:sars/Control/control.dart';
 
 void main() {
   runApp(const MyApp());
