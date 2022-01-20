@@ -30,7 +30,7 @@ class Registration extends State {
         elevation: 20,
         backgroundColor: const Color.fromARGB(255, 0, 173, 181),
         title: Container(
-          padding: const EdgeInsets.only(left: 70),
+          padding: const EdgeInsets.only(left: 75),
           child: const Text(
             'Registration',
             style: TextStyle(

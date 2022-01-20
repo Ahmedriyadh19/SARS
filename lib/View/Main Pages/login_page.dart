@@ -111,9 +111,8 @@ class LoginPage extends State {
                       child: const Text(
                         'Forget Password',
                         style:
-                            TextStyle(color:  Color.fromARGB(255, 87, 188, 237)),
+                            TextStyle(color: Color.fromARGB(255, 87, 188, 237)),
                       ),
-                     
                       onTap: () => {
                         showModalBottomSheet(
                           context: context,
@@ -170,6 +169,16 @@ class LoginPage extends State {
                                                     child: const TextField(
                                                       decoration:
                                                           InputDecoration(
+                                                        border:
+                                                            InputBorder.none,
+                                                        focusedBorder:
+                                                            InputBorder.none,
+                                                        enabledBorder:
+                                                            InputBorder.none,
+                                                        errorBorder:
+                                                            InputBorder.none,
+                                                        disabledBorder:
+                                                            InputBorder.none,
                                                         icon: Icon(
                                                           Icons.email_rounded,
                                                           color: Colors.black,
