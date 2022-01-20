@@ -111,9 +111,9 @@ class LoginPage extends State {
                       child: const Text(
                         'Forget Password',
                         style:
-                            TextStyle(color: Color.fromARGB(255, 87, 188, 237)),
+                            TextStyle(color:  Color.fromARGB(255, 87, 188, 237)),
                       ),
-                      //hoverColor: Colors.yellow,
+                     
                       onTap: () => {
                         showModalBottomSheet(
                           context: context,

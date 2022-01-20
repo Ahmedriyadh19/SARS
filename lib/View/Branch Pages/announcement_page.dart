@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TicketPage extends State {
-  static String title = 'Ticket';
+class AnnouncementPage extends State {
+  static String title = 'Announcement';
   String getAppTitle() => title;
 
   @override

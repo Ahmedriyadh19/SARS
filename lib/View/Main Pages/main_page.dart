@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sars/View/Branch%20Pages/history.dart';
-import 'package:sars/View/Branch%20Pages/notification_page.dart';
-import 'package:sars/View/Branch%20Pages/profile.dart';
-import 'package:sars/View/Branch%20Pages/ticket.dart';
+
+import 'package:sars/View/Branch%20Pages/history_page.dart';
+import 'package:sars/View/Branch%20Pages/announcement_page.dart';
+import 'package:sars/View/Branch%20Pages/profile_page.dart';
+import 'package:sars/View/Branch%20Pages/report_page.dart';
 
 class MainPageBuilder extends StatefulWidget {
   const MainPageBuilder({Key? key}) : super(key: key);
@@ -12,12 +13,13 @@ class MainPageBuilder extends StatefulWidget {
 }
 
 class MainPage extends State {
-  static String appBarTitle = 'Notification';
+  String appBarTitle = 'Announcement';
   int selectedPageIndex = 0;
+
   List<String> appBarTitles = [
-    NotificationPage().getAppTitle(),
+    AnnouncementPage().getAppTitle(),
     HistoryPage().getAppTitle(),
-    TicketPage().getAppTitle(),
+    ReportPage().getAppTitle(),
     ProfilePage().getAppTitle()
   ];
   void getSelectedPage(int i) {
@@ -30,9 +32,9 @@ class MainPage extends State {
   @override
   Widget build(BuildContext context) {
     List<Widget> bodies = [
-      NotificationPage().build(context),
+      AnnouncementPage().build(context),
       HistoryPage().build(context),
-      TicketPage().build(context),
+      ReportPage().build(context),
       ProfilePage().build(context),
     ];
 
@@ -44,8 +46,6 @@ class MainPage extends State {
           elevation: 20,
           backgroundColor: const Color.fromARGB(255, 0, 173, 181),
           title: Center(
-
-           // padding: const EdgeInsets.only(left: 90),
             child: Text(
               appBarTitle,
               style: const TextStyle(
@@ -96,8 +96,8 @@ class MainPage extends State {
               BottomNavigationBarItem(
                   icon: Icon(Icons.notifications),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),
-                  label: 'Notification',
-                  tooltip: 'Notification'),
+                  label: 'Announcement',
+                  tooltip: 'Announcement'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.history),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),
@@ -106,8 +106,8 @@ class MainPage extends State {
               BottomNavigationBarItem(
                   icon: Icon(Icons.add_box),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),
-                  label: 'Ticket',
-                  tooltip: 'Ticket'),
+                  label: 'Report',
+                  tooltip: 'Report'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
                   backgroundColor: Color.fromARGB(255, 0, 173, 181),
