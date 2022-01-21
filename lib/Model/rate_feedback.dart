@@ -4,6 +4,7 @@ class RateFeedback {
   String reportId;
   int rate;
   String feedback;
+  
   RateFeedback({
     required this.reportId,
     required this.rate,

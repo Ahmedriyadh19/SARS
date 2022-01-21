@@ -2,39 +2,222 @@ import 'package:flutter/material.dart';
 
 class ReportPage extends State {
   static String title = 'Report';
+  int currentStep = 0;
+  String? dropMenuValue = "1";
   Function(int newIndex) onTapped;
+  Function(dynamic value) selectedMenuValue;
   Function() onContinue;
   Function() onCancel;
-  int currentStep = 0;
+
+  final items = [
+    'Item 1',
+    'Item 2',
+    'Item 4',
+    'Item 5',
+    'Item 6',
+    'Item 7',
+    'Item 8',
+    'Others'
+  ];
+  DropdownMenuItem buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(item),
+      );
+
   ReportPage({
+    required this.currentStep,
+    this.dropMenuValue,
     required this.onTapped,
     required this.onContinue,
     required this.onCancel,
-    required this.currentStep,
-  });  
-  String getAppTitle() => title;
+    required this.selectedMenuValue,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Center(
-          child: Stepper(
-            elevation: 50,
-            steps: [
-              Step(title: const Text('Step 1'), content: Container()),
-              Step(title: const Text('Step 2'), content: Container()),
-              Step(title: const Text('Step 3'), content: Container()),
-              Step(title: const Text('Step 4'), content: Container()),
-              Step(title: const Text('Step 5'), content: Container()),
-            ],
-            currentStep: currentStep,
-            onStepTapped: onTapped,
-            onStepContinue: onContinue,
-            onStepCancel:onCancel
+    return Center(
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Theme(
+          data: ThemeData(primarySwatch: Colors.cyan),
+          child: SingleChildScrollView(
+            child: Stepper(
+                controlsBuilder:
+                    (BuildContext context, ControlsDetails details) {
+                  if (details.stepIndex < 4) {
+                    return Row(
+                      children: <Widget>[
+                        TextButton(
+                          style: ButtonStyle(
+                            elevation: MaterialStateProperty.all(10),
+                            padding: MaterialStateProperty.all(
+                                const EdgeInsets.only(
+                                    left: 25, right: 25, bottom: 10, top: 10)),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.cyan),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    side: BorderSide(
+                                        color: Colors.black.withOpacity(0.5)))),
+                          ),
+                          onPressed: details.onStepContinue,
+                          child: const Text(
+                            'CONTINUE',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        TextButton(
+                          onPressed: details.onStepCancel,
+                          child: const Text(
+                            'CANCEL',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Row();
+                  }
+                },
+                elevation: 50,
+                steps: [
+                  Step(
+                      title: const Text('Step 1: Type of Issue'),
+                      content: Container(
+                        padding: const EdgeInsets.all(5),
+                        margin: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color.fromARGB(255, 141, 218, 221),
+                                width: 1)),
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            canvasColor:
+                                const Color.fromARGB(200, 85, 200, 205),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              isExpanded: true,
+                              value: dropMenuValue,
+                              items: items.map(buildMenuItem).toList(),
+                              onChanged: selectedMenuValue,
+                            ),
+                          ),
+                        ),
+                      )),
+                  Step(
+                      title: const Text('Step 2: Description.'),
+                      content: Container(
+                        child: TextFormField(
+                          autocorrect: true,
+                          decoration: const InputDecoration(
+                              label: Text(
+                                'Description',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              hintText: 'Describe your issue.'),
+                          minLines: 1,
+                          maxLines: 6,
+                          keyboardType: TextInputType
+                              .multiline, // user keyboard will have a button to move cursor to next line
+                          maxLength: 2000,
+                          //controller: _Textcontroller,
+                        ),
+                      )),
+                  Step(
+                      title: const Text('Step 3: Take pictures.'),
+                      content: Container(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.add_a_photo),
+                                      onPressed: () {},
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.add_a_photo),
+                                      onPressed: () {},
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.add_a_photo),
+                                      onPressed: () {},
+                                    ),
+                                  ]),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.add_a_photo),
+                                    onPressed: () {},
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.add_a_photo),
+                                    onPressed: () {},
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.add_a_photo),
+                                    onPressed: () {},
+                                  ),
+                                ],
+                              ),
+                            ]),
+                      )),
+                  Step(
+                      title: const Text('Step 4: Record a video.'),
+                      content: Container()),
+                  Step(
+                      title: const Text('Step 5: Submission.'),
+                      content: Container(
+                        child: ElevatedButton(
+                          child: const Text('Submit !'),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => SimpleDialog(
+                                title: const Text('Registration'),
+                                contentPadding: const EdgeInsets.all(20.0),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 85, 200, 205),
+                                children: [
+                                  const Text(
+                                    'The submission has submitted successfully.',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 15.0),
+                                    child: TextButton(
+                                      child: const Text(
+                                        'Close.',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 18, 49, 85)),
+                                      ),
+                                      onPressed: () =>
+                                          {Navigator.of(context).pop()},
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      )),
+                ],
+                currentStep: currentStep,
+                onStepTapped: onTapped,
+                onStepContinue: onContinue,
+                onStepCancel: onCancel),
           ),
         ),
-      ),
+      ]),
     );
   }
 }

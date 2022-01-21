@@ -302,15 +302,22 @@ class Registration extends State {
                                 builder: (context) => SimpleDialog(
                                   title: const Text('Registration'),
                                   contentPadding: const EdgeInsets.all(20.0),
-                                  backgroundColor:const Color.fromARGB(255,85, 200, 205),
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 85, 200, 205),
                                   children: [
                                     const Text(
-                                        'The registration has done successfully.'),
+                                      'The registration has done successfully.',
+                                      textAlign: TextAlign.center,
+                                    ),
                                     Container(
-                                      margin:const EdgeInsets.only(top: 15.0),
+                                      margin: const EdgeInsets.only(top: 15.0),
                                       child: TextButton(
-
-                                        child: const Text('Close.',style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),),
+                                        child: const Text(
+                                          'Close.',
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 18, 49, 85)),
+                                        ),
                                         onPressed: () =>
                                             {Navigator.of(context).pop()},
                                       ),

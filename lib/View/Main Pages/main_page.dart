@@ -16,6 +16,7 @@ class MainPage extends State {
   String appBarTitle = 'Announcement';
   int selectedPageIndex = 0;
   int currentStep = 0;
+  String? dropMenuValue;
 
   onTapped(int newIndex) {
     setState(() {
@@ -37,6 +38,12 @@ class MainPage extends State {
         currentStep -= 1;
       });
     }
+  }
+
+  selectedMenuValue(value) {
+    setState(() {
+      dropMenuValue = value;
+    });
   }
 
   List<String> appBarTitles = [
@@ -61,7 +68,9 @@ class MainPage extends State {
               onCancel: onCancel,
               onContinue: onContinue,
               onTapped: onTapped,
-              currentStep: currentStep)
+              currentStep: currentStep,
+              selectedMenuValue: selectedMenuValue,
+              dropMenuValue: dropMenuValue)
           .build(context),
       SettingsPage().build(context),
     ];
@@ -107,9 +116,11 @@ class MainPage extends State {
               Color.fromRGBO(0, 57, 60, 1),
             ],
           )),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [bodies[selectedPageIndex]],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [bodies[selectedPageIndex]],
+            ),
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -142,7 +153,6 @@ class MainPage extends State {
                   label: 'Settings',
                   tooltip: 'Settings'),
             ]),
-            
       ),
     );
   }
