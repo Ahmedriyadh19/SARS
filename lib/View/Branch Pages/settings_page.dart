@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/control.dart';
 
-class ProfilePage extends State {
+class SettingsPage extends State {
   static String title = 'Settings';
   String getAppTitle() => title;
 

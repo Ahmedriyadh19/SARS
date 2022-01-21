@@ -296,7 +296,29 @@ class Registration extends State {
                                     const EdgeInsets.only(left: 50, right: 50)),
                                 textStyle: MaterialStateProperty.all(
                                     const TextStyle(fontSize: 15))),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => SimpleDialog(
+                                  title: const Text('Registration'),
+                                  contentPadding: const EdgeInsets.all(20.0),
+                                  backgroundColor:const Color.fromARGB(255,85, 200, 205),
+                                  children: [
+                                    const Text(
+                                        'The registration has done successfully.'),
+                                    Container(
+                                      margin:const EdgeInsets.only(top: 15.0),
+                                      child: TextButton(
+
+                                        child: const Text('Close.',style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),),
+                                        onPressed: () =>
+                                            {Navigator.of(context).pop()},
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ],

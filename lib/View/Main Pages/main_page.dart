@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sars/View/Branch%20Pages/history_page.dart';
 import 'package:sars/View/Branch%20Pages/announcement_page.dart';
-import 'package:sars/View/Branch%20Pages/profile_page.dart';
+import 'package:sars/View/Branch%20Pages/settings_page.dart';
 import 'package:sars/View/Branch%20Pages/report_page.dart';
 
 class MainPageBuilder extends StatefulWidget {
@@ -15,12 +15,35 @@ class MainPageBuilder extends StatefulWidget {
 class MainPage extends State {
   String appBarTitle = 'Announcement';
   int selectedPageIndex = 0;
+  int currentStep = 0;
+
+  onTapped(int newIndex) {
+    setState(() {
+      currentStep = newIndex;
+    });
+  }
+
+  onContinue() {
+    if (currentStep != 4) {
+      setState(() {
+        currentStep += 1;
+      });
+    }
+  }
+
+  onCancel() {
+    if (currentStep != 0) {
+      setState(() {
+        currentStep -= 1;
+      });
+    }
+  }
 
   List<String> appBarTitles = [
-    AnnouncementPage().getAppTitle(),
-    HistoryPage().getAppTitle(),
-    ReportPage().getAppTitle(),
-    ProfilePage().getAppTitle()
+    'Announcement',
+    'History.',
+    'Report',
+    'Settings.'
   ];
   void getSelectedPage(int i) {
     setState(() {
@@ -34,8 +57,13 @@ class MainPage extends State {
     List<Widget> bodies = [
       AnnouncementPage().build(context),
       HistoryPage().build(context),
-      ReportPage().build(context),
-      ProfilePage().build(context),
+      ReportPage(
+              onCancel: onCancel,
+              onContinue: onContinue,
+              onTapped: onTapped,
+              currentStep: currentStep)
+          .build(context),
+      SettingsPage().build(context),
     ];
 
     return DefaultTabController(
@@ -114,6 +142,7 @@ class MainPage extends State {
                   label: 'Settings',
                   tooltip: 'Settings'),
             ]),
+            
       ),
     );
   }
