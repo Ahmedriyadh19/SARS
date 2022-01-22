@@ -48,9 +48,9 @@ class MainPage extends State {
 
   List<String> appBarTitles = [
     'Announcement',
-    'History.',
-    'Report',
-    'Settings.'
+    'History',
+    'Ticket',
+    'Settings'
   ];
   void getSelectedPage(int i) {
     setState(() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sars/Control/control.dart';
 
 class RegistrationBuild extends StatefulWidget {
   const RegistrationBuild({Key? key}) : super(key: key);
@@ -320,8 +321,13 @@ class Registration extends State {
                                               color: Color.fromARGB(
                                                   255, 18, 49, 85)),
                                         ),
-                                        onPressed: () =>
-                                            {Navigator.of(context).pop()},
+                                        onPressed: () => {
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                            builder: (_) =>
+                                                const LoginBuilder(),
+                                          ))
+                                        },
                                       ),
                                     )
                                   ],

@@ -98,7 +98,7 @@ class TicketPage extends State {
                       title: const Text('Step 1: Type of Issue'),
                       content: SingleChildScrollView(
                         child: Container(
-                          padding: const EdgeInsets.all(5),
+                          //padding: const EdgeInsets.all(5),
                           margin: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -126,6 +126,8 @@ class TicketPage extends State {
                       title: const Text('Step 2: Description.'),
                       content: SingleChildScrollView(
                         child: TextFormField(
+                          style:
+                              TextStyle(color: Colors.white.withOpacity(0.7)),
                           autocorrect: true,
                           decoration: const InputDecoration(
                               label: Text(
@@ -138,6 +140,7 @@ class TicketPage extends State {
                           keyboardType: TextInputType
                               .multiline, // user keyboard will have a button to move cursor to next line
                           maxLength: 2000,
+
                           //controller: _Textcontroller,
                         ),
                       )),
@@ -184,14 +187,24 @@ class TicketPage extends State {
                               ),
                             ]),
                       )),
-                  const Step(
-                      title: Text('Step 4: Record a video.'),
-                      content: SingleChildScrollView()),
+                  Step(
+                      title: const Text('Step 4: Record a video.'),
+                      content: SingleChildScrollView(
+                        child: Row(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                        
+                          IconButton(
+                            icon: const Icon(Icons.video_call_rounded),
+                            onPressed: () => () {},
+                          ),
+                        ]),
+                      )),
                   Step(
                       title: const Text('Step 5: Submission.'),
                       content: SingleChildScrollView(
                         child: ElevatedButton(
-                          child: const Text('Submit !'),
+                          child: const Text('Submit'),
                           onPressed: () {
                             showDialog(
                               context: context,

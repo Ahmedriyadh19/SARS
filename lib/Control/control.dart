@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sars/View/Main%20Pages/hold_app_page.dart';
+import 'package:sars/View/Main%20Pages/login_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -8,14 +8,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ControlFull(),
+      home: LoginBuilder(),
     );
   }
 }
 
-class ControlFull extends StatefulWidget {
-  const ControlFull({Key? key}) : super(key: key);
+class LoginBuilder extends StatefulWidget {
+  const LoginBuilder({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => HoldAppPage();
+  State<StatefulWidget> createState() => LoginPage();
 }

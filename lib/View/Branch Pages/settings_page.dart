@@ -10,7 +10,7 @@ class SettingsPage extends State {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-         Text(title),
+        Text(title),
         const SizedBox(
           height: 400,
         ),
@@ -26,15 +26,15 @@ class SettingsPage extends State {
                       side: const BorderSide(
                           color: Color.fromARGB(255, 141, 218, 221)))),
               elevation: MaterialStateProperty.all(30),
-              backgroundColor: MaterialStateProperty.all(
-                  const Color.fromARGB(0, 0, 57, 60)),
+              backgroundColor:
+                  MaterialStateProperty.all(const Color.fromARGB(0, 0, 57, 60)),
               padding: MaterialStateProperty.all(
                   const EdgeInsets.only(left: 112, right: 112)),
               textStyle:
                   MaterialStateProperty.all(const TextStyle(fontSize: 15))),
           onPressed: () => {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (_) => const ControlFull(),
+              builder: (_) => const LoginBuilder(),
             ))
           },
         ),
