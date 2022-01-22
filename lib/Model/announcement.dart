@@ -1,22 +1,20 @@
 import 'dart:convert';
 
-
-
-class Notification {
+class Announcement {
   DateTime dateTime;
   String contain;
+
   
-  Notification({
+  Announcement({
     required this.dateTime,
     required this.contain,
   });
-  
 
-  Notification copyWith({
+  Announcement copyWith({
     DateTime? dateTime,
     String? contain,
   }) {
-    return Notification(
+    return Announcement(
       dateTime: dateTime ?? this.dateTime,
       contain: contain ?? this.contain,
     );
@@ -29,8 +27,8 @@ class Notification {
     };
   }
 
-  factory Notification.fromMap(Map<String, dynamic> map) {
-    return Notification(
+  factory Announcement.fromMap(Map<String, dynamic> map) {
+    return Announcement(
       dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime']),
       contain: map['contain'] ?? '',
     );
@@ -38,18 +36,19 @@ class Notification {
 
   String toJson() => json.encode(toMap());
 
-  factory Notification.fromJson(String source) => Notification.fromMap(json.decode(source));
+  factory Announcement.fromJson(String source) =>
+      Announcement.fromMap(json.decode(source));
 
   @override
-  String toString() => 'Notification(dateTime: $dateTime, contain: $contain)';
+  String toString() => 'Announcement(dateTime: $dateTime, contain: $contain)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is Notification &&
-      other.dateTime == dateTime &&
-      other.contain == contain;
+
+    return other is Announcement &&
+        other.dateTime == dateTime &&
+        other.contain == contain;
   }
 
   @override

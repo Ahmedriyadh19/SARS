@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-class Report {
+class Ticket {
   String type;
   String description;
   DateTime dateTime;
@@ -10,8 +10,9 @@ class Report {
   List<String> images;
   String video;
   String userId;
-  
-  Report({
+
+
+  Ticket({
     required this.type,
     required this.description,
     required this.dateTime,
@@ -20,8 +21,9 @@ class Report {
     required this.video,
     required this.userId,
   });
+ 
 
-  Report copyWith({
+  Ticket copyWith({
     String? type,
     String? description,
     DateTime? dateTime,
@@ -30,7 +32,7 @@ class Report {
     String? video,
     String? userId,
   }) {
-    return Report(
+    return Ticket(
       type: type ?? this.type,
       description: description ?? this.description,
       dateTime: dateTime ?? this.dateTime,
@@ -53,8 +55,8 @@ class Report {
     };
   }
 
-  factory Report.fromMap(Map<String, dynamic> map) {
-    return Report(
+  factory Ticket.fromMap(Map<String, dynamic> map) {
+    return Ticket(
       type: map['type'] ?? '',
       description: map['description'] ?? '',
       dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime']),
@@ -67,18 +69,18 @@ class Report {
 
   String toJson() => json.encode(toMap());
 
-  factory Report.fromJson(String source) => Report.fromMap(json.decode(source));
+  factory Ticket.fromJson(String source) => Ticket.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'Report(type: $type, description: $description, dateTime: $dateTime, status: $status, images: $images, video: $video, userId: $userId)';
+    return 'Ticket(type: $type, description: $description, dateTime: $dateTime, status: $status, images: $images, video: $video, userId: $userId)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
   
-    return other is Report &&
+    return other is Ticket &&
       other.type == type &&
       other.description == description &&
       other.dateTime == dateTime &&

@@ -25,7 +25,9 @@ class User {
     String? address,
     String? role,
     int? phone,
-  }) {
+  }) 
+  
+  {
     return User(
       name: name ?? this.name,
       email: email ?? this.email,
