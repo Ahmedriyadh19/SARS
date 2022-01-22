@@ -13,12 +13,14 @@ class LoginPage extends State {
 
   @override
   Widget build(BuildContext context) {
+    double newWidth = MediaQuery.of(context).size.width - 50;
+
     return SingleChildScrollView(
       child: Center(
           child: Column(children: [
         Container(
           alignment: Alignment.center,
-          width: 350,
+          width: newWidth,
           height: 500,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(45),

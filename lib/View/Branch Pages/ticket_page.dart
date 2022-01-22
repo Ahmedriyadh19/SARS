@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ReportPage extends State {
+class TicketPage extends State {
   static String title = 'Report';
   int currentStep = 0;
   String? dropMenuValue = "1";
@@ -10,21 +10,21 @@ class ReportPage extends State {
   Function() onCancel;
 
   final items = [
-    'Item 1',
-    'Item 2',
-    'Item 4',
-    'Item 5',
-    'Item 6',
-    'Item 7',
-    'Item 8',
+    'Improper Surface Grading/Drainage',
+    'Improper Electrical Wiring.',
+    'Roof Damage.',
+    'Heating or cooling system.',
+    'Poor Overall Maintenance.',
+    'Structurally Related Problems.',
+    'Plumbing.',
+    'Exteriors.',
     'Others'
   ];
   DropdownMenuItem buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(item),
       );
-
-  ReportPage({
+  TicketPage({
     required this.currentStep,
     this.dropMenuValue,
     required this.onTapped,
@@ -35,12 +35,23 @@ class ReportPage extends State {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Theme(
-          data: ThemeData(primarySwatch: Colors.cyan),
-          child: SingleChildScrollView(
+    double newWidth = MediaQuery.of(context).size.width - 50;
+
+    return Column(
+      children: [
+        const SizedBox(
+          height: 250,
+        ),
+        Container(
+          width: newWidth,
+          padding: const EdgeInsets.only(left: 0, right: 0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.black.withOpacity(0.1)),
+          child: Theme(
+            data: ThemeData(primarySwatch: Colors.cyan),
             child: Stepper(
+                type: StepperType.vertical,
                 controlsBuilder:
                     (BuildContext context, ControlsDetails details) {
                   if (details.stepIndex < 4) {
@@ -85,32 +96,35 @@ class ReportPage extends State {
                 steps: [
                   Step(
                       title: const Text('Step 1: Type of Issue'),
-                      content: Container(
-                        padding: const EdgeInsets.all(5),
-                        margin: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color.fromARGB(255, 141, 218, 221),
-                                width: 1)),
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            canvasColor:
-                                const Color.fromARGB(200, 85, 200, 205),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              isExpanded: true,
-                              value: dropMenuValue,
-                              items: items.map(buildMenuItem).toList(),
-                              onChanged: selectedMenuValue,
+                      content: SingleChildScrollView(
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          margin: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color:
+                                      const Color.fromARGB(255, 141, 218, 221),
+                                  width: 1)),
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              canvasColor:
+                                  const Color.fromARGB(200, 85, 200, 205),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                isExpanded: true,
+                                value: dropMenuValue,
+                                items: items.map(buildMenuItem).toList(),
+                                onChanged: selectedMenuValue,
+                              ),
                             ),
                           ),
                         ),
                       )),
                   Step(
                       title: const Text('Step 2: Description.'),
-                      content: Container(
+                      content: SingleChildScrollView(
                         child: TextFormField(
                           autocorrect: true,
                           decoration: const InputDecoration(
@@ -129,7 +143,7 @@ class ReportPage extends State {
                       )),
                   Step(
                       title: const Text('Step 3: Take pictures.'),
-                      content: Container(
+                      content: SingleChildScrollView(
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -170,12 +184,12 @@ class ReportPage extends State {
                               ),
                             ]),
                       )),
-                  Step(
-                      title: const Text('Step 4: Record a video.'),
-                      content: Container()),
+                  const Step(
+                      title: Text('Step 4: Record a video.'),
+                      content: SingleChildScrollView()),
                   Step(
                       title: const Text('Step 5: Submission.'),
-                      content: Container(
+                      content: SingleChildScrollView(
                         child: ElevatedButton(
                           child: const Text('Submit !'),
                           onPressed: () {
@@ -217,7 +231,10 @@ class ReportPage extends State {
                 onStepCancel: onCancel),
           ),
         ),
-      ]),
+        const SizedBox(
+          height: 250,
+        )
+      ],
     );
   }
 }

@@ -25,6 +25,8 @@ class Registration extends State {
 
   @override
   Widget build(BuildContext context) {
+    double newWidth = MediaQuery.of(context).size.width - 50;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 20,
@@ -67,7 +69,7 @@ class Registration extends State {
             child: Center(
               child: Container(
                   alignment: Alignment.center,
-                  width: 350,
+                  width: newWidth,
                   height: 600,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(45),
