@@ -52,6 +52,7 @@ class TicketPage extends State {
             data: ThemeData(primarySwatch: Colors.cyan),
             child: Stepper(
                 type: StepperType.vertical,
+                physics: const NeverScrollableScrollPhysics(),
                 controlsBuilder:
                     (BuildContext context, ControlsDetails details) {
                   if (details.stepIndex < 4) {
@@ -191,14 +192,13 @@ class TicketPage extends State {
                       title: const Text('Step 4: Record a video.'),
                       content: SingleChildScrollView(
                         child: Row(
-                             mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                        
-                          IconButton(
-                            icon: const Icon(Icons.video_call_rounded),
-                            onPressed: () => () {},
-                          ),
-                        ]),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.video_call_rounded),
+                                onPressed: () => () {},
+                              ),
+                            ]),
                       )),
                   Step(
                       title: const Text('Step 5: Submission.'),
