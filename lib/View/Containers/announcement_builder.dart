@@ -3,11 +3,13 @@ import 'package:intl/intl.dart';
 
 class AnnouncementBuilder extends StatelessWidget {
   final String contain;
+  final String title;
   final DateTime dateTime;
 
   const AnnouncementBuilder({
     Key? key,
     required this.contain,
+    required this.title,
     required this.dateTime,
   }) : super(key: key);
 
@@ -26,13 +28,21 @@ class AnnouncementBuilder extends StatelessWidget {
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  )
+                ]),
+                const SizedBox(height: 10),
                 SingleChildScrollView(
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text('Date: ${DateFormat.yMMMEd().format(dateTime)}',
                             style: const TextStyle(
-                              color: Color.fromARGB(255, 0, 188, 212),
+                              // color: Color.fromARGB(255, 0, 188, 212),
                               fontSize: 20,
                             ))
                       ]),
@@ -53,10 +63,10 @@ class AnnouncementBuilder extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          gradient: LinearGradient(colors: [
-            Colors.black.withOpacity(0.2),
-            Colors.black.withOpacity(0.2),
-          ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+          gradient: const LinearGradient(colors: [
+            Color.fromARGB(240, 169, 225, 228),
+            Color.fromARGB(255, 169, 225, 228)
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
     );
   }
 }

@@ -38,9 +38,11 @@ class LoginPage extends State {
                   Container(
                     alignment: Alignment.center,
                     width: newWidth,
-                    height: 500,
+                    margin: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.only(top: 15,bottom: 15),
+                    
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(45),
+                        borderRadius: BorderRadius.circular(25),
                         color: Colors.black.withOpacity(0.1)),
                     child: SingleChildScrollView(
                       child: Column(
