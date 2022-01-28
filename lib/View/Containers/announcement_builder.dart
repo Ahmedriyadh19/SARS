@@ -50,8 +50,10 @@ class AnnouncementBuilder extends StatelessWidget {
                 SingleChildScrollView(
                   child: Container(
                       padding: const EdgeInsets.all(10),
-                      child: Text(
+                      child: SelectableText(
                         'Announcement: $contain',
+                        showCursor: true,
+                        toolbarOptions: const ToolbarOptions(copy: true,selectAll: true),
                         textAlign: TextAlign.justify,
                         style: const TextStyle(fontSize: 20),
                       )),

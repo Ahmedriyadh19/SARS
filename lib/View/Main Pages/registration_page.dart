@@ -14,107 +14,106 @@ class Registration extends State {
 
   bool passwordVis = true;
   bool passwordVis2 = true;
-  static List<String?> erorrText = List.generate(6, (i) => null);
+  static List<String?> erorrTexts = List.generate(6, (i) => null);
   static List<TextEditingController> myController =
       List.generate(6, (i) => TextEditingController());
 
   static setMsgErrorNull() {
-    for (int i = 0; i < erorrText.length; i++) {
-      erorrText[i] = null;
+    for (int i = 0; i < erorrTexts.length; i++) {
+      erorrTexts[i] = null;
+    }
+  }
+
+  setVisibility() {
+    setState(() {
+      passwordVis = !passwordVis;
+    });
+  }
+
+  setVisibility2() {
+    setState(() {
+      passwordVis2 = !passwordVis2;
+    });
+  }
+
+  checkValidator() {
+    bool checker = true;
+
+    setState(() {
+      setMsgErrorNull();
+      if (myController[0].text.isEmpty) {
+        erorrTexts[0] = 'User Name is required';
+        checker = false;
+      }
+      if (myController[1].text.isEmpty) {
+        erorrTexts[1] = 'Email is required';
+        checker = false;
+      }
+
+      if (myController[2].text.isEmpty) {
+        erorrTexts[2] = 'Password is required';
+        checker = false;
+      }
+      if (myController[3].text.isEmpty) {
+        erorrTexts[3] = 'Confirm Password is required';
+        checker = false;
+      }
+      if (myController[4].text.isEmpty) {
+        erorrTexts[4] = 'The phone is required';
+        checker = false;
+      }
+      if (myController[5].text.isEmpty) {
+        erorrTexts[5] = 'The address is required';
+        checker = false;
+      }
+      if (myController[2].text != myController[3].text) {
+        erorrTexts[3] = 'The password is not much';
+        checker = false;
+      }
+    });
+
+    return checker;
+  }
+
+  doSubmit() {
+    if (checkValidator()) {
+      showDialog(
+        context: context,
+        builder: (context) => SimpleDialog(
+          title: const Text('Registration'),
+          contentPadding: const EdgeInsets.all(20.0),
+          backgroundColor: const Color.fromARGB(255, 85, 200, 205),
+          children: [
+            Text(
+              msg,
+              textAlign: TextAlign.center,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 15.0),
+              child: TextButton(
+                child: const Text(
+                  'Close.',
+                  style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
+                ),
+                onPressed: () => {
+                  Navigator.of(context)
+                      .pop() /*pushReplacement(MaterialPageRoute(
+                    builder: (_) => const LoginBuilder(),
+                  ))*/
+                },
+              ),
+            )
+          ],
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    setVisibility() {
-      setState(() {
-        passwordVis = !passwordVis;
-      });
-    }
-
-    setVisibility2() {
-      setState(() {
-        passwordVis2 = !passwordVis2;
-      });
-    }
-
-    checkValidator() {
-      bool checker = true;
-
-      setState(() {
-        setMsgErrorNull();
-        if (myController[0].text.isEmpty) {
-          erorrText[0] = 'User Name is required';
-          checker = false;
-        }
-        if (myController[1].text.isEmpty) {
-          erorrText[1] = 'Email is required';
-          checker = false;
-        }
-
-        if (myController[2].text.isEmpty) {
-          erorrText[2] = 'Password is required';
-          checker = false;
-        }
-        if (myController[3].text.isEmpty) {
-          erorrText[3] = 'Confirm Password is required';
-          checker = false;
-        }
-        if (myController[4].text.isEmpty) {
-          erorrText[4] = 'The phone is required';
-          checker = false;
-        }
-        if (myController[5].text.isEmpty) {
-          erorrText[5] = 'The address is required';
-          checker = false;
-        }
-        if (myController[2].text != myController[3].text) {
-          erorrText[3] = 'The password is not much';
-          checker = false;
-        }
-      });
-
-      return checker;
-    }
-
-    show() {
-      if (checkValidator()) {
-        showDialog(
-          context: context,
-          builder: (context) => SimpleDialog(
-            title: const Text('Registration'),
-            contentPadding: const EdgeInsets.all(20.0),
-            backgroundColor: const Color.fromARGB(255, 85, 200, 205),
-            children: [
-              Text(
-                msg,
-                textAlign: TextAlign.center,
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 15.0),
-                child: TextButton(
-                  child: const Text(
-                    'Close.',
-                    style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
-                  ),
-                  onPressed: () => {
-                    Navigator.of(context)
-                        .pop() /*pushReplacement(MaterialPageRoute(
-                    builder: (_) => const LoginBuilder(),
-                  ))*/
-                  },
-                ),
-              )
-            ],
-          ),
-        );
-      }
-    }
-
     double? newWidth = MediaQuery.of(context).size.width - 50;
 
     return Scaffold(
-
       appBar: AppBar(
         elevation: 20,
         backgroundColor: const Color.fromARGB(255, 0, 173, 181),
@@ -157,9 +156,9 @@ class Registration extends State {
               child: Container(
                   alignment: Alignment.center,
                   margin: const EdgeInsets.all(15),
-                  padding: const EdgeInsets.only(top:15,bottom: 15),
+                  padding: const EdgeInsets.only(top: 15, bottom: 15),
                   width: newWidth,
-                 // height: 650,
+                  // height: 650,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: Colors.black.withOpacity(0.1)),
@@ -189,7 +188,7 @@ class Registration extends State {
                               hintText: 'Enter Your User Name',
                               labelStyle: const TextStyle(color: Colors.black),
                               iconColor: Colors.black,
-                              errorText: erorrText[0],
+                              errorText: erorrTexts[0],
                               /* focusedBorder: OutlineInputBorder(
                             borderSide:
                                 const BorderSide(color: Colors.black, width: 2.0),
@@ -221,7 +220,7 @@ class Registration extends State {
                                 labelStyle:
                                     const TextStyle(color: Colors.black),
                                 iconColor: Colors.black,
-                                errorText: erorrText[1]
+                                errorText: erorrTexts[1]
 
                                 /* focusedBorder: OutlineInputBorder(
                             borderSide:
@@ -260,7 +259,7 @@ class Registration extends State {
                               borderSide: const BorderSide(
                                   color: Colors.black, width: 2.0),
                               borderRadius: BorderRadius.circular(10.0)),*/
-                                errorText: erorrText[2],
+                                errorText: erorrTexts[2],
                                 suffixIcon: IconButton(
                                     onPressed: setVisibility,
                                     icon: passwordVis
@@ -298,7 +297,7 @@ class Registration extends State {
                                 labelStyle:
                                     const TextStyle(color: Colors.black),
                                 iconColor: Colors.black,
-                                errorText: erorrText[3],
+                                errorText: erorrTexts[3],
                                 /* focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.black, width: 2.0),
@@ -331,7 +330,7 @@ class Registration extends State {
                               enabledBorder: InputBorder.none,
                               errorBorder: InputBorder.none,
                               disabledBorder: InputBorder.none,
-                              errorText: erorrText[4],
+                              errorText: erorrTexts[4],
                               icon: const Icon(
                                 Icons.phone_android,
                                 color: Colors.black,
@@ -362,7 +361,7 @@ class Registration extends State {
                               enabledBorder: InputBorder.none,
                               errorBorder: InputBorder.none,
                               disabledBorder: InputBorder.none,
-                              errorText: erorrText[5],
+                              errorText: erorrTexts[5],
                               icon: const Icon(
                                 Icons.location_city_rounded,
                                 color: Colors.black,
@@ -401,7 +400,7 @@ class Registration extends State {
                                   padding: MaterialStateProperty.all(
                                       const EdgeInsets.only(left: 50, right: 50)),
                                   textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
-                              onPressed: show),
+                              onPressed: doSubmit),
                         ),
                       ],
                     ),

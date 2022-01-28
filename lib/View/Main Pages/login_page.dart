@@ -5,10 +5,46 @@ import 'package:sars/View/Main%20Pages/registration_page.dart';
 class LoginPage extends State {
   bool passwordVis = true;
 
+  static List<String?> erorrTexts = List.generate(2, (i) => null);
+  static List<TextEditingController> myController =
+      List.generate(2, (i) => TextEditingController());
+
+  static setMsgErrorNull() {
+    for (int i = 0; i < erorrTexts.length; i++) {
+      erorrTexts[i] = null;
+    }
+  }
+
   setVisibility() {
     setState(() {
       passwordVis = !passwordVis;
     });
+  }
+
+  checkValidator() {
+    bool checker = true;
+
+    setState(() {
+      setMsgErrorNull();
+      if (myController[0].text.isEmpty) {
+        erorrTexts[0] = 'User Name is required';
+        checker = false;
+      }
+      if (myController[1].text.isEmpty) {
+        erorrTexts[1] = 'Password is required';
+        checker = false;
+      }
+    });
+
+    return checker;
+  }
+
+  doLogin() {
+    if (checkValidator()) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => const MainPageBuilder(),
+      ));
+    }
   }
 
   @override
@@ -39,8 +75,7 @@ class LoginPage extends State {
                     alignment: Alignment.center,
                     width: newWidth,
                     margin: const EdgeInsets.all(20),
-                    padding: const EdgeInsets.only(top: 15,bottom: 15),
-                    
+                    padding: const EdgeInsets.only(top: 15, bottom: 15),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         color: Colors.black.withOpacity(0.1)),
@@ -70,23 +105,26 @@ class LoginPage extends State {
                                 borderRadius: BorderRadius.circular(15),
                                 color:
                                     const Color.fromARGB(255, 169, 225, 228)),
-                            child: const TextField(
+                            child: TextField(
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
                                 enabledBorder: InputBorder.none,
                                 errorBorder: InputBorder.none,
                                 disabledBorder: InputBorder.none,
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.person_rounded,
                                   color: Colors.black,
                                 ),
                                 labelText: 'User Name',
                                 hintText: 'Enter Your User Name',
-                                labelStyle: TextStyle(color: Colors.black),
+                                labelStyle:
+                                    const TextStyle(color: Colors.black),
                                 iconColor: Colors.black,
+                                errorText: erorrTexts[0],
                               ),
                               keyboardType: TextInputType.name,
+                              controller: myController[0],
                             ),
                           ),
                           Container(
@@ -108,6 +146,7 @@ class LoginPage extends State {
                                   ),
                                   labelText: "Password",
                                   hintText: 'Password',
+                                  errorText: erorrTexts[1],
                                   labelStyle:
                                       const TextStyle(color: Colors.black),
                                   iconColor: Colors.black,
@@ -124,6 +163,7 @@ class LoginPage extends State {
                                             ))),
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: passwordVis,
+                              controller: myController[1],
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -293,12 +333,7 @@ class LoginPage extends State {
                                     left: 112, right: 112)),
                                 textStyle: MaterialStateProperty.all(
                                     const TextStyle(fontSize: 15))),
-                            onPressed: () => {
-                              Navigator.of(context)
-                                  .pushReplacement(MaterialPageRoute(
-                                builder: (_) => const MainPageBuilder(),
-                              ))
-                            },
+                            onPressed: doLogin,
                           ),
                           //const SizedBox(height: 10),
                           ElevatedButton(
