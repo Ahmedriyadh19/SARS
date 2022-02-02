@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sars/View/Main%20Pages/main_page.dart';
 import 'package:sars/View/Main%20Pages/registration_page.dart';
+class LoginBuilder extends StatefulWidget {
+  const LoginBuilder({Key? key}) : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() => LoginPage();
+}
 class LoginPage extends State {
   bool passwordVis = true;
 
