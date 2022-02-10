@@ -1,61 +1,73 @@
 import 'dart:convert';
 
 class User {
-  String name;
-  String email;
-  String password;
-  String address;
-  String role;
-  int phone;
-
+  String? uid;
+  String? name;
+  String? email;
+  String? password;
+  String? address;
+  String? role;
+  String? pictureUrl;
+  int? phone;
   
   User({
+    required this.uid,
     required this.name,
     required this.email,
     required this.password,
     required this.address,
     required this.role,
+    required this.pictureUrl,
     required this.phone,
   });
 
+
+
+
   User copyWith({
+    String? uid,
     String? name,
     String? email,
     String? password,
     String? address,
     String? role,
+    String? pictureUrl,
     int? phone,
-  }) 
-  
-  {
+  }) {
     return User(
+      uid: uid ?? this.uid,
       name: name ?? this.name,
       email: email ?? this.email,
       password: password ?? this.password,
       address: address ?? this.address,
       role: role ?? this.role,
+      pictureUrl: pictureUrl ?? this.pictureUrl,
       phone: phone ?? this.phone,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
+      'uid': uid,
       'name': name,
       'email': email,
       'password': password,
       'address': address,
       'role': role,
+      'pictureUrl': pictureUrl,
       'phone': phone,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
+      uid: map['uid'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       password: map['password'] ?? '',
       address: map['address'] ?? '',
       role: map['role'] ?? '',
+      pictureUrl: map['pictureUrl'] ?? '',
       phone: map['phone']?.toInt() ?? 0,
     );
   }
@@ -66,7 +78,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(name: $name, email: $email, password: $password, address: $address, role: $role, phone: $phone)';
+    return 'User(uid: $uid, name: $name, email: $email, password: $password, address: $address, role: $role, pictureUrl: $pictureUrl, phone: $phone)';
   }
 
   @override
@@ -74,21 +86,25 @@ class User {
     if (identical(this, other)) return true;
   
     return other is User &&
+      other.uid == uid &&
       other.name == name &&
       other.email == email &&
       other.password == password &&
       other.address == address &&
       other.role == role &&
+      other.pictureUrl == pictureUrl &&
       other.phone == phone;
   }
 
   @override
   int get hashCode {
-    return name.hashCode ^
+    return uid.hashCode ^
+      name.hashCode ^
       email.hashCode ^
       password.hashCode ^
       address.hashCode ^
       role.hashCode ^
+      pictureUrl.hashCode ^
       phone.hashCode;
   }
 }

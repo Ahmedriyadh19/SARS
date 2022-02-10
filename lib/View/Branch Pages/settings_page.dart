@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:sars/View/Main%20Pages/login_page.dart';
+import 'package:sars/Control/Services/auth.dart';
+import 'package:sars/View/Main%20Pages/loading.dart';
 
 class SettingsPage extends State {
   static String title = 'Settings';
+
+
   String getAppTitle() => title;
+  final AuthUserMethod _auth = AuthUserMethod();
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +36,8 @@ class SettingsPage extends State {
                   const EdgeInsets.only(left: 112, right: 112)),
               textStyle:
                   MaterialStateProperty.all(const TextStyle(fontSize: 15))),
-          onPressed: () => {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (_) => const LoginBuilder(),
-            ))
+          onPressed: () async {
+            await _auth.signOutUser();
           },
         ),
       ],
