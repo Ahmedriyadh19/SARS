@@ -14,7 +14,7 @@ class LoginBuilder extends StatefulWidget {
 class LoginPage extends State {
   bool passwordVis = true;
   bool loading = false;
-  final AuthUserMethod _auth = AuthUserMethod();
+  // final AuthUserMethod _auth = AuthUserMethod();
 
   static List<String?> erorrTexts = List.generate(2, (i) => null);
   static List<TextEditingController> myController =
@@ -361,13 +361,7 @@ class LoginPage extends State {
                                     setState(() {
                                       loading = true;
                                     });
-                                    var res = await _auth.anonUser();
-
-                                    if (res == null) {
-                                      setState(() {
-                                        loading = false;
-                                      });
-                                    } else {}
+                                    
                                   },
                                 ),
                                 //const SizedBox(height: 10),

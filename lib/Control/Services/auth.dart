@@ -11,12 +11,12 @@ class AuthUserMethod {
     return user != null
         ? User(
             uid: user.uid,
-            email: 'unknow',
+            email: user.email,
             name: 'unknow',
             address: 'unknow',
             password: 'unknow',
             role: 'unknow',
-            phone: 00,
+            phone: user.phoneNumber,
             pictureUrl: 'unknow')
         : null;
   }
@@ -34,21 +34,19 @@ class AuthUserMethod {
 // Sign with facebook
 
 // Registration
-
-// anon
-
-  Future anonUser() async {
+  Future registrationUserAuth(User userInput) async {
     try {
-      firebase.UserCredential result = await _auth.signInAnonymously();
-      firebase.User userFromAuth = result.user as firebase.User;
+      firebase.UserCredential resultAuth =
+          await _auth.createUserWithEmailAndPassword(
+              email: userInput.email!, password: userInput.password!);
+      firebase.User userFromAuth = resultAuth.user as firebase.User;
       return _userFromFirebase(userFromAuth);
     } catch (e) {
-      return null;
+      return (e.toString());
     }
   }
 
 // sign out
-
   Future signOutUser() async {
     try {
       return await _auth.signOut();
@@ -57,3 +55,17 @@ class AuthUserMethod {
     }
   }
 }
+
+
+
+// anon
+
+/*   Future anonUser() async {
+    try {
+      firebase.UserCredential result = await _auth.signInAnonymously();
+      firebase.User userFromAuth = result.user as firebase.User;
+      return _userFromFirebase(userFromAuth);
+    } catch (e) {
+      return null;
+    }
+  } */

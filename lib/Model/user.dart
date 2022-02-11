@@ -8,21 +8,18 @@ class User {
   String? address;
   String? role;
   String? pictureUrl;
-  int? phone;
-  
+  String? phone;
+
   User({
-    required this.uid,
-    required this.name,
-    required this.email,
-    required this.password,
-    required this.address,
-    required this.role,
-    required this.pictureUrl,
-    required this.phone,
+    this.uid,
+    this.name,
+    this.email,
+    this.password,
+    this.address,
+    this.role,
+    this.pictureUrl,
+    this.phone,
   });
-
-
-
 
   User copyWith({
     String? uid,
@@ -32,7 +29,7 @@ class User {
     String? address,
     String? role,
     String? pictureUrl,
-    int? phone,
+    String? phone,
   }) {
     return User(
       uid: uid ?? this.uid,
@@ -61,14 +58,14 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      uid: map['uid'] ?? '',
-      name: map['name'] ?? '',
-      email: map['email'] ?? '',
-      password: map['password'] ?? '',
-      address: map['address'] ?? '',
-      role: map['role'] ?? '',
-      pictureUrl: map['pictureUrl'] ?? '',
-      phone: map['phone']?.toInt() ?? 0,
+      uid: map['uid'],
+      name: map['name'],
+      email: map['email'],
+      password: map['password'],
+      address: map['address'],
+      role: map['role'],
+      pictureUrl: map['pictureUrl'],
+      phone: map['phone'],
     );
   }
 
@@ -84,27 +81,27 @@ class User {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is User &&
-      other.uid == uid &&
-      other.name == name &&
-      other.email == email &&
-      other.password == password &&
-      other.address == address &&
-      other.role == role &&
-      other.pictureUrl == pictureUrl &&
-      other.phone == phone;
+        other.uid == uid &&
+        other.name == name &&
+        other.email == email &&
+        other.password == password &&
+        other.address == address &&
+        other.role == role &&
+        other.pictureUrl == pictureUrl &&
+        other.phone == phone;
   }
 
   @override
   int get hashCode {
     return uid.hashCode ^
-      name.hashCode ^
-      email.hashCode ^
-      password.hashCode ^
-      address.hashCode ^
-      role.hashCode ^
-      pictureUrl.hashCode ^
-      phone.hashCode;
+        name.hashCode ^
+        email.hashCode ^
+        password.hashCode ^
+        address.hashCode ^
+        role.hashCode ^
+        pictureUrl.hashCode ^
+        phone.hashCode;
   }
 }

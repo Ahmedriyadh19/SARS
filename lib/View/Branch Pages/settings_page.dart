@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
-import 'package:sars/View/Main%20Pages/loading.dart';
 
 class SettingsPage extends State {
   static String title = 'Settings';

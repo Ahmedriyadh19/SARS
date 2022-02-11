@@ -8,13 +8,12 @@ import 'package:sars/Model/user.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-      /*options: const FirebaseOptions(
+  /*options: const FirebaseOptions(
       apiKey: "XXX",
       appId: "XXX",
       messagingSenderId: "XXX",
       projectId: "XXX",
     ),*/
-     
 
   runApp(const MyApp());
 }
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User?>.value(
       value: AuthUserMethod().getUserAuth,
       initialData: null,
-     // catchError: null,
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Controller(),
