@@ -4,9 +4,9 @@ import 'package:sars/Model/user.dart';
 
 class AuthUserMethod {
   final firebase.FirebaseAuth _auth = firebase.FirebaseAuth.instance;
+  static String errorMsg = '';
 
   // create user oject based on fairbase user
-
   User? _userFromFirebase(user) {
     return user != null
         ? User(
@@ -29,12 +29,37 @@ class AuthUserMethod {
 
 // Lgin Email & Password
 
-// Sign with google
+  Future loginUserEmailPass(String e, String p) async {
+    errorMsg = '';
+    try {
+      firebase.UserCredential resultAuth =
+          await _auth.signInWithEmailAndPassword(email: e, password: p);
+      firebase.User userEmailAndPassFromAuth = resultAuth.user as firebase.User;
+      return _userFromFirebase(userEmailAndPassFromAuth);
+    } catch (e) {
+      errorMsg = e.toString().split('] ')[1];
+      return null;
+    }
+  }
 
-// Sign with facebook
+// forget Password
+
+  Future userForgetPasswor(String e) async {
+    errorMsg = '';
+    try {
+      return await _auth.sendPasswordResetEmail(email: e);
+    } catch (e) {
+      errorMsg = e.toString().split('] ')[1];
+      print(errorMsg);
+      return null;
+    }
+  }
+
 
 // Registration
+
   Future registrationUserAuth(User userInput) async {
+    errorMsg = '';
     try {
       firebase.UserCredential resultAuth =
           await _auth.createUserWithEmailAndPassword(
@@ -42,18 +67,33 @@ class AuthUserMethod {
       firebase.User userFromAuth = resultAuth.user as firebase.User;
       return _userFromFirebase(userFromAuth);
     } catch (e) {
-      return (e.toString());
+      errorMsg = e.toString().split('] ')[1];
+      return null;
     }
   }
 
 // sign out
   Future signOutUser() async {
+    errorMsg = '';
     try {
       return await _auth.signOut();
     } catch (e) {
+      errorMsg = e.toString();
       return null;
     }
   }
+
+  //Get the errors based on firebase.
+  String getErrorMsg() {
+    return errorMsg;
+  }
+
+  
+// Sign with google
+
+// Sign with facebook
+
+
 }
 
 

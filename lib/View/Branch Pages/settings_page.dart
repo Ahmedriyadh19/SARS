@@ -19,7 +19,7 @@ class SettingsPage extends State {
         ),
         ElevatedButton(
           child: const Text(
-            'Logout',
+            'Sign out',
             textAlign: TextAlign.center,
           ),
           style: ButtonStyle(

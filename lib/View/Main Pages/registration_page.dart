@@ -13,22 +13,28 @@ class RegistrationBuild extends StatefulWidget {
 }
 
 class Registration extends State {
-  String msg = 'The registration has done successfully';
-  String errorMsg = '';
+  final AuthUserMethod _auth = AuthUserMethod();
+  
+  static String errorMsg = '';
   bool passwordVis = true;
   bool passwordVis2 = true;
   static bool checker = true;
   bool loading = false;
 
-  final AuthUserMethod _auth = AuthUserMethod();
-
   static List<String?> erorrTexts = List.generate(6, (i) => null);
-  static List<TextEditingController> myController =
+  static final List<TextEditingController> myController =
       List.generate(6, (i) => TextEditingController());
 
   static setMsgErrorNull() {
     for (int i = 0; i < erorrTexts.length; i++) {
       erorrTexts[i] = null;
+      errorMsg = '';
+    }
+  }
+
+  static setMyControllerNull() {
+    for (int i = 0; i < myController.length; i++) {
+      myController[i].clear();
     }
   }
 
@@ -91,49 +97,24 @@ class Registration extends State {
         phone: myController[4].text,
         address: myController[5].text,
       );
+
       setState(() {
         loading = true;
       });
+
       dynamic result = await _auth.registrationUserAuth(user);
 
       if (result == null) {
         checker = false;
+        setState(() {
+          loading = false;
+          errorMsg = _auth.getErrorMsg();
+        });
       } else {
-        checker = true;
+        setMsgErrorNull();
+        setMyControllerNull();
         Navigator.of(context).pop();
       }
-    }
-  }
-
-  doSubmit() {
-    if (checkValidator() == false) {
-      setState(() {
-        errorMsg = 'Please supply a valid info';
-      });
-      /*  showDialog(
-        context: context,
-        builder: (context) => SimpleDialog(
-          title: const Text('Registration'),
-          contentPadding: const EdgeInsets.all(20.0),
-          backgroundColor: const Color.fromARGB(255, 85, 200, 205),
-          children: [
-            Text(
-              msg,
-              textAlign: TextAlign.center,
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 15.0),
-              child: TextButton(
-                child: const Text(
-                  'Close.',
-                  style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
-                ),
-                onPressed: () => {Navigator.of(context).pop()},
-              ),
-            )
-          ],
-        ),
-      ); */
     }
   }
 
@@ -221,11 +202,6 @@ class Registration extends State {
                                         const TextStyle(color: Colors.black),
                                     iconColor: Colors.black,
                                     errorText: erorrTexts[0],
-                                    /* focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.black, width: 2.0),
-                            borderRadius: BorderRadius.circular(10),
-                          )*/
                                   ),
                                   keyboardType: TextInputType.name,
                                   controller: myController[0],
@@ -253,14 +229,7 @@ class Registration extends State {
                                       labelStyle:
                                           const TextStyle(color: Colors.black),
                                       iconColor: Colors.black,
-                                      errorText: erorrTexts[1]
-
-                                      /* focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.black, width: 2.0),
-                            borderRadius: BorderRadius.circular(10),
-                          )*/
-                                      ),
+                                      errorText: erorrTexts[1]),
                                   keyboardType: TextInputType.emailAddress,
                                   controller: myController[1],
                                 ),
@@ -288,11 +257,6 @@ class Registration extends State {
                                       labelStyle:
                                           const TextStyle(color: Colors.black),
                                       iconColor: Colors.black,
-                                      //focusColor: Colors.amber,
-                                      /* focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 2.0),
-                              borderRadius: BorderRadius.circular(10.0)),*/
                                       errorText: erorrTexts[2],
                                       suffixIcon: IconButton(
                                           onPressed: setVisibility,
@@ -333,10 +297,6 @@ class Registration extends State {
                                           const TextStyle(color: Colors.black),
                                       iconColor: Colors.black,
                                       errorText: erorrTexts[3],
-                                      /* focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 2.0),
-                              borderRadius: BorderRadius.circular(10.0)),*/
                                       suffixIcon: IconButton(
                                           onPressed: setVisibility2,
                                           icon: passwordVis2
@@ -376,11 +336,6 @@ class Registration extends State {
                                     labelStyle:
                                         const TextStyle(color: Colors.black),
                                     iconColor: Colors.black,
-                                    /* focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.black, width: 2.0),
-                            borderRadius: BorderRadius.circular(10),
-                          )*/
                                   ),
                                   keyboardType: TextInputType.number,
                                   controller: myController[4],
@@ -409,11 +364,6 @@ class Registration extends State {
                                     labelStyle:
                                         const TextStyle(color: Colors.black),
                                     iconColor: Colors.black,
-                                    /* focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.black, width: 2.0),
-                            borderRadius: BorderRadius.circular(10),
-                          )*/
                                   ),
                                   keyboardType: TextInputType.name,
                                   controller: myController[5],
@@ -440,12 +390,16 @@ class Registration extends State {
                                         padding: MaterialStateProperty.all(
                                             const EdgeInsets.only(left: 50, right: 50)),
                                         textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
-                                    onPressed: doSubmit),
+                                    onPressed: checkValidator),
                               ),
                               const SizedBox(height: 15),
-                              Text(errorMsg,
-                                  style: const TextStyle(
-                                      color: Colors.red, fontSize: 15.0))
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(errorMsg,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        color: Colors.red, fontSize: 15.0)),
+                              )
                             ],
                           ),
                         )),
@@ -454,3 +408,70 @@ class Registration extends State {
           );
   }
 }
+
+ /*  doSubmit() {
+    if (checkValidator() == false) {
+      setState(() {
+        loading = false;
+        checker = false;
+        errorMsg = _auth.getErrorMsg();
+      });
+      /*  showDialog(
+        context: context,
+        builder: (context) => SimpleDialog(
+          title: const Text('Registration'),
+          contentPadding: const EdgeInsets.all(20.0),
+          backgroundColor: const Color.fromARGB(255, 85, 200, 205),
+          children: [
+            Text(
+              msg,
+              textAlign: TextAlign.center,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 15.0),
+              child: TextButton(
+                child: const Text(
+                  'Close.',
+                  style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
+                ),
+                onPressed: () => {Navigator.of(context).pop()},
+              ),
+            )
+          ],
+        ),
+      ); */
+    else
+   */
+
+            /* focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.black, width: 2.0),
+                            borderRadius: BorderRadius.circular(10),
+                          )*/
+                                   /* focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.black, width: 2.0),
+                            borderRadius: BorderRadius.circular(10),
+                          )*/
+
+                             /* focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                              borderRadius: BorderRadius.circular(10.0)),*/
+                                 //focusColor: Colors.amber,
+                                      /* focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                              borderRadius: BorderRadius.circular(10.0)),*/
+                              
+                                      /* focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.black, width: 2.0),
+                            borderRadius: BorderRadius.circular(10),
+                          )*/
+
+                                                              /* focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.black, width: 2.0),
+                            borderRadius: BorderRadius.circular(10),
+                          )*/
