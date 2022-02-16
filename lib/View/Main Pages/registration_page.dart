@@ -14,7 +14,6 @@ class RegistrationBuild extends StatefulWidget {
 
 class Registration extends State {
   final AuthUserMethod _auth = AuthUserMethod();
-  
   static String errorMsg = '';
   bool passwordVis = true;
   bool passwordVis2 = true;

@@ -1,23 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
-
+import 'package:sars/Control/Services/database_services.dart';
 import 'package:sars/Model/user.dart';
 
 class AuthUserMethod {
   final firebase.FirebaseAuth _auth = firebase.FirebaseAuth.instance;
-  static String errorMsg = '';
+  String? errorMsg = '';
 
   // create user oject based on fairbase user
   User? _userFromFirebase(user) {
     return user != null
         ? User(
             uid: user.uid,
-            email: user.email,
-            name: 'unknow',
-            address: 'unknow',
-            password: 'unknow',
-            role: 'unknow',
-            phone: user.phoneNumber,
-            pictureUrl: 'unknow')
+          )
         : null;
   }
 
@@ -33,7 +27,7 @@ class AuthUserMethod {
     errorMsg = '';
     try {
       firebase.UserCredential resultAuth =
-          await _auth.signInWithEmailAndPassword(email: e, password: p);
+          await _auth.signInWithEmailAndPassword(email: e.trim(), password: p);
       firebase.User userEmailAndPassFromAuth = resultAuth.user as firebase.User;
       return _userFromFirebase(userEmailAndPassFromAuth);
     } catch (e) {
@@ -47,14 +41,12 @@ class AuthUserMethod {
   Future userForgetPasswor(String e) async {
     errorMsg = '';
     try {
-      return await _auth.sendPasswordResetEmail(email: e);
+      return await _auth.sendPasswordResetEmail(email: e.trim());
     } catch (e) {
       errorMsg = e.toString().split('] ')[1];
-      print(errorMsg);
       return null;
     }
   }
-
 
 // Registration
 
@@ -63,12 +55,21 @@ class AuthUserMethod {
     try {
       firebase.UserCredential resultAuth =
           await _auth.createUserWithEmailAndPassword(
-              email: userInput.email!, password: userInput.password!);
+              email: userInput.email!.trim(), password: userInput.password!);
       firebase.User userFromAuth = resultAuth.user as firebase.User;
+
+      await DatabaseFeatures(uidUser: userFromAuth.uid)
+          .createNewUser(userInput);
       return _userFromFirebase(userFromAuth);
+      
     } catch (e) {
-      errorMsg = e.toString().split('] ')[1];
-      return null;
+      try {
+        errorMsg = e.toString().split('] ')[1];
+        return null;
+      } catch (ee) {
+        errorMsg = e.toString();
+        return null;
+      }
     }
   }
 
@@ -85,14 +86,12 @@ class AuthUserMethod {
 
   //Get the errors based on firebase.
   String getErrorMsg() {
-    return errorMsg;
+    return errorMsg!;
   }
 
-  
 // Sign with google
 
 // Sign with facebook
-
 
 }
 

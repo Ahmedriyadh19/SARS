@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
+import 'package:sars/View/Main%20Pages/forget_password.dart';
 import 'package:sars/View/Main%20Pages/loading.dart';
 import 'package:sars/View/Main%20Pages/registration_page.dart';
 
@@ -7,21 +8,20 @@ class LoginBuilder extends StatefulWidget {
   const LoginBuilder({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => LoginPage();
+  State<StatefulWidget> createState() => _LoginPage();
 }
 
-class LoginPage extends State {
+class _LoginPage extends State {
   final AuthUserMethod _auth = AuthUserMethod();
-  static TextEditingController myControllerForgetPass = TextEditingController();
+  
   bool passwordVis = true;
   bool loading = false;
-    static bool checker = true;
-   static bool checkerForgetPass = true;
+  static bool checker = true;
+  
 
 
-  String msg = 'The registration has done successfully';
   static String errorMsgLogin = '';
-  static String? errorForgetPassword;
+
   static List<String?> erorrTexts = List.generate(2, (i) => null);
   static List<TextEditingController> myControllerLogin =
       List.generate(2, (i) => TextEditingController());
@@ -46,7 +46,7 @@ class LoginPage extends State {
   }
 
   checkValidatorLogin() async {
-     checker = true;
+    checker = true;
     setState(() {
       setMsgErrorNull();
       if (myControllerLogin[0].text.isEmpty) {
@@ -84,150 +84,11 @@ class LoginPage extends State {
     }
   }
 
-  checkValidatorForgetPassword() async {
-    checkerForgetPass == true;
-    setState(() {
-      if (myControllerForgetPass.text.isEmpty) {
-        errorForgetPassword = 'Email is required';
-        checkerForgetPass = false;
-      }
-    });
-
-    if (checkerForgetPass == true) {
-      dynamic result =
-          await _auth.userForgetPasswor(myControllerForgetPass.text);
-      if (result == null) {
-        setState(() {
-          errorForgetPassword = _auth.getErrorMsg();
-        });
-      } else {
-        myControllerForgetPass.clear();
-        errorForgetPassword = '';
-        showDialog(
-          context: context,
-          builder: (context) => SimpleDialog(
-            title: const Text('Forget PassWord'),
-            contentPadding: const EdgeInsets.all(20.0),
-            backgroundColor: const Color.fromARGB(255, 85, 200, 205),
-            children: [
-              Text(
-                msg,
-                textAlign: TextAlign.center,
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 15.0),
-                child: TextButton(
-                  child: const Text(
-                    'Close.',
-                    style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
-                  ),
-                  onPressed: () => {Navigator.of(context).pop()},
-                ),
-              )
-            ],
-          ),
-        );
-      }
-    }
-  }
-
-  showForgetPasswordPage() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.black.withOpacity(0.5),
-      elevation: 10,
-      builder: (_) {
-        return Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromRGBO(0, 173, 181, 0.6),
-                Color.fromRGBO(0, 57, 60, 0.6),
-              ],
-            )),
-            alignment: Alignment.center,
-            child: SingleChildScrollView(
-                child: Center(
-                    child: Container(
-                        alignment: Alignment.center,
-                        width: 350,
-                        height: 290,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(45),
-                            color: Colors.black.withOpacity(0.1)),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const Text(
-                                'Forget Password',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: const Color.fromARGB(
-                                        255, 169, 225, 228)),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    icon: const Icon(
-                                      Icons.email_rounded,
-                                      color: Colors.black,
-                                    ),
-                                    errorText: errorForgetPassword,
-                                    labelText: 'Email',
-                                    hintText: 'Enter Your Email',
-                                    labelStyle:
-                                        const TextStyle(color: Colors.black),
-                                    iconColor: Colors.black,
-                                  ),
-                                  keyboardType: TextInputType.emailAddress,
-                                ),
-                              ),
-                              Container(
-                                padding:
-                                    const EdgeInsets.only(left: 50, right: 50),
-                                child: ElevatedButton(
-                                  child: const Text('Submit'),
-                                  style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(30),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              side: const BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 141, 218, 221)))),
-                                      backgroundColor: MaterialStateProperty.all(
-                                          const Color.fromARGB(0, 0, 57, 60)),
-                                      padding: MaterialStateProperty.all(
-                                          const EdgeInsets.only(left: 50, right: 50)),
-                                      textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
-                                  onPressed: checkValidatorForgetPassword,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )))));
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     double newWidth = MediaQuery.of(context).size.width - 50;
+
+
 
     return loading
         ? const Loading()
@@ -353,7 +214,12 @@ class LoginPage extends State {
                                         color:
                                             Color.fromARGB(255, 87, 188, 237)),
                                   ),
-                                  onTap: showForgetPasswordPage,
+                                  onTap: () => {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (_) => const ForgetPasswordBuilder(),
+                                    ))
+                                  },
                                 ),
                                 const SizedBox(height: 4),
                                 Container(
@@ -423,12 +289,17 @@ class LoginPage extends State {
                               child: Divider(
                             indent: 60,
                             endIndent: 20,
+                            color: Colors.white,
                           )),
-                          Text("Or Sign in!"),
+                          Text(
+                            "Or Sign in",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           Expanded(
                               child: Divider(
                             indent: 20,
                             endIndent: 60,
+                            color: Colors.white,
                           )),
                         ]),
                         const SizedBox(height: 20),
@@ -442,10 +313,24 @@ class LoginPage extends State {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Image.asset(
-                                  'assets/icons/icons8_Facebook_48px.png'),
-                              Image.asset(
-                                  'assets/icons/icons8_google_48px.png'),
+                              GestureDetector(
+                                onTap: () {}, // Image tapped
+                                child: Image.asset(
+                                  'assets/icons/icons8_google_96px.png',
+                                  fit: BoxFit.cover, // Fixes border issues
+                                  width: 40,
+                                  height: 40,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {}, // Image tapped
+                                child: Image.asset(
+                                  'assets/icons/icons8_Facebook_96px.png',
+                                  fit: BoxFit.cover, // Fixes border issues
+                                  width: 45,
+                                  height: 45,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -466,3 +351,148 @@ class LoginPage extends State {
       ));
     }
   } */
+/* 
+      showForgetPasswordPage() {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.black.withOpacity(0.5),
+        elevation: 10,
+        builder: (_) {
+          return Container(
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(0, 173, 181, 0.6),
+                  Color.fromRGBO(0, 57, 60, 0.6),
+                ],
+              )),
+              alignment: Alignment.center,
+              child: SingleChildScrollView(
+                  child: Center(
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: 350,
+                          height: 290,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(45),
+                              color: Colors.black.withOpacity(0.1)),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const Text(
+                                  'Forget Password',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: const Color.fromARGB(
+                                          255, 169, 225, 228)),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                      icon: const Icon(
+                                        Icons.email_rounded,
+                                        color: Colors.black,
+                                      ),
+                                      errorText: errorForgetPassword,
+                                      labelText: 'Email',
+                                      hintText: 'Enter Your Email',
+                                      labelStyle:
+                                          const TextStyle(color: Colors.black),
+                                      iconColor: Colors.black,
+                                    ),
+                                    keyboardType: TextInputType.emailAddress,
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 50, right: 50),
+                                  child: ElevatedButton(
+                                    child: const Text('Submit'),
+                                    style: ButtonStyle(
+                                        elevation:
+                                            MaterialStateProperty.all(30),
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                side: const BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 141, 218, 221)))),
+                                        backgroundColor: MaterialStateProperty.all(
+                                            const Color.fromARGB(0, 0, 57, 60)),
+                                        padding: MaterialStateProperty.all(
+                                            const EdgeInsets.only(left: 50, right: 50)),
+                                        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
+                                    onPressed: checkValidatorForgetPassword,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )))));
+        },
+      );
+    } */
+
+    /* 
+  checkValidatorForgetPassword() async {
+    checkerForgetPass == true;
+
+    if (myControllerForgetPass.text.isEmpty) {
+      setState(() {
+        errorForgetPassword = 'Email is required';
+        checkerForgetPass = false;
+      });
+    }
+
+    if (checkerForgetPass == true) {
+      dynamic result =
+          await _auth.userForgetPasswor(myControllerForgetPass.text);
+      if (result == null) {
+        setState(() {
+          errorForgetPassword = _auth.getErrorMsg();
+        });
+      } else {
+        myControllerForgetPass.clear();
+        errorForgetPassword = '';
+        showDialog(
+          context: context,
+          builder: (context) => SimpleDialog(
+            title: const Text('Forget PassWord'),
+            contentPadding: const EdgeInsets.all(20.0),
+            backgroundColor: const Color.fromARGB(255, 85, 200, 205),
+            children: [
+              Text(
+                msg,
+                textAlign: TextAlign.center,
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 15.0),
+                child: TextButton(
+                  child: const Text(
+                    'Close.',
+                    style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
+                  ),
+                  onPressed: () => {Navigator.of(context).pop()},
+                ),
+              )
+            ],
+          ),
+        );
+      }
+    }
+  }
+ */
