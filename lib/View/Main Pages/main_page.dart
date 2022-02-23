@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sars/View/Branch%20Pages/history_page.dart';
 import 'package:sars/View/Branch%20Pages/announcement_page.dart';
+import 'package:sars/View/Branch%20Pages/home_page.dart';
 import 'package:sars/View/Branch%20Pages/settings_page.dart';
 import 'package:sars/View/Branch%20Pages/ticket_page.dart';
 
@@ -13,7 +14,7 @@ class MainPageBuilder extends StatefulWidget {
 }
 
 class MainPage extends State {
-  String appBarTitle = 'Announcement';
+  String appBarTitle = 'Home';
   int selectedPageIndex = 0;
   int currentStep = 0;
   String? dropMenuValue;
@@ -47,6 +48,7 @@ class MainPage extends State {
   }
 
   List<String> appBarTitles = [
+    'Home',
     'Announcement',
     'History',
     'Ticket',
@@ -62,6 +64,7 @@ class MainPage extends State {
   @override
   Widget build(BuildContext context) {
     List<Widget> bodies = [
+      HomePage().build(context),
       AnnouncementPage().build(context),
       HistoryPage().build(context),
       TicketPage(
@@ -129,6 +132,11 @@ class MainPage extends State {
           selectedItemColor: const Color.fromARGB(255, 35, 61, 82),
           unselectedItemColor: const Color.fromARGB(255, 141, 218, 221),
           items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home_rounded),
+                backgroundColor: Color.fromARGB(255, 0, 173, 181),
+                label: 'Home',
+                tooltip: 'Home'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.notifications),
                 backgroundColor: Color.fromARGB(255, 0, 173, 181),
