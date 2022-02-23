@@ -59,7 +59,7 @@ class AuthUserMethod {
       firebase.User userFromAuth = resultAuth.user as firebase.User;
 
       await DatabaseFeatures(uidUser: userFromAuth.uid)
-          .createNewUser(userInput);
+          .createNewUserInfo(userInput);
       return _userFromFirebase(userFromAuth);
       
     } catch (e) {

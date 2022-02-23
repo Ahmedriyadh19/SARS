@@ -10,11 +10,10 @@ class DatabaseFeatures {
 
   DatabaseFeatures({required this.uidUser});
 
-  Future createNewUser(User u) async {
+  Future createNewUserInfo(User u) async {
     return await _databaseCollection.collection('user').doc(uidUser).set({
       'name': u.name,
       'email': u.email,
-      'password': u.password,
       'address': u.address,
       'role': 'r',
       'pictureUrl': u.pictureUrl,
