@@ -63,9 +63,10 @@ class MainPage extends State {
 
   @override
   Widget build(BuildContext context) {
+    
     List<Widget> bodies = [
       HomePage().build(context),
-      AnnouncementPage().build(context),
+      AnnouncementStreamListener().build(context),
       HistoryPage().build(context),
       TicketPage(
               onCancel: onCancel,
@@ -116,10 +117,12 @@ class MainPage extends State {
             Color.fromRGBO(0, 57, 60, 1),
           ],
         )),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [bodies[selectedPageIndex]],
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [bodies[selectedPageIndex]],
+            ),
           ),
         ),
       ),

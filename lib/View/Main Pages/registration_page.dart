@@ -74,16 +74,20 @@ class Registration extends State {
         erorrTexts[3] = 'Confirm Password is required';
         checker = false;
       }
+      if (myController[2].text != myController[3].text) {
+        erorrTexts[3] = 'The password is not much';
+        checker = false;
+      }
       if (myController[4].text.isEmpty) {
-        erorrTexts[4] = 'The phone is required';
+        erorrTexts[4] = 'The phone number is required';
+        checker = false;
+      }
+      if (myController[4].text.length > 14) {
+        erorrTexts[4] = 'The phone number is invalid';
         checker = false;
       }
       if (myController[5].text.isEmpty) {
         erorrTexts[5] = 'The address is required';
-        checker = false;
-      }
-      if (myController[2].text != myController[3].text) {
-        erorrTexts[3] = 'The password is not much';
         checker = false;
       }
     });

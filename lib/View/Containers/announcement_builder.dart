@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
+import 'package:sars/Model/announcement.dart';
 
 class AnnouncementBuilder extends StatelessWidget {
-  final String contain;
-  final String title;
-  final DateTime dateTime;
+  final Announcement announcement;
 
-  const AnnouncementBuilder({
-    Key? key,
-    required this.contain,
-    required this.title,
-    required this.dateTime,
-  }) : super(key: key);
+  const AnnouncementBuilder({Key? key, required this.announcement})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return   Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
       padding: const EdgeInsets.all(5),
@@ -26,11 +21,10 @@ class AnnouncementBuilder extends StatelessWidget {
           margin: const EdgeInsets.all(10),
           child: SingleChildScrollView(
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
-                    title,
+                    announcement.title,
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   )
@@ -39,8 +33,10 @@ class AnnouncementBuilder extends StatelessWidget {
                 SingleChildScrollView(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text('Date: ${DateFormat.yMMMEd().format(dateTime)}',
+                      children:  [
+                        /*${DateFormat.yMMMEd().format(announcement.dateTime)}*/
+                        Text(
+                            announcement.dateTime,
                             style: const TextStyle(
                               // color: Color.fromARGB(255, 0, 188, 212),
                               fontSize: 20,
@@ -51,9 +47,10 @@ class AnnouncementBuilder extends StatelessWidget {
                   child: Container(
                       padding: const EdgeInsets.all(10),
                       child: SelectableText(
-                        'Announcement: $contain',
+                        announcement.contain,
                         showCursor: true,
-                        toolbarOptions: const ToolbarOptions(copy: true,selectAll: true),
+                        toolbarOptions:
+                            const ToolbarOptions(copy: true, selectAll: true),
                         textAlign: TextAlign.justify,
                         style: const TextStyle(fontSize: 20),
                       )),

@@ -8,13 +8,6 @@ import 'package:sars/Model/user.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  /*options: const FirebaseOptions(
-      apiKey: "XXX",
-      appId: "XXX",
-      messagingSenderId: "XXX",
-      projectId: "XXX",
-    ),*/
-
   runApp(const MyApp());
 }
 
@@ -33,3 +26,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+  /*options: const FirebaseOptions(
+      apiKey: "XXX",
+      appId: "XXX",
+      messagingSenderId: "XXX",
+      projectId: "XXX",
+    ),*/

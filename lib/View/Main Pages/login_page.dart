@@ -87,9 +87,6 @@ class _LoginPage extends State {
   @override
   Widget build(BuildContext context) {
     double newWidth = MediaQuery.of(context).size.width - 50;
-
-
-
     return loading
         ? const Loading()
         : Scaffold(
