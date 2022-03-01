@@ -25,7 +25,7 @@ class DatabaseFeatures {
       database_firestore.QuerySnapshot snp) {
     return snp.docChanges.map((data) {
       return Announcement(
-          dateTime: data.doc['date'] ?? '',
+          dateTime: DateTime.tryParse(data.doc['date']) ?? DateTime.now(),
           contain: data.doc['description'] ?? '',
           title: data.doc['title'] ?? '');
     }).toList();

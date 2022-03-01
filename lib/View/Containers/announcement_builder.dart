@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 import 'package:sars/Model/announcement.dart';
 
 class AnnouncementBuilder extends StatelessWidget {
@@ -34,9 +34,9 @@ class AnnouncementBuilder extends StatelessWidget {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children:  [
-                        /*${DateFormat.yMMMEd().format(announcement.dateTime)}*/
+                        /**/
                         Text(
-                            announcement.dateTime,
+                            (DateFormat.yMMMEd().format(announcement.dateTime)),
                             style: const TextStyle(
                               // color: Color.fromARGB(255, 0, 188, 212),
                               fontSize: 20,

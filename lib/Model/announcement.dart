@@ -1,5 +1,5 @@
 class Announcement {
-  String dateTime;
+  DateTime dateTime;
   String title;
   String contain;
 

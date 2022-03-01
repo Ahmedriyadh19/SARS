@@ -15,37 +15,17 @@ class MainPageBuilder extends StatefulWidget {
 
 class MainPage extends State {
   String appBarTitle = 'Home';
+  static bool otherActive = false;
+  List<bool> pictures = [false, false, false, false, false, false];
   int selectedPageIndex = 0;
   int currentStep = 0;
   String? dropMenuValue;
+  String? errorOther;
+  String? genrlError;
+  bool chk = false;
 
-  onTapped(int newIndex) {
-    setState(() {
-      currentStep = newIndex;
-    });
-  }
-
-  onContinue() {
-    if (currentStep != 4) {
-      setState(() {
-        currentStep += 1;
-      });
-    }
-  }
-
-  onCancel() {
-    if (currentStep != 0) {
-      setState(() {
-        currentStep -= 1;
-      });
-    }
-  }
-
-  selectedMenuValue(value) {
-    setState(() {
-      dropMenuValue = value;
-    });
-  }
+  static final List<TextEditingController> myController =
+      List.generate(3, (i) => TextEditingController());
 
   List<String> appBarTitles = [
     'Home',
@@ -54,21 +34,21 @@ class MainPage extends State {
     'Ticket',
     'Settings'
   ];
-  void getSelectedPage(int i) {
-    setState(() {
-      selectedPageIndex = i;
-      appBarTitle = appBarTitles[i];
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    
     List<Widget> bodies = [
       HomePage().build(context),
       AnnouncementStreamListener().build(context),
       HistoryPage().build(context),
       TicketPage(
+              chk: chk,
+              genrlError: genrlError,
+              valid: valid,
+              errorOther: errorOther,
+              myController: myController,
+              pictures: pictures,
+              otherActive: otherActive,
               onCancel: onCancel,
               onContinue: onContinue,
               onTapped: onTapped,
@@ -162,5 +142,66 @@ class MainPage extends State {
                 tooltip: 'Settings'),
           ]),
     );
+  }
+
+  onTapped(int newIndex) {
+    setState(() {
+      currentStep = newIndex;
+    });
+  }
+
+  onContinue() {
+    if (currentStep != 5) {
+      setState(() {
+        currentStep += 1;
+      });
+    }
+  }
+
+  onCancel() {
+    if (currentStep != 0) {
+      setState(() {
+        currentStep -= 1;
+      });
+    }
+  }
+
+  selectedMenuValue(value) {
+    setState(() {
+      dropMenuValue = value;
+      if (value == 'Other') {
+        otherActive = true;
+      } else {
+        otherActive = false;
+      }
+    });
+  }
+
+  void getSelectedPage(int i) {
+    setState(() {
+      selectedPageIndex = i;
+      appBarTitle = appBarTitles[i];
+    });
+  }
+
+  bool valid() {
+    bool chk1 = true;
+    chk = false;
+    genrlError = '';
+    errorOther = null;
+    setState(() {
+      if (myController[0].text.isEmpty && dropMenuValue == 'Other') {
+        errorOther = 'You can not leave the type of issus empty';
+        chk1 = false;
+        chk = true;
+        currentStep = 0;
+      }
+      if (dropMenuValue == null) {
+        genrlError = 'Must choose your type of issue';
+        chk1 = false;
+        chk = true;
+      }
+    });
+    return chk1;
   }
 }
