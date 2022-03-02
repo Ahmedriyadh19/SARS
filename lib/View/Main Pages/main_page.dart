@@ -16,10 +16,13 @@ class MainPageBuilder extends StatefulWidget {
 class MainPage extends State {
   String appBarTitle = 'Home';
   static bool otherActive = false;
-  bool isTherePictures = true;
-  List<bool> picturesFound = [true, true, true, true, true, true];
+  bool isTherePictures = false;
+  static List<bool> picturesFound = [false, false, false, false, false, false];
+  List<int> indexPicturesFound = [0, 1, 2, 3, 4, 5];
+  List<String> ticketInfo = [];
   int selectedPageIndex = 0;
   int currentStep = 0;
+  int availableTry = -1;
   String? dropMenuValue;
   String? errorOther;
   String? genrlError;
@@ -43,18 +46,22 @@ class MainPage extends State {
       AnnouncementStreamListener().build(context),
       HistoryPage().build(context),
       TicketPage(
-        isTherePictures: isTherePictures,
+              ticketInfo: ticketInfo,
+              availableTry: availableTry,
+              isTherePictures: isTherePictures,
               chk: chk,
               genrlError: genrlError,
-              valid: valid,
+              currentStep: currentStep,
               errorOther: errorOther,
               myController: myController,
               picturesFound: picturesFound,
               otherActive: otherActive,
+              deletPicture: deletPicture,
+              valid: valid,
               onCancel: onCancel,
               onContinue: onContinue,
               onTapped: onTapped,
-              currentStep: currentStep,
+              controlAvailableTry: controlAvailableTry,
               selectedMenuValue: selectedMenuValue,
               dropMenuValue: dropMenuValue)
           .build(context),
@@ -179,10 +186,30 @@ class MainPage extends State {
     });
   }
 
-  void getSelectedPage(int i) {
+  getSelectedPage(int i) {
     setState(() {
       selectedPageIndex = i;
       appBarTitle = appBarTitles[i];
+    });
+  }
+
+  controlAvailableTry() {
+    setState(() {
+      availableTry++;
+      picturesFound[availableTry] = true;
+      if (availableTry < 0) {
+        isTherePictures = false;
+      } else {
+        isTherePictures = true;
+      }
+    });
+  }
+
+  deletPicture(int index) {
+    setState(() {
+      picturesFound.removeAt(index);
+      picturesFound.add(false);
+      availableTry--;
     });
   }
 

@@ -3,17 +3,21 @@ import 'package:flutter/material.dart';
 class TicketPage extends State {
   bool otherActive; //active other input
   bool isTherePictures;
-  int currentStep = 0;
+  int currentStep;
+  int availableTry;
   String? dropMenuValue;
   String? errorOther;
   String? genrlError;
-  List<bool> picturesFound = [];
-  List<String> ticketInfo = [];
+  List<bool> picturesFound;
+  List<String> ticketInfo;
+
   Function(int newIndex) onTapped;
+  Function() controlAvailableTry;
   Function(dynamic value) selectedMenuValue;
   Function() valid;
   Function() onContinue;
   Function() onCancel;
+  Function(int index) deletPicture;
   bool chk;
   final List<TextEditingController> myController;
   final items = [
@@ -215,7 +219,9 @@ class TicketPage extends State {
                                               trailing: IconButton(
                                                 icon: const Icon(
                                                     Icons.delete_rounded),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  deletPicture(0);
+                                                },
                                               ),
                                               onTap: () {},
                                             ),
@@ -243,7 +249,9 @@ class TicketPage extends State {
                                               trailing: IconButton(
                                                 icon: const Icon(
                                                     Icons.delete_rounded),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  deletPicture(1);
+                                                },
                                               ),
                                               onTap: () {},
                                             ),
@@ -271,7 +279,9 @@ class TicketPage extends State {
                                               trailing: IconButton(
                                                 icon: const Icon(
                                                     Icons.delete_rounded),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  deletPicture(2);
+                                                },
                                               ),
                                               onTap: () {},
                                             ),
@@ -299,7 +309,9 @@ class TicketPage extends State {
                                               trailing: IconButton(
                                                 icon: const Icon(
                                                     Icons.delete_rounded),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  deletPicture(3);
+                                                },
                                               ),
                                               onTap: () {},
                                             ),
@@ -327,7 +339,9 @@ class TicketPage extends State {
                                               trailing: IconButton(
                                                 icon: const Icon(
                                                     Icons.delete_rounded),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  deletPicture(4);
+                                                },
                                               ),
                                               onTap: () {},
                                             ),
@@ -355,7 +369,9 @@ class TicketPage extends State {
                                               trailing: IconButton(
                                                 icon: const Icon(
                                                     Icons.delete_rounded),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  deletPicture(5);
+                                                },
                                               ),
                                               onTap: () {},
                                             ),
@@ -374,45 +390,10 @@ class TicketPage extends State {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        picturesFound.elementAt(0)
-                                            ? const Text(
-                                                '',
-                                                style: TextStyle(fontSize: 1),
-                                              )
-                                            : IconButton(
-                                                icon: const Icon(
-                                                    Icons.add_a_photo),
-                                                onPressed: () {},
-                                              ),
-                                        picturesFound.elementAt(1)
-                                            ? const Text(
-                                                '',
-                                                style: TextStyle(fontSize: 1),
-                                              )
-                                            : IconButton(
-                                                icon: const Icon(
-                                                    Icons.add_a_photo),
-                                                onPressed: () {},
-                                              ),
-                                        picturesFound.elementAt(2)
-                                            ? const Text(
-                                                '',
-                                                style: TextStyle(fontSize: 1),
-                                              )
-                                            : IconButton(
-                                                icon: const Icon(
-                                                    Icons.add_a_photo),
-                                                onPressed: () {},
-                                              ),
-                                      ]),
-                                  Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      picturesFound.elementAt(3)
+                                      availableTry >= 5
                                           ? const Text(
                                               '',
                                               style: TextStyle(fontSize: 1),
@@ -420,27 +401,9 @@ class TicketPage extends State {
                                           : IconButton(
                                               icon:
                                                   const Icon(Icons.add_a_photo),
-                                              onPressed: () {},
-                                            ),
-                                      picturesFound.elementAt(4)
-                                          ? const Text(
-                                              '',
-                                              style: TextStyle(fontSize: 1),
-                                            )
-                                          : IconButton(
-                                              icon:
-                                                  const Icon(Icons.add_a_photo),
-                                              onPressed: () {},
-                                            ),
-                                      picturesFound.elementAt(5)
-                                          ? const Text(
-                                              '',
-                                              style: TextStyle(fontSize: 1),
-                                            )
-                                          : IconButton(
-                                              icon:
-                                                  const Icon(Icons.add_a_photo),
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                controlAvailableTry();
+                                              },
                                             ),
                                     ],
                                   ),
@@ -525,6 +488,9 @@ class TicketPage extends State {
       );
   TicketPage(
       {required this.otherActive,
+      required this.deletPicture,
+      required this.controlAvailableTry,
+      required this.availableTry,
       required this.isTherePictures,
       required this.chk,
       required this.genrlError,
@@ -537,5 +503,6 @@ class TicketPage extends State {
       required this.onContinue,
       required this.onCancel,
       required this.myController,
+      required this.ticketInfo,
       required this.valid});
 }
