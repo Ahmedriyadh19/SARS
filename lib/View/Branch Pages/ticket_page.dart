@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class TicketPage extends State {
   bool otherActive; //active other input
+  bool isTherePictures;
   int currentStep = 0;
-  String? dropMenuValue = "1";
+  String? dropMenuValue;
   String? errorOther;
   String? genrlError;
-  List<bool> pictures = [];
+  List<bool> picturesFound = [];
   List<String> ticketInfo = [];
   Function(int newIndex) onTapped;
   Function(dynamic value) selectedMenuValue;
@@ -192,45 +193,259 @@ class TicketPage extends State {
                     Step(
                         title: const Text('Step 4: Take pictures'),
                         content: SingleChildScrollView(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Row(
+                          child: Column(children: [
+                            isTherePictures
+                                ? Column(children: [
+                                    picturesFound.elementAt(0)
+                                        ? Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 3, top: 3),
+                                            color:
+                                                Colors.black.withOpacity(0.01),
+                                            child: ListTile(
+                                              leading: CircleAvatar(
+                                                radius: 25.0,
+                                                backgroundColor: Colors
+                                                    .cyanAccent
+                                                    .withOpacity(0.5),
+                                              ),
+                                              title: const Text('Picture 1'),
+                                              subtitle: const Text(
+                                                  'Click To view it'),
+                                              trailing: IconButton(
+                                                icon: const Icon(
+                                                    Icons.delete_rounded),
+                                                onPressed: () {},
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          )
+                                        : const Text(
+                                            '',
+                                            style: TextStyle(fontSize: 1),
+                                          ),
+                                    picturesFound.elementAt(1)
+                                        ? Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 3, top: 3),
+                                            color:
+                                                Colors.black.withOpacity(0.01),
+                                            child: ListTile(
+                                              leading: CircleAvatar(
+                                                radius: 25.0,
+                                                backgroundColor: Colors
+                                                    .cyanAccent
+                                                    .withOpacity(0.5),
+                                              ),
+                                              title: const Text('Picture 2'),
+                                              subtitle: const Text(
+                                                  'Click To view it'),
+                                              trailing: IconButton(
+                                                icon: const Icon(
+                                                    Icons.delete_rounded),
+                                                onPressed: () {},
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          )
+                                        : const Text(
+                                            '',
+                                            style: TextStyle(fontSize: 1),
+                                          ),
+                                    picturesFound.elementAt(2)
+                                        ? Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 3, top: 3),
+                                            color:
+                                                Colors.black.withOpacity(0.01),
+                                            child: ListTile(
+                                              leading: CircleAvatar(
+                                                radius: 25.0,
+                                                backgroundColor: Colors
+                                                    .cyanAccent
+                                                    .withOpacity(0.5),
+                                              ),
+                                              title: const Text('Picture 3'),
+                                              subtitle: const Text(
+                                                  'Click To view it'),
+                                              trailing: IconButton(
+                                                icon: const Icon(
+                                                    Icons.delete_rounded),
+                                                onPressed: () {},
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          )
+                                        : const Text(
+                                            '',
+                                            style: TextStyle(fontSize: 1),
+                                          ),
+                                    picturesFound.elementAt(3)
+                                        ? Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 3, top: 3),
+                                            color:
+                                                Colors.black.withOpacity(0.01),
+                                            child: ListTile(
+                                              leading: CircleAvatar(
+                                                radius: 25.0,
+                                                backgroundColor: Colors
+                                                    .cyanAccent
+                                                    .withOpacity(0.5),
+                                              ),
+                                              title: const Text('Picture 4'),
+                                              subtitle: const Text(
+                                                  'Click To view it'),
+                                              trailing: IconButton(
+                                                icon: const Icon(
+                                                    Icons.delete_rounded),
+                                                onPressed: () {},
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          )
+                                        : const Text(
+                                            '',
+                                            style: TextStyle(fontSize: 1),
+                                          ),
+                                    picturesFound.elementAt(4)
+                                        ? Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 3, top: 3),
+                                            color:
+                                                Colors.black.withOpacity(0.01),
+                                            child: ListTile(
+                                              leading: CircleAvatar(
+                                                radius: 25.0,
+                                                backgroundColor: Colors
+                                                    .cyanAccent
+                                                    .withOpacity(0.5),
+                                              ),
+                                              title: const Text('Picture 5'),
+                                              subtitle: const Text(
+                                                  'Click To view it'),
+                                              trailing: IconButton(
+                                                icon: const Icon(
+                                                    Icons.delete_rounded),
+                                                onPressed: () {},
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          )
+                                        : const Text(
+                                            '',
+                                            style: TextStyle(fontSize: 1),
+                                          ),
+                                    picturesFound.elementAt(5)
+                                        ? Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 3, top: 3),
+                                            color:
+                                                Colors.black.withOpacity(0.01),
+                                            child: ListTile(
+                                              leading: CircleAvatar(
+                                                radius: 25.0,
+                                                backgroundColor: Colors
+                                                    .cyanAccent
+                                                    .withOpacity(0.5),
+                                              ),
+                                              title: const Text('Picture 6'),
+                                              subtitle: const Text(
+                                                  'Click To view it'),
+                                              trailing: IconButton(
+                                                icon: const Icon(
+                                                    Icons.delete_rounded),
+                                                onPressed: () {},
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                          )
+                                        : const Text(
+                                            '',
+                                            style: TextStyle(fontSize: 1),
+                                          ),
+                                  ])
+                                : const Text(
+                                    '',
+                                    style: TextStyle(fontSize: 1),
+                                  ),
+                            Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        picturesFound.elementAt(0)
+                                            ? const Text(
+                                                '',
+                                                style: TextStyle(fontSize: 1),
+                                              )
+                                            : IconButton(
+                                                icon: const Icon(
+                                                    Icons.add_a_photo),
+                                                onPressed: () {},
+                                              ),
+                                        picturesFound.elementAt(1)
+                                            ? const Text(
+                                                '',
+                                                style: TextStyle(fontSize: 1),
+                                              )
+                                            : IconButton(
+                                                icon: const Icon(
+                                                    Icons.add_a_photo),
+                                                onPressed: () {},
+                                              ),
+                                        picturesFound.elementAt(2)
+                                            ? const Text(
+                                                '',
+                                                style: TextStyle(fontSize: 1),
+                                              )
+                                            : IconButton(
+                                                icon: const Icon(
+                                                    Icons.add_a_photo),
+                                                onPressed: () {},
+                                              ),
+                                      ]),
+                                  Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      IconButton(
-                                        icon: const Icon(Icons.add_a_photo),
-                                        onPressed: () {},
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.add_a_photo),
-                                        onPressed: () {},
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.add_a_photo),
-                                        onPressed: () {},
-                                      ),
-                                    ]),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.add_a_photo),
-                                      onPressed: () {},
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.add_a_photo),
-                                      onPressed: () {},
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.add_a_photo),
-                                      onPressed: () {},
-                                    ),
-                                  ],
-                                ),
-                              ]),
+                                      picturesFound.elementAt(3)
+                                          ? const Text(
+                                              '',
+                                              style: TextStyle(fontSize: 1),
+                                            )
+                                          : IconButton(
+                                              icon:
+                                                  const Icon(Icons.add_a_photo),
+                                              onPressed: () {},
+                                            ),
+                                      picturesFound.elementAt(4)
+                                          ? const Text(
+                                              '',
+                                              style: TextStyle(fontSize: 1),
+                                            )
+                                          : IconButton(
+                                              icon:
+                                                  const Icon(Icons.add_a_photo),
+                                              onPressed: () {},
+                                            ),
+                                      picturesFound.elementAt(5)
+                                          ? const Text(
+                                              '',
+                                              style: TextStyle(fontSize: 1),
+                                            )
+                                          : IconButton(
+                                              icon:
+                                                  const Icon(Icons.add_a_photo),
+                                              onPressed: () {},
+                                            ),
+                                    ],
+                                  ),
+                                ]),
+                          ]),
                         )),
                     Step(
                         title: const Text('Step 5: Record a video'),
@@ -310,11 +525,12 @@ class TicketPage extends State {
       );
   TicketPage(
       {required this.otherActive,
+      required this.isTherePictures,
       required this.chk,
       required this.genrlError,
       required this.currentStep,
       required this.dropMenuValue,
-      required this.pictures,
+      required this.picturesFound,
       required this.onTapped,
       required this.selectedMenuValue,
       required this.errorOther,

@@ -16,7 +16,8 @@ class MainPageBuilder extends StatefulWidget {
 class MainPage extends State {
   String appBarTitle = 'Home';
   static bool otherActive = false;
-  List<bool> pictures = [false, false, false, false, false, false];
+  bool isTherePictures = true;
+  List<bool> picturesFound = [true, true, true, true, true, true];
   int selectedPageIndex = 0;
   int currentStep = 0;
   String? dropMenuValue;
@@ -42,12 +43,13 @@ class MainPage extends State {
       AnnouncementStreamListener().build(context),
       HistoryPage().build(context),
       TicketPage(
+        isTherePictures: isTherePictures,
               chk: chk,
               genrlError: genrlError,
               valid: valid,
               errorOther: errorOther,
               myController: myController,
-              pictures: pictures,
+              picturesFound: picturesFound,
               otherActive: otherActive,
               onCancel: onCancel,
               onContinue: onContinue,
