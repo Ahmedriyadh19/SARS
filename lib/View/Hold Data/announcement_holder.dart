@@ -10,6 +10,14 @@ class AnnouncementBuilderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double newWidth = MediaQuery.of(context).size.width - 20;
     final announcementData = Provider.of<List<Announcement>>(context);
+    announcementData.sort((b, a) {
+      return a.dateTime.compareTo(b.dateTime);
+    });
+
+    // get last 30 announcementData
+    if (announcementData.length > 30) {
+      announcementData.getRange(0, 30);
+    }
     return announcementData.isNotEmpty
         ? SizedBox(
             width: newWidth,
@@ -23,7 +31,7 @@ class AnnouncementBuilderPage extends StatelessWidget {
                   );
                 }),
           )
-        : const Text('No Announcement Yet...',
-            style: TextStyle(fontSize: 30, color: Colors.white));
+        : const Text('No Announcement Yet',
+            style: TextStyle(fontSize: 20, color: Colors.white));
   }
 }

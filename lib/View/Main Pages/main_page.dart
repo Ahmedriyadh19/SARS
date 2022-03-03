@@ -14,19 +14,19 @@ class MainPageBuilder extends StatefulWidget {
 }
 
 class MainPage extends State {
-  String appBarTitle = 'Home';
-  static bool otherActive = false;
+  bool otherActive = false;
   bool isTherePictures = false;
-  static List<bool> picturesFound = [false, false, false, false, false, false];
-  List<int> indexPicturesFound = [0, 1, 2, 3, 4, 5];
+  bool chkEverything = false;
+  bool isThereVideo = false;
+  List<bool> picturesFound = [false, false, false, false, false, false];
   List<String> ticketInfo = [];
   int selectedPageIndex = 0;
   int currentStep = 0;
-  int availableTry = -1;
+  int availableTryPictures = -1;
   String? dropMenuValue;
   String? errorOther;
   String? genrlError;
-  bool chk = false;
+  String appBarTitle = 'Home';
 
   static final List<TextEditingController> myController =
       List.generate(3, (i) => TextEditingController());
@@ -47,21 +47,25 @@ class MainPage extends State {
       HistoryPage().build(context),
       TicketPage(
               ticketInfo: ticketInfo,
-              availableTry: availableTry,
+              isThereVideo: isThereVideo,
+              availableTryPictures: availableTryPictures,
               isTherePictures: isTherePictures,
-              chk: chk,
+              chkEverything: chkEverything,
               genrlError: genrlError,
               currentStep: currentStep,
               errorOther: errorOther,
               myController: myController,
               picturesFound: picturesFound,
               otherActive: otherActive,
+              dailog: dailog,
+              deleteVideo: deleteVideo,
+              recordVideo: recordVideo,
               deletPicture: deletPicture,
               valid: valid,
               onCancel: onCancel,
               onContinue: onContinue,
               onTapped: onTapped,
-              controlAvailableTry: controlAvailableTry,
+              takePictures: takePictures,
               selectedMenuValue: selectedMenuValue,
               dropMenuValue: dropMenuValue)
           .build(context),
@@ -167,12 +171,52 @@ class MainPage extends State {
     }
   }
 
+  deleteVideo() {
+    setState(() {
+      isThereVideo = false;
+    });
+  }
+
   onCancel() {
-    if (currentStep != 0) {
-      setState(() {
+    setState(() {
+      if (currentStep == 0) {
+        myController[0].clear();
+        dropMenuValue = null;
+        otherActive = false;
+        errorOther = null;
+      }
+      if (currentStep == 1) {
+        myController[1].clear();
+      }
+      if (currentStep == 2) {
+        myController[2].clear();
+      }
+      if (currentStep == 3) {
+        deleteAllPicture();
+      }
+      if (currentStep == 4) {
+        isThereVideo = false;
+      }
+      if (currentStep != 0) {
         currentStep -= 1;
-      });
-    }
+      }
+    });
+  }
+
+  deleteAllPicture() {
+    setState(() {
+      availableTryPictures = -1;
+      isTherePictures = false;
+      for (int i = 0; i < picturesFound.length; i++) {
+        picturesFound[i] = false;
+      }
+    });
+  }
+
+  recordVideo() {
+    setState(() {
+      isThereVideo = true;
+    });
   }
 
   selectedMenuValue(value) {
@@ -193,11 +237,11 @@ class MainPage extends State {
     });
   }
 
-  controlAvailableTry() {
+  takePictures() {
     setState(() {
-      availableTry++;
-      picturesFound[availableTry] = true;
-      if (availableTry < 0) {
+      availableTryPictures++;
+      picturesFound[availableTryPictures] = true;
+      if (availableTryPictures < 0) {
         isTherePictures = false;
       } else {
         isTherePictures = true;
@@ -209,28 +253,80 @@ class MainPage extends State {
     setState(() {
       picturesFound.removeAt(index);
       picturesFound.add(false);
-      availableTry--;
+      availableTryPictures--;
     });
   }
 
   bool valid() {
     bool chk1 = true;
-    chk = false;
+    chkEverything = false;
     genrlError = '';
     errorOther = null;
     setState(() {
       if (myController[0].text.isEmpty && dropMenuValue == 'Other') {
         errorOther = 'You can not leave the type of issus empty';
         chk1 = false;
-        chk = true;
+        chkEverything = true;
         currentStep = 0;
       }
       if (dropMenuValue == null) {
         genrlError = 'Must choose your type of issue';
+        currentStep = 0;
         chk1 = false;
-        chk = true;
+        chkEverything = true;
       }
     });
     return chk1;
+  }
+
+  dailog() {
+    if (valid()) {
+      setDefault();
+      return showDialog(
+        context: context,
+        builder: (context) => SimpleDialog(
+          title: const Text('Ticket'),
+          contentPadding: const EdgeInsets.all(20.0),
+          backgroundColor: const Color.fromARGB(255, 85, 200, 205),
+          children: [
+            const Text(
+              'The Ticket has submitted successfully.',
+              textAlign: TextAlign.center,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 15.0),
+              child: TextButton(
+                child: const Text(
+                  'Close',
+                  style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
+                ),
+                onPressed: () => {Navigator.of(context).pop()},
+              ),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  setDefault() {
+    setState(() {
+      otherActive = false;
+      isTherePictures = false;
+      chkEverything = false;
+      isThereVideo = false;
+      currentStep = 0;
+      availableTryPictures = -1;
+      dropMenuValue = null;
+      errorOther = null;
+      genrlError = null;
+
+      for (int i = 0; i < picturesFound.length; i++) {
+        picturesFound[i] = false;
+      }
+      for (int i = 0; i < myController.length; i++) {
+        myController[i].clear();
+      }
+    });
   }
 }

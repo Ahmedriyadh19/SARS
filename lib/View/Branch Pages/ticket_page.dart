@@ -3,23 +3,28 @@ import 'package:flutter/material.dart';
 class TicketPage extends State {
   bool otherActive; //active other input
   bool isTherePictures;
+  bool isThereVideo;
+  bool chkEverything;
   int currentStep;
-  int availableTry;
+  int availableTryPictures;
   String? dropMenuValue;
   String? errorOther;
   String? genrlError;
   List<bool> picturesFound;
   List<String> ticketInfo;
+  List<TextEditingController> myController;
 
-  Function(int newIndex) onTapped;
-  Function() controlAvailableTry;
-  Function(dynamic value) selectedMenuValue;
+  Function() takePictures;
+  Function() recordVideo;
   Function() valid;
   Function() onContinue;
   Function() onCancel;
+  Function() deleteVideo;
   Function(int index) deletPicture;
-  bool chk;
-  final List<TextEditingController> myController;
+  Function(int newIndex) onTapped;
+  Function(dynamic value) selectedMenuValue;
+  Function() dailog;
+
   final items = [
     'Improper Surface Grading/Drainage',
     'Improper Electrical Wiring',
@@ -393,7 +398,7 @@ class TicketPage extends State {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      availableTry >= 5
+                                      availableTryPictures >= 5
                                           ? const Text(
                                               '',
                                               style: TextStyle(fontSize: 1),
@@ -402,7 +407,7 @@ class TicketPage extends State {
                                               icon:
                                                   const Icon(Icons.add_a_photo),
                                               onPressed: () {
-                                                controlAvailableTry();
+                                                takePictures();
                                               },
                                             ),
                                     ],
@@ -413,13 +418,40 @@ class TicketPage extends State {
                     Step(
                         title: const Text('Step 5: Record a video'),
                         content: SingleChildScrollView(
-                          child: Row(
+                          child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                IconButton(
-                                  icon: const Icon(Icons.video_call_rounded),
-                                  onPressed: () => () {},
-                                ),
+                                isThereVideo
+                                    ? Container(
+                                        margin: const EdgeInsets.only(
+                                            bottom: 3, top: 3),
+                                        color: Colors.black.withOpacity(0.01),
+                                        child: ListTile(
+                                          leading: CircleAvatar(
+                                            radius: 25.0,
+                                            backgroundColor: Colors.cyanAccent
+                                                .withOpacity(0.5),
+                                          ),
+                                          title: const Text('Video'),
+                                          subtitle:
+                                              const Text('Click To view it'),
+                                          trailing: IconButton(
+                                            icon: const Icon(
+                                                Icons.delete_rounded),
+                                            onPressed: () {
+                                              deleteVideo();
+                                            },
+                                          ),
+                                          onTap: () {},
+                                        ),
+                                      )
+                                    : IconButton(
+                                        icon: const Icon(
+                                            Icons.video_call_rounded),
+                                        onPressed: () {
+                                          recordVideo();
+                                        },
+                                      )
                               ]),
                         )),
                     Step(
@@ -428,7 +460,8 @@ class TicketPage extends State {
                           child: ElevatedButton(
                             child: const Text('Submit'),
                             onPressed: () {
-                              valid();
+                              dailog();
+                              print('dilog active');
                             },
                           ),
                         )),
@@ -438,7 +471,7 @@ class TicketPage extends State {
                   onStepContinue: onContinue,
                   onStepCancel: onCancel),
             ),
-            chk
+            chkEverything
                 ? Text(
                     genrlError!,
                     style:
@@ -455,32 +488,7 @@ class TicketPage extends State {
     );
   }
 
-  dialog() {
-    return showDialog(
-      context: context,
-      builder: (_) => SimpleDialog(
-        title: const Text('Ticket'),
-        contentPadding: const EdgeInsets.all(20.0),
-        backgroundColor: const Color.fromARGB(255, 85, 200, 205),
-        children: [
-          const Text(
-            'The Ticket has submitted successfully.',
-            textAlign: TextAlign.center,
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 15.0),
-            child: TextButton(
-              child: const Text(
-                'Close',
-                style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
-              ),
-              onPressed: () => {Navigator.of(context).pop()},
-            ),
-          )
-        ],
-      ),
-    );
-  }
+
 
   DropdownMenuItem buildMenuItem(String item) => DropdownMenuItem(
         value: item,
@@ -488,11 +496,14 @@ class TicketPage extends State {
       );
   TicketPage(
       {required this.otherActive,
+      required this.isThereVideo,
+      required this.deleteVideo,
+      required this.recordVideo,
       required this.deletPicture,
-      required this.controlAvailableTry,
-      required this.availableTry,
+      required this.takePictures,
+      required this.availableTryPictures,
       required this.isTherePictures,
-      required this.chk,
+      required this.chkEverything,
       required this.genrlError,
       required this.currentStep,
       required this.dropMenuValue,
@@ -504,5 +515,6 @@ class TicketPage extends State {
       required this.onCancel,
       required this.myController,
       required this.ticketInfo,
+      required this.dailog,
       required this.valid});
 }
