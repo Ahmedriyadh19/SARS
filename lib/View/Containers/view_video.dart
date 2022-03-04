@@ -80,8 +80,7 @@ class DisplayVideoScreenState extends State<DisplayVideoScreen> {
                       : Container(),
                   Center(
                     child: FloatingActionButton(
-                      backgroundColor: Colors.cyanAccent.withOpacity(0.2),
-                      elevation: 15,
+                      backgroundColor: Colors.cyanAccent.withOpacity(0),
                       tooltip: 'Play/Pause',
                       onPressed: () {
                         setState(() {
@@ -94,7 +93,8 @@ class DisplayVideoScreenState extends State<DisplayVideoScreen> {
                         videoPlayerController!.value.isPlaying
                             ? Icons.pause
                             : Icons.play_arrow,
-                        // color: Colors.cyanAccent.withOpacity(0.1),
+                        color: Colors.cyanAccent.withOpacity(0),
+                        size: 200,
                       ),
                     ),
                   ),
