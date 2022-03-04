@@ -16,7 +16,7 @@ class DatabaseFeatures {
       'email': u.email,
       'address': u.address,
       'role': 'r',
-      'pictureUrl': u.pictureUrl,
+      'pictureUrl': '',
       'phone': u.phone,
     });
   }

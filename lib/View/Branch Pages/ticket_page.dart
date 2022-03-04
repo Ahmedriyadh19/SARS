@@ -461,7 +461,6 @@ class TicketPage extends State {
                             child: const Text('Submit'),
                             onPressed: () {
                               dailog();
-                              print('dilog active');
                             },
                           ),
                         )),
