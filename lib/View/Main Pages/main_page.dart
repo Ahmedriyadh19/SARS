@@ -1,13 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:sars/View/Branch%20Pages/history_page.dart';
 import 'package:sars/View/Branch%20Pages/announcement_page.dart';
 import 'package:sars/View/Branch%20Pages/home_page.dart';
 import 'package:sars/View/Branch%20Pages/settings_page.dart';
 import 'package:sars/View/Branch%20Pages/ticket_page.dart';
+import 'package:sars/View/Containers/view_image.dart';
 
 class MainPageBuilder extends StatefulWidget {
   const MainPageBuilder({Key? key}) : super(key: key);
@@ -30,6 +29,7 @@ class MainPage extends State {
   String? dropMenuValue;
   String? errorOther;
   String? genrlError;
+  String? descriptionError;
   String appBarTitle = 'Home';
   final imagePicker = ImagePicker();
 
@@ -51,30 +51,32 @@ class MainPage extends State {
       AnnouncementStreamListener().build(context),
       HistoryPage().build(context),
       TicketPage(
-              ticketInfo: ticketInfo,
-              isThereVideo: isThereVideo,
-              availableTryPictures: availableTryPictures,
-              isTherePictures: isTherePictures,
-              chkEverything: chkEverything,
-              genrlError: genrlError,
-              currentStep: currentStep,
-              errorOther: errorOther,
-              myController: myController,
-              picturesFound: picturesFound,
-              otherActive: otherActive,
-              images: images,
-              dailog: dailog,
-              deleteVideo: deleteVideo,
-              recordVideo: recordVideo,
-              deletPicture: deletPicture,
-              valid: valid,
-              onCancel: onCancel,
-              onContinue: onContinue,
-              onTapped: onTapped,
-              takePictures: takePictures,
-              selectedMenuValue: selectedMenuValue,
-              dropMenuValue: dropMenuValue)
-          .build(context),
+        ticketInfo: ticketInfo,
+        isThereVideo: isThereVideo,
+        availableTryPictures: availableTryPictures,
+        isTherePictures: isTherePictures,
+        chkEverything: chkEverything,
+        genrlError: genrlError,
+        currentStep: currentStep,
+        errorOther: errorOther,
+        myController: myController,
+        picturesFound: picturesFound,
+        otherActive: otherActive,
+        images: images,
+        dropMenuValue: dropMenuValue,
+        descriptionError: descriptionError,
+        viewPicture: viewPicture,
+        dailog: dailog,
+        deleteVideo: deleteVideo,
+        recordVideo: recordVideo,
+        deletPicture: deletPicture,
+        valid: valid,
+        onCancel: onCancel,
+        onContinue: onContinue,
+        onTapped: onTapped,
+        takePictures: takePictures,
+        selectedMenuValue: selectedMenuValue,
+      ).build(context),
       SettingsPage().build(context),
     ];
 
@@ -215,6 +217,7 @@ class MainPage extends State {
       isTherePictures = false;
       for (int i = 0; i < picturesFound.length; i++) {
         picturesFound[i] = false;
+        images.clear();
       }
     });
   }
@@ -256,6 +259,22 @@ class MainPage extends State {
     });
   }
 
+  viewPicture(int index) async {
+    try {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => DisplayPictureScreen(
+            imagePath: images.elementAt(index),
+            number: index,
+          ),
+        ),
+      );
+    } catch (e) {
+      // If an error occurs, log the error to the console.
+
+    }
+  }
+
   deletPicture(int index) {
     setState(() {
       picturesFound.removeAt(index);
@@ -270,6 +289,7 @@ class MainPage extends State {
     chkEverything = false;
     genrlError = '';
     errorOther = null;
+    descriptionError = null;
     setState(() {
       if (myController[0].text.isEmpty && dropMenuValue == 'Other') {
         errorOther = 'You can not leave the type of issus empty';
@@ -280,6 +300,12 @@ class MainPage extends State {
       if (dropMenuValue == null) {
         genrlError = 'Must choose your type of issue';
         currentStep = 0;
+        chk1 = false;
+        chkEverything = true;
+      }
+      if (myController[1].text.isEmpty) {
+        descriptionError = 'Must write your description of issue';
+        currentStep = 1;
         chk1 = false;
         chkEverything = true;
       }
@@ -328,6 +354,7 @@ class MainPage extends State {
       dropMenuValue = null;
       errorOther = null;
       genrlError = null;
+      descriptionError = null;
 
       for (int i = 0; i < picturesFound.length; i++) {
         picturesFound[i] = false;

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 class TicketPage extends State {
@@ -12,6 +11,7 @@ class TicketPage extends State {
   String? dropMenuValue;
   String? errorOther;
   String? genrlError;
+  String? descriptionError;
   List<bool> picturesFound;
   List<String> ticketInfo;
   List<TextEditingController> myController;
@@ -23,10 +23,11 @@ class TicketPage extends State {
   Function() onContinue;
   Function() onCancel;
   Function() deleteVideo;
+  Function() dailog;
   Function(int index) deletPicture;
   Function(int newIndex) onTapped;
   Function(dynamic value) selectedMenuValue;
-  Function() dailog;
+  Function(int index) viewPicture;
 
   final items = [
     'Improper Surface Grading/Drainage',
@@ -165,11 +166,12 @@ class TicketPage extends State {
                             style:
                                 TextStyle(color: Colors.white.withOpacity(0.7)),
                             autocorrect: true,
-                            decoration: const InputDecoration(
-                                label: Text(
+                            decoration:  InputDecoration(
+                                label: const Text(
                                   'Description',
                                   style: TextStyle(color: Colors.black),
                                 ),
+                                errorText: descriptionError,
                                 hintText: 'Describe your issue'),
                             minLines: 1,
                             maxLines: 6,
@@ -177,6 +179,7 @@ class TicketPage extends State {
                                 .multiline, // user keyboard will have a button to move cursor to next line
                             maxLength: 2000,
                             controller: myController[1],
+                            
                           ),
                         )),
                     Step(
@@ -216,6 +219,8 @@ class TicketPage extends State {
                                                 Colors.black.withOpacity(0.01),
                                             child: ListTile(
                                               leading: CircleAvatar(
+                                                backgroundImage: FileImage(
+                                                    images.elementAt(0)),
                                                 radius: 25.0,
                                                 backgroundColor: Colors
                                                     .cyanAccent
@@ -231,7 +236,9 @@ class TicketPage extends State {
                                                   deletPicture(0);
                                                 },
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                viewPicture(0);
+                                              },
                                             ),
                                           )
                                         : const Text(
@@ -247,6 +254,8 @@ class TicketPage extends State {
                                             child: ListTile(
                                               leading: CircleAvatar(
                                                 radius: 25.0,
+                                                backgroundImage: FileImage(
+                                                    images.elementAt(1)),
                                                 backgroundColor: Colors
                                                     .cyanAccent
                                                     .withOpacity(0.5),
@@ -261,7 +270,9 @@ class TicketPage extends State {
                                                   deletPicture(1);
                                                 },
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                viewPicture(1);
+                                              },
                                             ),
                                           )
                                         : const Text(
@@ -276,6 +287,8 @@ class TicketPage extends State {
                                                 Colors.black.withOpacity(0.01),
                                             child: ListTile(
                                               leading: CircleAvatar(
+                                                backgroundImage: FileImage(
+                                                    images.elementAt(2)),
                                                 radius: 25.0,
                                                 backgroundColor: Colors
                                                     .cyanAccent
@@ -291,7 +304,9 @@ class TicketPage extends State {
                                                   deletPicture(2);
                                                 },
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                viewPicture(2);
+                                              },
                                             ),
                                           )
                                         : const Text(
@@ -306,6 +321,8 @@ class TicketPage extends State {
                                                 Colors.black.withOpacity(0.01),
                                             child: ListTile(
                                               leading: CircleAvatar(
+                                                backgroundImage: FileImage(
+                                                    images.elementAt(3)),
                                                 radius: 25.0,
                                                 backgroundColor: Colors
                                                     .cyanAccent
@@ -321,7 +338,9 @@ class TicketPage extends State {
                                                   deletPicture(3);
                                                 },
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                viewPicture(3);
+                                              },
                                             ),
                                           )
                                         : const Text(
@@ -336,6 +355,8 @@ class TicketPage extends State {
                                                 Colors.black.withOpacity(0.01),
                                             child: ListTile(
                                               leading: CircleAvatar(
+                                                backgroundImage: FileImage(
+                                                    images.elementAt(4)),
                                                 radius: 25.0,
                                                 backgroundColor: Colors
                                                     .cyanAccent
@@ -351,7 +372,9 @@ class TicketPage extends State {
                                                   deletPicture(4);
                                                 },
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                viewPicture(4);
+                                              },
                                             ),
                                           )
                                         : const Text(
@@ -366,6 +389,8 @@ class TicketPage extends State {
                                                 Colors.black.withOpacity(0.01),
                                             child: ListTile(
                                               leading: CircleAvatar(
+                                                backgroundImage: FileImage(
+                                                    images.elementAt(5)),
                                                 radius: 25.0,
                                                 backgroundColor: Colors
                                                     .cyanAccent
@@ -381,7 +406,9 @@ class TicketPage extends State {
                                                   deletPicture(5);
                                                 },
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                viewPicture(5);
+                                              },
                                             ),
                                           )
                                         : const Text(
@@ -502,6 +529,7 @@ class TicketPage extends State {
       required this.recordVideo,
       required this.deletPicture,
       required this.takePictures,
+      required this.viewPicture,
       required this.availableTryPictures,
       required this.isTherePictures,
       required this.chkEverything,
@@ -517,5 +545,6 @@ class TicketPage extends State {
       required this.myController,
       required this.ticketInfo,
       required this.dailog,
+      required this.descriptionError,
       required this.valid});
 }
