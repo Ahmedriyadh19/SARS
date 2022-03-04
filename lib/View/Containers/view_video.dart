@@ -31,6 +31,8 @@ class DisplayVideoScreenState extends State<DisplayVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
         appBar: AppBar(
           elevation: 20,
@@ -79,9 +81,17 @@ class DisplayVideoScreenState extends State<DisplayVideoScreen> {
                         )
                       : Container(),
                   Center(
-                    child: FloatingActionButton(
-                      backgroundColor: Colors.cyanAccent.withOpacity(0),
+                    child: IconButton(
                       tooltip: 'Play/Pause',
+                      iconSize: width,
+                      color: Colors.cyanAccent.withOpacity(0),
+                      icon: Icon(
+                        videoPlayerController!.value.isPlaying
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                        color: Colors.cyanAccent.withOpacity(0),
+                        size: 200,
+                      ),
                       onPressed: () {
                         setState(() {
                           videoPlayerController!.value.isPlaying
@@ -89,13 +99,6 @@ class DisplayVideoScreenState extends State<DisplayVideoScreen> {
                               : videoPlayerController!.play();
                         });
                       },
-                      child: Icon(
-                        videoPlayerController!.value.isPlaying
-                            ? Icons.pause
-                            : Icons.play_arrow,
-                        color: Colors.cyanAccent.withOpacity(0),
-                        size: 200,
-                      ),
                     ),
                   ),
                 ]),
