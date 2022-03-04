@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:sars/View/Branch%20Pages/history_page.dart';
 import 'package:sars/View/Branch%20Pages/announcement_page.dart';
@@ -20,6 +23,7 @@ class MainPage extends State {
   bool isThereVideo = false;
   List<bool> picturesFound = [false, false, false, false, false, false];
   List<String> ticketInfo = [];
+  List<File> images = [];
   int selectedPageIndex = 0;
   int currentStep = 0;
   int availableTryPictures = -1;
@@ -27,6 +31,7 @@ class MainPage extends State {
   String? errorOther;
   String? genrlError;
   String appBarTitle = 'Home';
+  final imagePicker = ImagePicker();
 
   static final List<TextEditingController> myController =
       List.generate(3, (i) => TextEditingController());
@@ -57,6 +62,7 @@ class MainPage extends State {
               myController: myController,
               picturesFound: picturesFound,
               otherActive: otherActive,
+              images: images,
               dailog: dailog,
               deleteVideo: deleteVideo,
               recordVideo: recordVideo,
@@ -237,7 +243,8 @@ class MainPage extends State {
     });
   }
 
-  takePictures() {
+  takePictures() async {
+    await getImageFromCamera();
     setState(() {
       availableTryPictures++;
       picturesFound[availableTryPictures] = true;
@@ -252,6 +259,7 @@ class MainPage extends State {
   deletPicture(int index) {
     setState(() {
       picturesFound.removeAt(index);
+      images.removeAt(index);
       picturesFound.add(false);
       availableTryPictures--;
     });
@@ -327,6 +335,13 @@ class MainPage extends State {
       for (int i = 0; i < myController.length; i++) {
         myController[i].clear();
       }
+      images.clear();
     });
+  }
+
+  Future getImageFromCamera() async {
+    final image = await (imagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 65));
+    images.add(File(image!.path));
   }
 }

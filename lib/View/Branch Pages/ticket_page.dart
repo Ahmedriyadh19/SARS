@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class TicketPage extends State {
@@ -13,6 +15,7 @@ class TicketPage extends State {
   List<bool> picturesFound;
   List<String> ticketInfo;
   List<TextEditingController> myController;
+  List<File> images;
 
   Function() takePictures;
   Function() recordVideo;
@@ -487,14 +490,13 @@ class TicketPage extends State {
     );
   }
 
-
-
   DropdownMenuItem buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(item),
       );
   TicketPage(
       {required this.otherActive,
+      required this.images,
       required this.isThereVideo,
       required this.deleteVideo,
       required this.recordVideo,
