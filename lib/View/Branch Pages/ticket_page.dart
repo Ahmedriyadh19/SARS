@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class TicketPage extends State {
   bool otherActive; //active other input
@@ -16,6 +17,7 @@ class TicketPage extends State {
   List<String> ticketInfo;
   List<TextEditingController> myController;
   List<File> images;
+  XFile? videoFile;
 
   Function() takePictures;
   Function() recordVideo;
@@ -24,6 +26,7 @@ class TicketPage extends State {
   Function() onCancel;
   Function() deleteVideo;
   Function() dailog;
+  Function() viewVideo;
   Function(int index) deletPicture;
   Function(int newIndex) onTapped;
   Function(dynamic value) selectedMenuValue;
@@ -166,7 +169,7 @@ class TicketPage extends State {
                             style:
                                 TextStyle(color: Colors.white.withOpacity(0.7)),
                             autocorrect: true,
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                                 label: const Text(
                                   'Description',
                                   style: TextStyle(color: Colors.black),
@@ -179,7 +182,6 @@ class TicketPage extends State {
                                 .multiline, // user keyboard will have a button to move cursor to next line
                             maxLength: 2000,
                             controller: myController[1],
-                            
                           ),
                         )),
                     Step(
@@ -201,8 +203,6 @@ class TicketPage extends State {
                                 .multiline, // user keyboard will have a button to move cursor to next line
                             maxLength: 50,
                             controller: myController[2],
-
-                            //controller: _Textcontroller,
                           ),
                         )),
                     Step(
@@ -215,8 +215,11 @@ class TicketPage extends State {
                                         ? Container(
                                             margin: const EdgeInsets.only(
                                                 bottom: 3, top: 3),
-                                            color:
-                                                Colors.black.withOpacity(0.01),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
                                             child: ListTile(
                                               leading: CircleAvatar(
                                                 backgroundImage: FileImage(
@@ -241,16 +244,16 @@ class TicketPage extends State {
                                               },
                                             ),
                                           )
-                                        : const Text(
-                                            '',
-                                            style: TextStyle(fontSize: 1),
-                                          ),
+                                        : Container(),
                                     picturesFound.elementAt(1)
                                         ? Container(
                                             margin: const EdgeInsets.only(
                                                 bottom: 3, top: 3),
-                                            color:
-                                                Colors.black.withOpacity(0.01),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
                                             child: ListTile(
                                               leading: CircleAvatar(
                                                 radius: 25.0,
@@ -275,16 +278,16 @@ class TicketPage extends State {
                                               },
                                             ),
                                           )
-                                        : const Text(
-                                            '',
-                                            style: TextStyle(fontSize: 1),
-                                          ),
+                                        : Container(),
                                     picturesFound.elementAt(2)
                                         ? Container(
                                             margin: const EdgeInsets.only(
                                                 bottom: 3, top: 3),
-                                            color:
-                                                Colors.black.withOpacity(0.01),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
                                             child: ListTile(
                                               leading: CircleAvatar(
                                                 backgroundImage: FileImage(
@@ -309,16 +312,16 @@ class TicketPage extends State {
                                               },
                                             ),
                                           )
-                                        : const Text(
-                                            '',
-                                            style: TextStyle(fontSize: 1),
-                                          ),
+                                        : Container(),
                                     picturesFound.elementAt(3)
                                         ? Container(
                                             margin: const EdgeInsets.only(
                                                 bottom: 3, top: 3),
-                                            color:
-                                                Colors.black.withOpacity(0.01),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
                                             child: ListTile(
                                               leading: CircleAvatar(
                                                 backgroundImage: FileImage(
@@ -343,16 +346,16 @@ class TicketPage extends State {
                                               },
                                             ),
                                           )
-                                        : const Text(
-                                            '',
-                                            style: TextStyle(fontSize: 1),
-                                          ),
+                                        : Container(),
                                     picturesFound.elementAt(4)
                                         ? Container(
                                             margin: const EdgeInsets.only(
                                                 bottom: 3, top: 3),
-                                            color:
-                                                Colors.black.withOpacity(0.01),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
                                             child: ListTile(
                                               leading: CircleAvatar(
                                                 backgroundImage: FileImage(
@@ -377,16 +380,16 @@ class TicketPage extends State {
                                               },
                                             ),
                                           )
-                                        : const Text(
-                                            '',
-                                            style: TextStyle(fontSize: 1),
-                                          ),
+                                        : Container(),
                                     picturesFound.elementAt(5)
                                         ? Container(
                                             margin: const EdgeInsets.only(
                                                 bottom: 3, top: 3),
-                                            color:
-                                                Colors.black.withOpacity(0.01),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
                                             child: ListTile(
                                               leading: CircleAvatar(
                                                 backgroundImage: FileImage(
@@ -411,10 +414,7 @@ class TicketPage extends State {
                                               },
                                             ),
                                           )
-                                        : const Text(
-                                            '',
-                                            style: TextStyle(fontSize: 1),
-                                          ),
+                                        : Container()
                                   ])
                                 : const Text(
                                     '',
@@ -429,10 +429,7 @@ class TicketPage extends State {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       availableTryPictures >= 5
-                                          ? const Text(
-                                              '',
-                                              style: TextStyle(fontSize: 1),
-                                            )
+                                          ? Container()
                                           : IconButton(
                                               icon:
                                                   const Icon(Icons.add_a_photo),
@@ -455,12 +452,18 @@ class TicketPage extends State {
                                     ? Container(
                                         margin: const EdgeInsets.only(
                                             bottom: 3, top: 3),
-                                        color: Colors.black.withOpacity(0.01),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color:
+                                                Colors.black.withOpacity(0.1)),
                                         child: ListTile(
                                           leading: CircleAvatar(
+                                            backgroundImage: const AssetImage(
+                                                'assets/icons/icons8_video_96px.png'),
                                             radius: 25.0,
                                             backgroundColor: Colors.cyanAccent
-                                                .withOpacity(0.5),
+                                                .withOpacity(0.1),
                                           ),
                                           title: const Text('Video'),
                                           subtitle:
@@ -472,7 +475,9 @@ class TicketPage extends State {
                                               deleteVideo();
                                             },
                                           ),
-                                          onTap: () {},
+                                          onTap: () {
+                                            viewVideo();
+                                          },
                                         ),
                                       )
                                     : IconButton(
@@ -506,7 +511,7 @@ class TicketPage extends State {
                     style:
                         const TextStyle(color: Colors.redAccent, fontSize: 15),
                   )
-                : const Text(''),
+                : Container(),
             const SizedBox(height: 15),
           ]),
         ),
@@ -530,6 +535,7 @@ class TicketPage extends State {
       required this.deletPicture,
       required this.takePictures,
       required this.viewPicture,
+      required this.videoFile,
       required this.availableTryPictures,
       required this.isTherePictures,
       required this.chkEverything,
@@ -538,6 +544,7 @@ class TicketPage extends State {
       required this.dropMenuValue,
       required this.picturesFound,
       required this.onTapped,
+      required this.viewVideo,
       required this.selectedMenuValue,
       required this.errorOther,
       required this.onContinue,

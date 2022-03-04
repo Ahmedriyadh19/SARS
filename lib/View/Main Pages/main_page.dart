@@ -7,6 +7,8 @@ import 'package:sars/View/Branch%20Pages/home_page.dart';
 import 'package:sars/View/Branch%20Pages/settings_page.dart';
 import 'package:sars/View/Branch%20Pages/ticket_page.dart';
 import 'package:sars/View/Containers/view_image.dart';
+import 'package:sars/View/Containers/view_video.dart';
+import 'package:video_player/video_player.dart';
 
 class MainPageBuilder extends StatefulWidget {
   const MainPageBuilder({Key? key}) : super(key: key);
@@ -20,9 +22,12 @@ class MainPage extends State {
   bool isTherePictures = false;
   bool chkEverything = false;
   bool isThereVideo = false;
+  bool? cameraGetimage;
+  bool? cameraGetvideo;
   List<bool> picturesFound = [false, false, false, false, false, false];
   List<String> ticketInfo = [];
   List<File> images = [];
+  XFile? videoFile;
   int selectedPageIndex = 0;
   int currentStep = 0;
   int availableTryPictures = -1;
@@ -31,7 +36,8 @@ class MainPage extends State {
   String? genrlError;
   String? descriptionError;
   String appBarTitle = 'Home';
-  final imagePicker = ImagePicker();
+  VideoPlayerController? videoPlayerController;
+  ImagePicker imagePicker = ImagePicker();
 
   static final List<TextEditingController> myController =
       List.generate(3, (i) => TextEditingController());
@@ -63,9 +69,11 @@ class MainPage extends State {
         picturesFound: picturesFound,
         otherActive: otherActive,
         images: images,
+        videoFile: videoFile,
         dropMenuValue: dropMenuValue,
         descriptionError: descriptionError,
         viewPicture: viewPicture,
+        viewVideo: viewVideo,
         dailog: dailog,
         deleteVideo: deleteVideo,
         recordVideo: recordVideo,
@@ -182,6 +190,7 @@ class MainPage extends State {
   deleteVideo() {
     setState(() {
       isThereVideo = false;
+      videoFile = null;
     });
   }
 
@@ -203,7 +212,7 @@ class MainPage extends State {
         deleteAllPicture();
       }
       if (currentStep == 4) {
-        isThereVideo = false;
+        deleteVideo();
       }
       if (currentStep != 0) {
         currentStep -= 1;
@@ -222,10 +231,13 @@ class MainPage extends State {
     });
   }
 
-  recordVideo() {
-    setState(() {
-      isThereVideo = true;
-    });
+  recordVideo() async {
+    await getVideoFromCamara();
+    if (cameraGetvideo == true) {
+      setState(() {
+        isThereVideo = true;
+      });
+    }
   }
 
   selectedMenuValue(value) {
@@ -248,15 +260,31 @@ class MainPage extends State {
 
   takePictures() async {
     await getImageFromCamera();
-    setState(() {
-      availableTryPictures++;
-      picturesFound[availableTryPictures] = true;
-      if (availableTryPictures < 0) {
-        isTherePictures = false;
-      } else {
-        isTherePictures = true;
-      }
-    });
+    if (cameraGetimage == true) {
+      setState(() {
+        availableTryPictures++;
+        picturesFound[availableTryPictures] = true;
+        if (availableTryPictures < 0) {
+          isTherePictures = false;
+        } else {
+          isTherePictures = true;
+        }
+      });
+    }
+  }
+
+  viewVideo() async {
+    try {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (_) => DisplayVideoScreen(
+                  videoFile: videoFile!,
+                )),
+      );
+    } catch (e) {
+      // If an error occurs, log the error to the console.
+
+    }
   }
 
   viewPicture(int index) async {
@@ -281,6 +309,7 @@ class MainPage extends State {
       images.removeAt(index);
       picturesFound.add(false);
       availableTryPictures--;
+      cameraGetimage = false;
     });
   }
 
@@ -349,12 +378,15 @@ class MainPage extends State {
       isTherePictures = false;
       chkEverything = false;
       isThereVideo = false;
+      cameraGetimage = false;
+      cameraGetvideo = false;
       currentStep = 0;
       availableTryPictures = -1;
       dropMenuValue = null;
       errorOther = null;
       genrlError = null;
       descriptionError = null;
+      videoFile = null;
 
       for (int i = 0; i < picturesFound.length; i++) {
         picturesFound[i] = false;
@@ -367,8 +399,22 @@ class MainPage extends State {
   }
 
   Future getImageFromCamera() async {
+    cameraGetimage = false;
     final image = await (imagePicker.pickImage(
         source: ImageSource.camera, imageQuality: 65));
-    images.add(File(image!.path));
+    if (image != null && image.path.isNotEmpty) {
+      images.add(File(image.path));
+      cameraGetimage = true;
+    }
+  }
+
+  getVideoFromCamara() async {
+    cameraGetvideo = false;
+    XFile? video = await imagePicker.pickVideo(
+        source: ImageSource.camera, maxDuration: const Duration(seconds: 60));
+    if (video != null && video.path.isNotEmpty) {
+      videoFile = video;
+      cameraGetvideo = true;
+    }
   }
 }
