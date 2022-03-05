@@ -11,10 +11,10 @@ class DisplayVideoScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DisplayVideoScreen> createState() => DisplayVideoScreenState();
+  State<DisplayVideoScreen> createState() => _DisplayVideoScreenState();
 }
 
-class DisplayVideoScreenState extends State<DisplayVideoScreen> {
+class _DisplayVideoScreenState extends State<DisplayVideoScreen> {
   VideoPlayerController? videoPlayerController;
 
   @override

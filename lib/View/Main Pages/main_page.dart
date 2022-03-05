@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:sars/View/Branch%20Pages/announcement_page.dart';
 import 'package:sars/View/Branch%20Pages/history_page.dart';
 import 'package:sars/View/Branch%20Pages/home_page.dart';
@@ -6,15 +7,21 @@ import 'package:sars/View/Branch%20Pages/settings_page.dart';
 import 'package:sars/View/Branch%20Pages/ticket_page.dart';
 
 class MainPageBuilder extends StatefulWidget {
-  const MainPageBuilder({Key? key}) : super(key: key);
+  final String userId;
+
+  const MainPageBuilder({
+    Key? key,
+    required this.userId,
+  }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => MainPage();
+  State<StatefulWidget> createState() => _MainPage();
 }
 
-class MainPage extends State {
+class _MainPage extends State {
   int selectedPageIndex = 0;
   String appBarTitle = 'Home';
+  String? userId;
 
   List<String> appBarTitles = [
     'Home',

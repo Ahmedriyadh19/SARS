@@ -21,6 +21,6 @@ class _AnnouncementStreamListenerState
     return StreamProvider<List<Announcement>>.value(
         initialData: announcementData2,
         value: DatabaseFeatures().announcementFromFirebase,
-        child: const AnnouncementBuilderPage());
+        child: const AnnouncementBuilderData());
   }
 }

@@ -9,15 +9,13 @@ class Controller extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final _user = Provider.of<User?>(context);
-    
+
     //return either home or login
-    if (_user == null){
+    if (_user == null) {
       return const LoginBuilder();
-    }
-    else{
-     return const MainPageBuilder();
+    } else {
+      return MainPageBuilder(userId: _user.uid!);
     }
   }
 }
