@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
 
-class SettingsPage extends State {
-  static String title = 'Settings';
+class SettingsBuilderPage extends StatefulWidget {
+  const SettingsBuilderPage({Key? key}) : super(key: key);
 
+  @override
+  State<SettingsBuilderPage> createState() => _SettingsBuilderPageState();
+}
 
-  String getAppTitle() => title;
+class _SettingsBuilderPageState extends State<SettingsBuilderPage> {
   final AuthUserMethod _auth = AuthUserMethod();
 
+ 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(title),
+        const Text('Settings'),
         const SizedBox(
           height: 400,
         ),

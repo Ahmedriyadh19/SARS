@@ -1,36 +1,41 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sars/View/Containers/view_image_builder.dart';
+import 'package:sars/View/Containers/view_video_builder.dart';
+import 'package:video_player/video_player.dart';
 
-class TicketPage extends State {
-  bool otherActive; //active other input
-  bool isTherePictures;
-  bool isThereVideo;
-  bool chkEverything;
-  int currentStep;
-  int availableTryPictures;
+class TicketBuilderPage extends StatefulWidget {
+  const TicketBuilderPage({Key? key}) : super(key: key);
+
+  @override
+  State<TicketBuilderPage> createState() => _TicketBuilderPageState();
+}
+
+class _TicketBuilderPageState extends State<TicketBuilderPage> {
+  bool otherActive = false;
+  bool isTherePictures = false;
+  bool chkEverything = false;
+  bool isThereVideo = false;
+  bool? cameraGetimage;
+  bool? cameraGetvideo;
+  List<bool> picturesFound = [false, false, false, false, false, false];
+  List<String> ticketInfo = [];
+  List<File> images = [];
+  XFile? videoFile;
+  int selectedPageIndex = 0;
+  int currentStep = 0;
+  int availableTryPictures = -1;
   String? dropMenuValue;
   String? errorOther;
   String? genrlError;
   String? descriptionError;
-  List<bool> picturesFound;
-  List<String> ticketInfo;
-  List<TextEditingController> myController;
-  List<File> images;
-  XFile? videoFile;
+  VideoPlayerController? videoPlayerController;
+  ImagePicker imagePicker = ImagePicker();
 
-  Function() takePictures;
-  Function() recordVideo;
-  Function() valid;
-  Function() onContinue;
-  Function() onCancel;
-  Function() deleteVideo;
-  Function() dailog;
-  Function() viewVideo;
-  Function(int index) deletPicture;
-  Function(int newIndex) onTapped;
-  Function(dynamic value) selectedMenuValue;
-  Function(int index) viewPicture;
+  static final List<TextEditingController> myController =
+      List.generate(3, (i) => TextEditingController());
 
   final items = [
     'Improper Surface Grading/Drainage',
@@ -526,32 +531,242 @@ class TicketPage extends State {
         value: item,
         child: Text(item),
       );
-  TicketPage(
-      {required this.otherActive,
-      required this.images,
-      required this.isThereVideo,
-      required this.deleteVideo,
-      required this.recordVideo,
-      required this.deletPicture,
-      required this.takePictures,
-      required this.viewPicture,
-      required this.videoFile,
-      required this.availableTryPictures,
-      required this.isTherePictures,
-      required this.chkEverything,
-      required this.genrlError,
-      required this.currentStep,
-      required this.dropMenuValue,
-      required this.picturesFound,
-      required this.onTapped,
-      required this.viewVideo,
-      required this.selectedMenuValue,
-      required this.errorOther,
-      required this.onContinue,
-      required this.onCancel,
-      required this.myController,
-      required this.ticketInfo,
-      required this.dailog,
-      required this.descriptionError,
-      required this.valid});
+
+  onTapped(int newIndex) {
+    setState(() {
+      currentStep = newIndex;
+    });
+  }
+
+  onContinue() {
+    if (currentStep != 5) {
+      setState(() {
+        currentStep += 1;
+      });
+    }
+  }
+
+  deleteVideo() {
+    setState(() {
+      isThereVideo = false;
+      videoFile = null;
+    });
+  }
+
+  onCancel() {
+    setState(() {
+      if (currentStep == 0) {
+        myController[0].clear();
+        dropMenuValue = null;
+        otherActive = false;
+        errorOther = null;
+      }
+      if (currentStep == 1) {
+        myController[1].clear();
+      }
+      if (currentStep == 2) {
+        myController[2].clear();
+      }
+      if (currentStep == 3) {
+        deleteAllPicture();
+      }
+      if (currentStep == 4) {
+        deleteVideo();
+      }
+      if (currentStep != 0) {
+        currentStep -= 1;
+      }
+    });
+  }
+
+  deleteAllPicture() {
+    setState(() {
+      availableTryPictures = -1;
+      isTherePictures = false;
+      for (int i = 0; i < picturesFound.length; i++) {
+        picturesFound[i] = false;
+        images.clear();
+      }
+    });
+  }
+
+  recordVideo() async {
+    await getVideoFromCamara();
+    if (cameraGetvideo == true) {
+      setState(() {
+        isThereVideo = true;
+      });
+    }
+  }
+
+  selectedMenuValue(value) {
+    setState(() {
+      dropMenuValue = value;
+      if (value == 'Other') {
+        otherActive = true;
+      } else {
+        otherActive = false;
+      }
+    });
+  }
+
+  takePictures() async {
+    await getImageFromCamera();
+    if (cameraGetimage == true) {
+      setState(() {
+        availableTryPictures++;
+        picturesFound[availableTryPictures] = true;
+        if (availableTryPictures < 0) {
+          isTherePictures = false;
+        } else {
+          isTherePictures = true;
+        }
+      });
+    }
+  }
+
+  viewVideo() async {
+    try {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (_) => DisplayVideoScreen(
+                  videoFile: videoFile!,
+                )),
+      );
+    } catch (e) {
+      // If an error occurs, log the error to the console.
+
+    }
+  }
+
+  viewPicture(int index) async {
+    try {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => DisplayPictureScreen(
+            imagePath: images.elementAt(index),
+            number: index,
+          ),
+        ),
+      );
+    } catch (e) {
+      // If an error occurs, log the error to the console.
+
+    }
+  }
+
+  deletPicture(int index) {
+    setState(() {
+      picturesFound.removeAt(index);
+      images.removeAt(index);
+      picturesFound.add(false);
+      availableTryPictures--;
+      cameraGetimage = false;
+    });
+  }
+
+  bool valid() {
+    bool chk1 = true;
+    chkEverything = false;
+    genrlError = '';
+    errorOther = null;
+    descriptionError = null;
+    setState(() {
+      if (myController[0].text.isEmpty && dropMenuValue == 'Other') {
+        errorOther = 'You can not leave the type of issus empty';
+        chk1 = false;
+        chkEverything = true;
+        currentStep = 0;
+      }
+      if (dropMenuValue == null) {
+        genrlError = 'Must choose your type of issue';
+        currentStep = 0;
+        chk1 = false;
+        chkEverything = true;
+      }
+      if (myController[1].text.isEmpty) {
+        descriptionError = 'Must write your description of issue';
+        currentStep = 1;
+        chk1 = false;
+        chkEverything = true;
+      }
+    });
+    return chk1;
+  }
+
+  dailog() {
+    if (valid()) {
+      setDefault();
+      return showDialog(
+        context: context,
+        builder: (context) => SimpleDialog(
+          title: const Text('Ticket'),
+          contentPadding: const EdgeInsets.all(20.0),
+          backgroundColor: const Color.fromARGB(255, 85, 200, 205),
+          children: [
+            const Text(
+              'The Ticket has submitted successfully.',
+              textAlign: TextAlign.center,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 15.0),
+              child: TextButton(
+                child: const Text(
+                  'Close',
+                  style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
+                ),
+                onPressed: () => {Navigator.of(context).pop()},
+              ),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  setDefault() {
+    setState(() {
+      otherActive = false;
+      isTherePictures = false;
+      chkEverything = false;
+      isThereVideo = false;
+      cameraGetimage = false;
+      cameraGetvideo = false;
+      currentStep = 0;
+      availableTryPictures = -1;
+      dropMenuValue = null;
+      errorOther = null;
+      genrlError = null;
+      descriptionError = null;
+      videoFile = null;
+
+      for (int i = 0; i < picturesFound.length; i++) {
+        picturesFound[i] = false;
+      }
+      for (int i = 0; i < myController.length; i++) {
+        myController[i].clear();
+      }
+      images.clear();
+    });
+  }
+
+  Future getImageFromCamera() async {
+    cameraGetimage = false;
+    final image = await (imagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 65));
+    if (image != null && image.path.isNotEmpty) {
+      images.add(File(image.path));
+      cameraGetimage = true;
+    }
+  }
+
+  getVideoFromCamara() async {
+    cameraGetvideo = false;
+    XFile? video = await imagePicker.pickVideo(
+        source: ImageSource.camera, maxDuration: const Duration(seconds: 60));
+    if (video != null && video.path.isNotEmpty) {
+      videoFile = video;
+      cameraGetvideo = true;
+    }
+  }
 }

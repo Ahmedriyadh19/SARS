@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-class HistoryPage extends State {
-  static String title = 'History';
+class HistoryPageBuilder extends StatefulWidget {
+  const HistoryPageBuilder({Key? key}) : super(key: key);
 
-  String getAppTitle() => title;
+  @override
+  State<HistoryPageBuilder> createState() => _HistoryPageBuilderState();
+}
 
+class _HistoryPageBuilderState extends State<HistoryPageBuilder> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children:  [Text(title)],
+      children: const [Text('History')],
     );
   }
 }

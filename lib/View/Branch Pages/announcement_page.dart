@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sars/Control/Services/database_services.dart';
 import 'package:sars/Model/announcement.dart';
-import 'package:sars/View/Hold%20data/announcement_holder.dart';
+import 'package:sars/View/Hold%20Data/announcement_holder.dart';
 
-class AnnouncementStreamListener extends State {
-  static String title = 'Announcement';
-  String getAppTitle() => title;
+class AnnouncementBuilderStreamListener extends StatefulWidget {
+  const AnnouncementBuilderStreamListener({Key? key}) : super(key: key);
 
+  @override
+  State<AnnouncementBuilderStreamListener> createState() =>
+      _AnnouncementStreamListenerState();
+}
+
+class _AnnouncementStreamListenerState
+    extends State<AnnouncementBuilderStreamListener> {
   @override
   Widget build(BuildContext context) {
     List<Announcement> announcementData2 = [];
@@ -15,6 +21,6 @@ class AnnouncementStreamListener extends State {
     return StreamProvider<List<Announcement>>.value(
         initialData: announcementData2,
         value: DatabaseFeatures().announcementFromFirebase,
-        child:  const AnnouncementBuilderPage());
+        child: const AnnouncementBuilderPage());
   }
 }

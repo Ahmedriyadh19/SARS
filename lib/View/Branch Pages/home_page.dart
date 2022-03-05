@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends State {
-  static String title = 'Home';
+class HomePageBuilder extends StatefulWidget {
+  const HomePageBuilder({Key? key}) : super(key: key);
 
-  String getAppTitle() => title;
+  @override
+  State<HomePageBuilder> createState() => _HomePageBuilderState();
+}
 
+class _HomePageBuilderState extends State<HomePageBuilder> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [Text(title)],
+      children: const [Text('Home')],
     );
   }
 }

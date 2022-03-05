@@ -13,12 +13,10 @@ class LoginBuilder extends StatefulWidget {
 
 class _LoginPage extends State {
   final AuthUserMethod _auth = AuthUserMethod();
-  
+
   bool passwordVis = true;
   bool loading = false;
   static bool checker = true;
-  
-
 
   static String errorMsgLogin = '';
 
@@ -214,7 +212,8 @@ class _LoginPage extends State {
                                   onTap: () => {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (_) => const ForgetPasswordBuilder(),
+                                      builder: (_) =>
+                                          const ForgetPasswordBuilder(),
                                     ))
                                   },
                                 ),
