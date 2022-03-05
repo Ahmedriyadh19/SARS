@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sars/Control/Services/database_services.dart';
 import 'package:sars/Model/announcement.dart';
-import 'package:sars/View/Hold%20Data/announcement_holder.dart';
+import 'package:sars/View/BuildWidgetsData/announcement_holder.dart';
 
 class AnnouncementBuilderStreamListener extends StatefulWidget {
   const AnnouncementBuilderStreamListener({Key? key}) : super(key: key);

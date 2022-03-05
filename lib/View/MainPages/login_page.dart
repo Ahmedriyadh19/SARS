@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
-import 'package:sars/View/Main%20Pages/forget_password.dart';
-import 'package:sars/View/Main%20Pages/loading.dart';
-import 'package:sars/View/Main%20Pages/registration_page.dart';
+import 'package:sars/View/MainPages/forget_password.dart';
+import 'package:sars/View/MainPages/loading.dart';
+import 'package:sars/View/MainPages/registration_page.dart';
+
 
 class LoginBuilder extends StatefulWidget {
   const LoginBuilder({Key? key}) : super(key: key);

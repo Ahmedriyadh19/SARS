@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
-import 'package:sars/View/Main%20Pages/loading.dart';
-import 'package:sars/View/Main%20Pages/login_page.dart';
+import 'package:sars/View/MainPages/loading.dart';
+import 'package:sars/View/MainPages/login_page.dart';
 
 class ForgetPasswordBuilder extends StatefulWidget {
   const ForgetPasswordBuilder({Key? key}) : super(key: key);

@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as database_firestore;
 import 'package:sars/Model/announcement.dart';
+import 'package:sars/Model/ticket.dart';
 import 'package:sars/Model/user.dart';
 
 class DatabaseFeatures {
-  final String? uidUser;
+   String? uidUser;
 
   final database_firestore.FirebaseFirestore _databaseCollection =
       database_firestore.FirebaseFirestore.instance;
@@ -18,6 +19,17 @@ class DatabaseFeatures {
       'role': 'r',
       'pictureUrl': '',
       'phone': u.phone,
+    });
+  }
+
+  Future pushNewTicket(Ticket t) async {
+    return await _databaseCollection.collection('ticket').doc().set({
+      'dateTime':t.dateTime,
+      'description': t.description,
+      'typeOfTicket': t.type,
+      'status': t.status,
+      'location': t.location,
+      'userID': uidUser,
     });
   }
 

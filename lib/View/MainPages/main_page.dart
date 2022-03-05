@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:sars/View/BranchPages/announcement_page.dart';
+import 'package:sars/View/BranchPages/history_page.dart';
+import 'package:sars/View/BranchPages/home_page.dart';
+import 'package:sars/View/BranchPages/settings_page.dart';
+import 'package:sars/View/BranchPages/ticket_page.dart';
 
-import 'package:sars/View/Branch%20Pages/announcement_page.dart';
-import 'package:sars/View/Branch%20Pages/history_page.dart';
-import 'package:sars/View/Branch%20Pages/home_page.dart';
-import 'package:sars/View/Branch%20Pages/settings_page.dart';
-import 'package:sars/View/Branch%20Pages/ticket_page.dart';
 
 class MainPageBuilder extends StatefulWidget {
   final String userId;
-
   const MainPageBuilder({
     Key? key,
     required this.userId,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _MainPage();
+  State<MainPageBuilder> createState() => _MainPageBuilderState();
 }
 
-class _MainPage extends State {
+class _MainPageBuilderState extends State<MainPageBuilder> {
   int selectedPageIndex = 0;
   String appBarTitle = 'Home';
-  String? userId;
+  String? uid;
 
   List<String> appBarTitles = [
     'Home',
@@ -29,14 +28,6 @@ class _MainPage extends State {
     'History',
     'Ticket',
     'Settings'
-  ];
-
-  List<Widget> bodies = [
-    const HomePageBuilder(),
-    const AnnouncementBuilderStreamListener(),
-    const HistoryPageBuilder(),
-    const TicketBuilderPage(),
-    const SettingsBuilderPage()
   ];
 
   getSelectedPage(int i) {
@@ -48,6 +39,15 @@ class _MainPage extends State {
 
   @override
   Widget build(BuildContext context) {
+    uid = widget.userId;
+
+    List<Widget> bodies = [
+      const HomePageBuilder(),
+      const AnnouncementBuilderStreamListener(),
+      HistoryPageBuilder(userID: uid!),
+      TicketBuilderPage(userID: uid!),
+      SettingsBuilderPage(userID: uid!)
+    ];
     return Scaffold(
       appBar: AppBar(
         elevation: 20,

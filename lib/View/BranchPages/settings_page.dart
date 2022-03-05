@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+
 import 'package:sars/Control/Services/auth.dart';
+import 'package:sars/Control/Services/database_services.dart';
 
 class SettingsBuilderPage extends StatefulWidget {
-  const SettingsBuilderPage({Key? key}) : super(key: key);
+  final String userID;
+  const SettingsBuilderPage({
+    Key? key,
+    required this.userID,
+  }) : super(key: key);
 
   @override
   State<SettingsBuilderPage> createState() => _SettingsBuilderPageState();
 }
 
 class _SettingsBuilderPageState extends State<SettingsBuilderPage> {
+  String? uid;
+  final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
   final AuthUserMethod _auth = AuthUserMethod();
 
- 
   @override
   Widget build(BuildContext context) {
+    uid = widget.userID;
+    _databaseFeatures.uidUser = uid;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

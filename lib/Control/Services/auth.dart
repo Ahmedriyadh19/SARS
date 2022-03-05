@@ -61,7 +61,6 @@ class AuthUserMethod {
       await DatabaseFeatures(uidUser: userFromAuth.uid)
           .createNewUserInfo(userInput);
       return _userFromFirebase(userFromAuth);
-      
     } catch (e) {
       try {
         errorMsg = e.toString().split('] ')[1];
@@ -94,17 +93,3 @@ class AuthUserMethod {
 // Sign with facebook
 
 }
-
-
-
-// anon
-
-/*   Future anonUser() async {
-    try {
-      firebase.UserCredential result = await _auth.signInAnonymously();
-      firebase.User userFromAuth = result.user as firebase.User;
-      return _userFromFirebase(userFromAuth);
-    } catch (e) {
-      return null;
-    }
-  } */
