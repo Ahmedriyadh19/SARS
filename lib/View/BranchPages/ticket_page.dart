@@ -728,7 +728,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
         chkEverything = true;
       }
       if (chk1) {
-        submitTicket();
+        getInitialized();
       }
     });
     return chk1;
@@ -751,20 +751,22 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
         type: typeOfIssue,
         status: 0,
         location: myController[2].text,
-        images: images,
+        attachmentsFilesImages: images,
       );
 
       if (isThereVideo) {
-        _ticket.video = File(videoFile!.path);
+        _ticket.attachmentsFilesVideo = File(videoFile!.path);
       }
+
+      submitTicket(_ticket);
     } catch (e) {
       genrlError = e.toString();
     }
   }
 
-  submitTicket() async {
+  submitTicket(Ticket _ticket) async {
     getInitialized();
-    // await _databaseFeatures.pushNewTicket(_ticket);
+    await _databaseFeatures.pushNewTicket(_ticket);
   }
 
   dailog() {

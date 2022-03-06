@@ -1,10 +1,13 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart' as database_firestore;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sars/Model/announcement.dart';
 import 'package:sars/Model/ticket.dart';
 import 'package:sars/Model/user.dart';
+import 'package:uuid/uuid.dart';
 
 class DatabaseFeatures {
-   String? uidUser;
+  String? uidUser;
 
   final database_firestore.FirebaseFirestore _databaseCollection =
       database_firestore.FirebaseFirestore.instance;
@@ -23,14 +26,18 @@ class DatabaseFeatures {
   }
 
   Future pushNewTicket(Ticket t) async {
-    return await _databaseCollection.collection('ticket').doc().set({
-      'dateTime':t.dateTime,
+    Uuid uuid = const Uuid();
+    String idTicketG = uuid.v1();
+    return await _databaseCollection.collection('ticket').doc(idTicketG).set({
+      'dateTime': t.dateTime,
       'description': t.description,
       'typeOfTicket': t.type,
       'status': t.status,
       'location': t.location,
       'userID': uidUser,
     });
+
+    // upLoad return d_p / push itckit
   }
 
   List<Announcement> announcementListData(
@@ -50,3 +57,18 @@ class DatabaseFeatures {
         .map(announcementListData);
   }
 }
+
+ Future<List<String>> uploadFiles(List<File> _images) async {
+  List<String> imageUrls =
+      await Future.wait(_images.map((_image) => uploadFile(_image)));
+  return imageUrls;
+}
+
+Future<String> uploadFile(File _image) async {
+  dynamic storageReference =
+      FirebaseStorage.instance.ref().child('posts/${_image.path}');
+  dynamic uploadTask = storageReference.putFile(_image);
+  await uploadTask.onComplete;
+  return await storageReference.getDownloadURL();
+}
+ 
