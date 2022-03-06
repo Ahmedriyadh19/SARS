@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sars/Model/announcement.dart';
 import 'package:sars/View/Containers/announcement_builder.dart';
-import 'package:sars/View/MainPages/loading.dart';
+import 'package:sars/View/BuildWidgetsData/loading.dart';
 
 
 class AnnouncementBuilderData extends StatefulWidget {

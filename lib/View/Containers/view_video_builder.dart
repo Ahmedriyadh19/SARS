@@ -24,7 +24,7 @@ class _DisplayVideoScreenState extends State<DisplayVideoScreen> {
     super.initState();
     videoPlayerController = VideoPlayerController.file(file)
       ..initialize().then((_) {
-        videoPlayerController!.setVolume(0.5);
+        videoPlayerController!.setVolume(1);
         setState(() {});
       });
   }
@@ -32,6 +32,7 @@ class _DisplayVideoScreenState extends State<DisplayVideoScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height - 100;
 
     return Scaffold(
         appBar: AppBar(
@@ -74,12 +75,20 @@ class _DisplayVideoScreenState extends State<DisplayVideoScreen> {
               child: SingleChildScrollView(
                 child: Stack(alignment: Alignment.center, children: [
                   videoPlayerController!.value.isInitialized
-                      ? AspectRatio(
-                          aspectRatio:
-                              videoPlayerController!.value.size.aspectRatio,
-                          child: VideoPlayer(videoPlayerController!),
+                      ? Container(
+                          alignment: Alignment.center,
+                          height: height,
+                          //width: width,
+                          child: Expanded(
+                            child: AspectRatio(
+                              aspectRatio:
+                                  videoPlayerController!.value.size.aspectRatio,
+                              child: VideoPlayer(videoPlayerController!),
+                            ),
+                          ),
                         )
-                      : Container(),
+                      : const Center(
+                          child: Text('Couldn\'t initialize the video')),
                   Center(
                     child: IconButton(
                       tooltip: 'Play/Pause',
@@ -89,8 +98,8 @@ class _DisplayVideoScreenState extends State<DisplayVideoScreen> {
                         videoPlayerController!.value.isPlaying
                             ? Icons.pause
                             : Icons.play_arrow,
-                        color: Colors.cyanAccent.withOpacity(0),
-                        size: 200,
+                        color: Colors.white.withOpacity(0.1),
+                        size: 30,
                       ),
                       onPressed: () {
                         setState(() {

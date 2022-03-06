@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:profanity_filter/profanity_filter.dart';
 import 'package:sars/Control/Services/database_services.dart';
 import 'package:sars/Model/ticket.dart';
-import 'package:sars/View/MainPages/loading.dart';
+import 'package:sars/View/BuildWidgetsData/loading.dart';
 import 'package:video_player/video_player.dart';
 import 'package:sars/View/Containers/view_image_builder.dart';
 import 'package:sars/View/Containers/view_video_builder.dart';
@@ -734,29 +734,36 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
     return chk1;
   }
 
+  getInitialized() {
+    try {
+      String cleanString = filter.censor(myController[1].text);
+      String typeOfIssue;
+
+      if (myController[0].text.isEmpty) {
+        typeOfIssue = dropMenuValue!;
+      } else {
+        typeOfIssue = myController[0].text;
+      }
+      Ticket _ticket = Ticket(
+        dateTime: DateTime.now(),
+        description: cleanString,
+        userId: uid!,
+        type: typeOfIssue,
+        status: 0,
+        location: myController[2].text,
+        images: images,
+      );
+
+      if (isThereVideo) {
+        _ticket.video = File(videoFile!.path);
+      }
+    } catch (e) {
+      genrlError = e.toString();
+    }
+  }
+
   submitTicket() async {
-    String cleanString = filter.censor(myController[1].text);
-    String typeOfIssue;
-
-    if (myController[0].text.isEmpty) {
-      typeOfIssue = dropMenuValue!;
-    } else {
-      typeOfIssue = myController[0].text;
-    }
-    Ticket _ticket = Ticket(
-      dateTime: DateTime.now(),
-      description: cleanString,
-      userId: uid!,
-      type: typeOfIssue,
-      status: 0,
-      location: myController[2].text,
-      images: images,
-    );
-
-    if (isThereVideo) {
-      _ticket.video = File(videoFile!.path);
-    }
-
+    getInitialized();
     // await _databaseFeatures.pushNewTicket(_ticket);
   }
 

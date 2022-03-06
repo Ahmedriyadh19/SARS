@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
 import 'package:sars/View/MainPages/forget_password.dart';
-import 'package:sars/View/MainPages/loading.dart';
+import 'package:sars/View/BuildWidgetsData/loading.dart';
 import 'package:sars/View/MainPages/registration_page.dart';
 
 

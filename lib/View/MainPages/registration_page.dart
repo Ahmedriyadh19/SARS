@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
 import 'package:sars/Model/user.dart';
-import 'package:sars/View/MainPages/loading.dart';
+import 'package:sars/View/BuildWidgetsData/loading.dart';
 
 class RegistrationBuild extends StatefulWidget {
   const RegistrationBuild({
