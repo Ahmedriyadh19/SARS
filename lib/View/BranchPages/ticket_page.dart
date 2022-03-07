@@ -23,7 +23,7 @@ class TicketBuilderPage extends StatefulWidget {
 class _TicketBuilderPageState extends State<TicketBuilderPage> {
   bool otherActive = false;
   bool isTherePictures = false;
-  bool chkEverything = false;
+  static bool chkEverything = false;
   bool isThereVideo = false;
   bool loading = false;
   bool? cameraGetimage;
@@ -42,7 +42,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   VideoPlayerController? videoPlayerController;
   ImagePicker imagePicker = ImagePicker();
   final filter = ProfanityFilter();
-  final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
+
   final List<TextEditingController> myController =
       List.generate(3, (i) => TextEditingController());
 
@@ -63,7 +63,6 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   Widget build(BuildContext context) {
     double newWidth = MediaQuery.of(context).size.width - 50;
     uid = widget.userID;
-    _databaseFeatures.uidUser = uid;
     return loading
         ? const Loading()
         : Column(
@@ -728,23 +727,25 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
         chkEverything = true;
       }
       if (chk1) {
-        getInitialized();
+        if (!getInitialized()) {
+          chkEverything = true;
+          chk1 = false;
+        }
       }
     });
     return chk1;
   }
 
-  getInitialized() {
-    try {
-      String cleanString = filter.censor(myController[1].text);
-      String typeOfIssue;
+  bool getInitialized() {
+    String cleanString = filter.censor(myController[1].text);
+    String typeOfIssue;
 
-      if (myController[0].text.isEmpty) {
-        typeOfIssue = dropMenuValue!;
-      } else {
-        typeOfIssue = myController[0].text;
-      }
-      Ticket _ticket = Ticket(
+    if (myController[0].text.isEmpty) {
+      typeOfIssue = dropMenuValue!;
+    } else {
+      typeOfIssue = myController[0].text;
+    }
+    Ticket _ticket = Ticket(
         dateTime: DateTime.now(),
         description: cleanString,
         userId: uid!,
@@ -752,25 +753,24 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
         status: 0,
         location: myController[2].text,
         attachmentsFiles: images,
-      );
+        feeddback: '',
+        rate: 0,
+        attachmentsFilesUrlData: []);
 
-      if (isThereVideo) {
-        _ticket.attachmentsFiles!.add(File(videoFile!.path));
-      }
-
-      submitTicket(_ticket);
+    if (isThereVideo) {
+      _ticket.attachmentsFiles.add(File(videoFile!.path));
+    }
+    try {
+      DatabaseFeatures(uidUser: uid).pushNewTicket(_ticket);
     } catch (e) {
       genrlError = e.toString();
+      return false;
     }
-  }
-
-  submitTicket(Ticket _ticket) async {
-    getInitialized();
-    await _databaseFeatures.pushNewTicket(_ticket);
+    return true;
   }
 
   dailog() {
-    if (valid()) {
+    if (valid() && !chkEverything) {
       setDefault();
       setState(() {
         loading = false;
@@ -816,7 +816,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
       cameraGetvideo = false;
       currentStep = 0;
       availableTryPictures = -1;
-      dropMenuValue = null;
+      dropMenuValue = 'Plumbing';
       errorOther = null;
       genrlError = null;
       descriptionError = null;
@@ -835,7 +835,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   Future getImageFromCamera() async {
     cameraGetimage = false;
     final image = await (imagePicker.pickImage(
-        source: ImageSource.camera, imageQuality: 65));
+        source: ImageSource.camera, imageQuality: 25));
     if (image != null && image.path.isNotEmpty) {
       images.add(File(image.path));
       cameraGetimage = true;

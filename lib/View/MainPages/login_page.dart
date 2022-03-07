@@ -4,7 +4,6 @@ import 'package:sars/View/MainPages/forget_password.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
 import 'package:sars/View/MainPages/registration_page.dart';
 
-
 class LoginBuilder extends StatefulWidget {
   const LoginBuilder({Key? key}) : super(key: key);
 
@@ -86,21 +85,21 @@ class _LoginPage extends State {
   @override
   Widget build(BuildContext context) {
     double newWidth = MediaQuery.of(context).size.width - 50;
-    return loading
-        ? const Loading()
-        : Scaffold(
-            body: Container(
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(0, 173, 181, 1),
-                  Color.fromRGBO(0, 57, 60, 1),
-                ],
-              )),
-              alignment: Alignment.center,
-              child: SingleChildScrollView(
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.fromRGBO(0, 173, 181, 1),
+            Color.fromRGBO(0, 57, 60, 1),
+          ],
+        )),
+        alignment: Alignment.center,
+        child: loading
+            ? const Loading()
+            : SingleChildScrollView(
                 padding: const EdgeInsets.only(top: 50),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -336,8 +335,8 @@ class _LoginPage extends State {
                   ],
                 ),
               ),
-            ),
-          );
+      ),
+    );
   }
 }
 

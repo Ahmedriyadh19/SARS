@@ -4,23 +4,28 @@ class Ticket {
   String userId;
   String type;
   String description;
-  String? location;
-  String? feeddback = '';
+  String location;
+  String feeddback = '';
   int status;
-  int? rate = 0;
+  int rate = 0;
   DateTime dateTime;
-  List<File>? attachmentsFiles = [];
-  List<String>? attachmentsFilesUrlData = [];
-  
+  List<File> attachmentsFiles = [];
+  List<String> attachmentsFilesUrlData = [];
+
   Ticket(
       {required this.userId,
       required this.dateTime,
       required this.status,
       required this.type,
       required this.description,
-      this.location,
-      this.attachmentsFiles,
-      this.attachmentsFilesUrlData,
-      this.feeddback,
-      this.rate});
+      required this.location,
+      required this.attachmentsFiles,
+      required this.attachmentsFilesUrlData,
+      required this.feeddback,
+      required this.rate});
+
+  @override
+  String toString() {
+    return 'Ticket(userId: $userId, type: $type, description: $description, location: $location, feeddback: $feeddback, status: $status, rate: $rate, dateTime: $dateTime, attachmentsFiles: $attachmentsFiles, attachmentsFilesUrlData: $attachmentsFilesUrlData)';
+  }
 }

@@ -4,10 +4,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sars/Model/announcement.dart';
 import 'package:sars/Model/ticket.dart';
 import 'package:sars/Model/user.dart';
-import 'package:uuid/uuid.dart';
 
 class DatabaseFeatures {
   String? uidUser;
+  static int x = 0;
 
   final database_firestore.FirebaseFirestore _databaseCollection =
       database_firestore.FirebaseFirestore.instance;
@@ -25,19 +25,37 @@ class DatabaseFeatures {
     });
   }
 
+  Future<List<String>> uploadFiles(List<File> _attachmentsTicket) async {
+    List<String> imageUrls = await Future.wait(
+        _attachmentsTicket.map((_attachment) => uploadFile(_attachment)));
+    return imageUrls;
+  }
+
+  Future<String> uploadFile(File _attachment) async {
+    String shortenPath = _attachment.path.split('com.services.sars/cache')[1];
+    dynamic storageReference = FirebaseStorage.instance
+        .ref()
+        .child('/resident/attachmentsTickets/$shortenPath');
+    dynamic uploadTask = storageReference.putFile(_attachment);
+    final TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
+    return await taskSnapshot.ref.getDownloadURL();
+  }
+
   Future pushNewTicket(Ticket t) async {
-    Uuid uuid = const Uuid();
-    String idTicketG = uuid.v1();
-    return await _databaseCollection.collection('ticket').doc(idTicketG).set({
+    if (t.attachmentsFiles.isNotEmpty) {
+      t.attachmentsFilesUrlData = await uploadFiles(t.attachmentsFiles);
+    }
+    return await _databaseCollection.collection('ticket').doc().set({
       'dateTime': database_firestore.Timestamp.fromDate(t.dateTime),
       'description': t.description,
       'typeOfTicket': t.type,
       'status': t.status,
       'location': t.location,
+      'attachments': t.attachmentsFilesUrlData,
+      'feedback': t.feeddback,
+      'rate': t.rate,
       'userID': uidUser,
     });
-
-    // upLoad return d_p / push itckit
   }
 
   List<Announcement> announcementListData(
@@ -56,18 +74,4 @@ class DatabaseFeatures {
         .snapshots()
         .map(announcementListData);
   }
-}
-
-Future<List<String>> uploadFiles(List<File> _images) async {
-  List<String> imageUrls =
-      await Future.wait(_images.map((_image) => uploadFile(_image)));
-  return imageUrls;
-}
-
-Future<String> uploadFile(File _image) async {
-  dynamic storageReference =
-      FirebaseStorage.instance.ref().child('posts/${_image.path}');
-  dynamic uploadTask = storageReference.putFile(_image);
-  await uploadTask.onComplete;
-  return await storageReference.getDownloadURL();
 }
