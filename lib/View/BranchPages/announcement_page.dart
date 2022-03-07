@@ -16,10 +16,10 @@ class _AnnouncementStreamListenerState
     extends State<AnnouncementBuilderStreamListener> {
   @override
   Widget build(BuildContext context) {
-    List<Announcement> announcementData2 = [];
+    List<Announcement> announcementData = [];
 
     return StreamProvider<List<Announcement>>.value(
-        initialData: announcementData2,
+        initialData: announcementData,
         value: DatabaseFeatures().announcementFromFirebase,
         child: const AnnouncementBuilderData());
   }

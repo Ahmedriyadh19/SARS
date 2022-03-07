@@ -74,4 +74,29 @@ class DatabaseFeatures {
         .snapshots()
         .map(announcementListData);
   }
+
+  List<Ticket> ticketListData(database_firestore.QuerySnapshot snp) {
+    return snp.docChanges.map(
+      (data) {
+        return Ticket(
+            attachmentsFilesUrlData: data.doc['attachments'] ?? [],
+            dateTime: DateTime.tryParse(data.doc['DateTIme']) ?? DateTime.now(),
+            description: data.doc['description'] ?? '',
+            feeddback: data.doc['feedback'] ?? '',
+            location: data.doc['location'] ?? '',
+            rate: data.doc['rate'] ?? '',
+            status: data.doc['status'] ?? '',
+            type: data.doc['typeOfTicket'] ?? '',
+            attachmentsFiles: [],
+            userId: data.doc['userID'] ?? '');
+      },
+    ).toList();
+  }
+
+  Stream<List<Ticket>> get ticketFromFirebase {
+    return _databaseCollection
+        .collection('ticket')
+        .snapshots()
+        .map(ticketListData);
+  }
 }

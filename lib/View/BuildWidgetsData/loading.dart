@@ -13,14 +13,3 @@ class Loading extends StatelessWidget {
     ));
   }
 }
-
-
-/*  decoration: const BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          Color.fromRGBO(0, 173, 181, 1),
-          Color.fromRGBO(0, 57, 60, 1),
-        ],
-      )), */
