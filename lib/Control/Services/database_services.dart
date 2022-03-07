@@ -29,7 +29,7 @@ class DatabaseFeatures {
     Uuid uuid = const Uuid();
     String idTicketG = uuid.v1();
     return await _databaseCollection.collection('ticket').doc(idTicketG).set({
-      'dateTime': t.dateTime,
+      'dateTime': database_firestore.Timestamp.fromDate(t.dateTime),
       'description': t.description,
       'typeOfTicket': t.type,
       'status': t.status,
@@ -58,7 +58,7 @@ class DatabaseFeatures {
   }
 }
 
- Future<List<String>> uploadFiles(List<File> _images) async {
+Future<List<String>> uploadFiles(List<File> _images) async {
   List<String> imageUrls =
       await Future.wait(_images.map((_image) => uploadFile(_image)));
   return imageUrls;
@@ -71,4 +71,3 @@ Future<String> uploadFile(File _image) async {
   await uploadTask.onComplete;
   return await storageReference.getDownloadURL();
 }
- 

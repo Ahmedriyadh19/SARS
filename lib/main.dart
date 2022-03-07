@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sars/Control/Services/auth.dart';
-import 'package:sars/Control/controller.dart';
+import 'package:sars/Control/Controller/controller.dart';
 import 'package:sars/Model/user.dart';
 
 void main() async {
@@ -16,9 +16,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user;
     return StreamProvider<User?>.value(
       value: AuthUserMethod().getUserAuth,
-      initialData: null,
+      initialData: user,
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Controller(),

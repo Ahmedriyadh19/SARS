@@ -9,11 +9,9 @@ class Ticket {
   int status;
   int? rate = 0;
   DateTime dateTime;
-  List<File>? attachmentsFilesImages = [];
-  File? attachmentsFilesVideo;
-  List<String>? attachmentsFilesUrlDataImages = [];
-  String? attachmentsFilesUrlDataVideo;
-
+  List<File>? attachmentsFiles = [];
+  List<String>? attachmentsFilesUrlData = [];
+  
   Ticket(
       {required this.userId,
       required this.dateTime,
@@ -21,10 +19,8 @@ class Ticket {
       required this.type,
       required this.description,
       this.location,
-      this.attachmentsFilesImages,
-      this.attachmentsFilesUrlDataImages,
-      this.attachmentsFilesUrlDataVideo,
-      this.attachmentsFilesVideo,
+      this.attachmentsFiles,
+      this.attachmentsFilesUrlData,
       this.feeddback,
       this.rate});
 }

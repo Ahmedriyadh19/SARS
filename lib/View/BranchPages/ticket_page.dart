@@ -751,11 +751,11 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
         type: typeOfIssue,
         status: 0,
         location: myController[2].text,
-        attachmentsFilesImages: images,
+        attachmentsFiles: images,
       );
 
       if (isThereVideo) {
-        _ticket.attachmentsFilesVideo = File(videoFile!.path);
+        _ticket.attachmentsFiles!.add(File(videoFile!.path));
       }
 
       submitTicket(_ticket);

@@ -4,7 +4,6 @@ import 'package:sars/Model/announcement.dart';
 import 'package:sars/View/Containers/announcement_builder.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
 
-
 class AnnouncementBuilderData extends StatefulWidget {
   const AnnouncementBuilderData({Key? key}) : super(key: key);
 
