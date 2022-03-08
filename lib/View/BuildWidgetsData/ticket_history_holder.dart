@@ -18,6 +18,9 @@ class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
   Widget build(BuildContext context) {
     double newWidth = MediaQuery.of(context).size.width - 10;
     final ticketData = Provider.of<List<Ticket>>(context);
+    ticketData.sort((b, a) {
+      return a.dateTime.compareTo(b.dateTime);
+    });
     return loading
         ? const Loading()
         : Column(children: [

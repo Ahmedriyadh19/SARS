@@ -10,11 +10,10 @@ class AnnouncementBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   Container(
+    return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
       padding: const EdgeInsets.all(5),
-      width: 400,
       height: 200,
       child: SingleChildScrollView(
         child: Container(
@@ -33,8 +32,7 @@ class AnnouncementBuilder extends StatelessWidget {
                 SingleChildScrollView(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children:  [
-                        /**/
+                      children: [
                         Text(
                             (DateFormat.yMMMEd().format(announcement.dateTime)),
                             style: const TextStyle(
@@ -64,7 +62,7 @@ class AnnouncementBuilder extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           gradient: const LinearGradient(colors: [
             Color.fromARGB(240, 169, 225, 228),
-            Color.fromARGB(255, 169, 225, 228)
+            Color.fromARGB(180, 169, 225, 228)
           ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
     );
   }
