@@ -33,9 +33,14 @@ class DatabaseFeatures {
 
   Future<String> uploadFile(File _attachment) async {
     String shortenPath = _attachment.path.split('com.services.sars/cache')[1];
-    dynamic storageReference = FirebaseStorage.instance
-        .ref()
-        .child('/resident/attachmentsTickets/$shortenPath');
+    dynamic storageReference;
+    if (shortenPath.contains('.jpg')) {
+      storageReference =
+          FirebaseStorage.instance.ref().child('/resident/images/$shortenPath');
+    } else {
+      storageReference =
+          FirebaseStorage.instance.ref().child('/resident/video/$shortenPath');
+    }
     dynamic uploadTask = storageReference.putFile(_attachment);
     final TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
     return await taskSnapshot.ref.getDownloadURL();
@@ -84,8 +89,8 @@ class DatabaseFeatures {
             description: data.doc['description'] ?? '',
             feeddback: data.doc['feedback'] ?? '',
             location: data.doc['location'] ?? '',
-            rate: data.doc['rate'] ?? '',
-            status: data.doc['status'] ?? '',
+            rate: data.doc['rate'] ?? 0,
+            status: data.doc['status'] ?? 0,
             type: data.doc['typeOfTicket'] ?? '',
             attachmentsFiles: [],
             userId: data.doc['userID'] ?? '');
