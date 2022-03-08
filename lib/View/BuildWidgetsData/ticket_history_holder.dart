@@ -34,7 +34,7 @@ class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
                   },
                 )),
             ticketData.isEmpty
-                ? const Text('No Tickit Yet',
+                ? const Text('No Ticket Yet',
                     style: TextStyle(fontSize: 20, color: Colors.white))
                 : Container()
           ]);

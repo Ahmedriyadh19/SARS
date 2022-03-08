@@ -84,8 +84,9 @@ class DatabaseFeatures {
     return snp.docChanges.map(
       (data) {
         return Ticket(
-            attachmentsFilesUrlData: data.doc['attachments'] ?? [],
-            dateTime: DateTime.tryParse(data.doc['DateTIme']) ?? DateTime.now(),
+            attachmentsFilesUrlData: List<String>.from(data.doc['attachments']),
+            dateTime: DateTime.tryParse(data.doc['dateTime'].toString()) ??
+                DateTime.now(),
             description: data.doc['description'] ?? '',
             feeddback: data.doc['feedback'] ?? '',
             location: data.doc['location'] ?? '',
