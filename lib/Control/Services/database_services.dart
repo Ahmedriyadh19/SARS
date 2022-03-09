@@ -22,7 +22,7 @@ class DatabaseFeatures {
       'role': 'r',
       'pictureUrl': '',
       'phone': u.phone,
-    'profilePictureURL':u.pictureUrl
+      'profilePictureURL': u.pictureUrl
     });
   }
 
@@ -86,8 +86,7 @@ class DatabaseFeatures {
       (data) {
         return Ticket(
             attachmentsFilesUrlData: List<String>.from(data.doc['attachments']),
-            dateTime: DateTime.tryParse(data.doc['dateTime'].toString()) ??
-                DateTime.now(),
+            dateTime: DateTime.parse(data.doc['dateTime'].toDate().toString()),
             description: data.doc['description'] ?? '',
             feeddback: data.doc['feedback'] ?? '',
             location: data.doc['location'] ?? '',
@@ -112,13 +111,12 @@ class DatabaseFeatures {
       (e) {
         return User(
           address: e.doc['address'] ?? '',
-          name:  e.doc['fullname'] ?? '',
+          name: e.doc['fullname'] ?? '',
           phone: e.doc['phonenumber'] ?? '',
           password: e.doc['secret'] ?? '',
           pictureUrl: e.doc['profilePictureURL'] ?? '',
           email: e.doc['email'] ?? '',
           role: e.doc['role'] ?? '',
-
         );
       },
     ).toList();

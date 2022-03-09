@@ -34,10 +34,12 @@ class AnnouncementBuilder extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                            (DateFormat.yMMMEd().format(announcement.dateTime)),
+                            (DateFormat.yMMMMEEEEd()
+                                .add_jm()
+                                .format(announcement.dateTime)),
                             style: const TextStyle(
                               // color: Color.fromARGB(255, 0, 188, 212),
-                              fontSize: 20,
+                              fontSize: 15,
                             ))
                       ]),
                 ),

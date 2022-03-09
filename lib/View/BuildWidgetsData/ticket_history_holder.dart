@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:sars/Model/ticket.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
 import 'package:sars/View/Containers/history_builder.dart';
 
 class TicketHistroyBuilderData extends StatefulWidget {
-  const TicketHistroyBuilderData({Key? key}) : super(key: key);
+  final String uid;
+  const TicketHistroyBuilderData({
+    Key? key,
+    required this.uid,
+  }) : super(key: key);
 
   @override
   State<TicketHistroyBuilderData> createState() =>
@@ -14,13 +19,20 @@ class TicketHistroyBuilderData extends StatefulWidget {
 
 class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
   bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     double newWidth = MediaQuery.of(context).size.width - 10;
+    final String uid = widget.uid;
     final ticketData = Provider.of<List<Ticket>>(context);
     ticketData.sort((b, a) {
       return a.dateTime.compareTo(b.dateTime);
     });
+
+    ticketData.where(
+      (element) => element.userId == uid,
+    );
+
     return loading
         ? const Loading()
         : Column(children: [

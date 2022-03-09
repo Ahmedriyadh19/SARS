@@ -27,6 +27,6 @@ class _HistoryPageBuilderState extends State<HistoryPageBuilder> {
     return StreamProvider<List<Ticket>>.value(
         initialData: ticketData,
         value: DatabaseFeatures().ticketFromFirebase,
-        child: const TicketHistroyBuilderData());
+        child: TicketHistroyBuilderData(uid: uid!));
   }
 }
