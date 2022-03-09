@@ -41,15 +41,34 @@ class _TicketBuilderState extends State<TicketBuilder> {
         start = const Color.fromARGB(240, 169, 225, 228);
         end = const Color.fromARGB(180, 169, 225, 228);
         break;
-      default:
+        case 1:
+        start = const Color.fromARGB(240, 169, 225, 228);
+        end = const Color.fromARGB(180, 169, 225, 228);
+        break;
+      case 2:
+        start = const Color.fromARGB(240, 169, 225, 228);
+        end = const Color.fromARGB(180, 169, 225, 228);
+        break;
+      case 3:
+        start = const Color.fromARGB(240, 169, 225, 228);
+        end = const Color.fromARGB(180, 169, 225, 228);
+        break;
+      case 4:
+        start = const Color.fromARGB(240, 169, 225, 228);
+        end = const Color.fromARGB(180, 169, 225, 228);
+        break;
+      default:{
+         start = const Color.fromARGB(240, 169, 225, 228);
+          end = const Color.fromARGB(180, 169, 225, 228);
+      }
     }
 
     BoxDecoration statusColor = BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         gradient: LinearGradient(colors: [
-          start!, //240
-          end!,
-          Colors.white.withOpacity(0.6) //180
+          start, 
+          end,
+          Colors.white.withOpacity(0.3)
         ], begin: Alignment.topLeft, end: Alignment.bottomRight));
 
     return statusColor;

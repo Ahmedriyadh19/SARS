@@ -16,12 +16,13 @@ class DatabaseFeatures {
 
   Future createNewUserInfo(User u) async {
     return await _databaseCollection.collection('user').doc(uidUser).set({
-      'name': u.name,
+      'fullname': u.name,
       'email': u.email,
       'address': u.address,
       'role': 'r',
       'pictureUrl': '',
       'phone': u.phone,
+    'profilePictureURL':u.pictureUrl
     });
   }
 
@@ -104,5 +105,29 @@ class DatabaseFeatures {
         .collection('ticket')
         .snapshots()
         .map(ticketListData);
+  }
+
+  List<User> getUserFromFirebase(database_firestore.QuerySnapshot snp) {
+    return snp.docChanges.map(
+      (e) {
+        return User(
+          address: e.doc['address'] ?? '',
+          name:  e.doc['fullname'] ?? '',
+          phone: e.doc['phonenumber'] ?? '',
+          password: e.doc['secret'] ?? '',
+          pictureUrl: e.doc['profilePictureURL'] ?? '',
+          email: e.doc['email'] ?? '',
+          role: e.doc['role'] ?? '',
+
+        );
+      },
+    ).toList();
+  }
+
+  Stream<List<User>> get getUserInfo {
+    return _databaseCollection
+        .collection('user')
+        .snapshots()
+        .map(getUserFromFirebase);
   }
 }

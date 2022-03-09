@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
 import 'package:sars/Control/Services/database_services.dart';
+import 'package:sars/Model/user.dart';
 
 class SettingsBuilderPage extends StatefulWidget {
-  final String userID;
+  final User userID;
   const SettingsBuilderPage({
     Key? key,
     required this.userID,
@@ -14,14 +15,14 @@ class SettingsBuilderPage extends StatefulWidget {
 }
 
 class _SettingsBuilderPageState extends State<SettingsBuilderPage> {
-  String? uid;
+  
   final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
   final AuthUserMethod _auth = AuthUserMethod();
 
   @override
   Widget build(BuildContext context) {
-    uid = widget.userID;
-    _databaseFeatures.uidUser = uid;
+   User?  uid = widget.userID;
+    _databaseFeatures.uidUser = uid.uid;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
