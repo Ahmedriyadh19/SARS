@@ -24,6 +24,7 @@ class TicketBuilderPage extends StatefulWidget {
 class _TicketBuilderPageState extends State<TicketBuilderPage> {
   bool otherActive = false;
   bool isTherePictures = false;
+  bool isPrivacy = true;
   static bool chkEverything = false;
   bool isThereVideo = false;
   bool loading = false;
@@ -531,7 +532,44 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                     ]),
                               )),
                           Step(
-                              title: const Text('Step 6: Submission'),
+                            title: const Text('Step 6: Privacy (Important !)'),
+                            content: SingleChildScrollView(
+                              child: Column(children: [
+                                const Text(
+                                    'This option allows others to examine the specifics of your ticket'),
+                                Row(
+                                  children: [
+                                    Radio(
+                                      value: true,
+                                      groupValue: 'hi',
+                                      onChanged: (val) {
+                                        setState(() {});
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      child: Text('Privacy'),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Radio(
+                                      value: false,
+                                      groupValue: 'hi',
+                                      onChanged: (val) {
+                                        setState(() {});
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      child: Text('Public'),
+                                    ),
+                                  ],
+                                )
+                              ]),
+                            ),
+                          ),
+                          Step(
+                              title: const Text('Step 7: Submission'),
                               content: SingleChildScrollView(
                                 child: ElevatedButton(
                                   child: const Text('Submit'),
@@ -575,7 +613,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   }
 
   onContinue() {
-    if (currentStep != 5) {
+    if (currentStep != 6) {
       setState(() {
         currentStep += 1;
       });

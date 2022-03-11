@@ -38,7 +38,6 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
   @override
   Widget build(BuildContext context) {
     User targetUser = widget.currentUser;
-    print(targetUser.toString());
     List<Widget> bodies = [
       const HomePageBuilder(),
       const AnnouncementBuilderStreamListener(),
@@ -50,31 +49,41 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
       appBar: AppBar(
         elevation: 20,
         backgroundColor: const Color.fromARGB(255, 0, 173, 181),
-        title: Center(
-          child: Text(
-            appBarTitle,
-            style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                shadows: [
-                  Shadow(
-                    offset: Offset(5.0, 5.0),
-                    blurRadius: 20,
-                    color: Colors.white,
-                  ),
-                  Shadow(
-                    offset: Offset(5.0, 5.0),
-                    blurRadius: 20,
-                    color: Colors.white,
-                  ),
-                ]),
-            textAlign: TextAlign.center,
+        title: Container(
+          margin: const EdgeInsets.only(left: 50),
+          child: Center(
+            child: Text(
+              appBarTitle,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      offset: Offset(5.0, 5.0),
+                      blurRadius: 20,
+                      color: Colors.white,
+                    ),
+                    Shadow(
+                      offset: Offset(5.0, 5.0),
+                      blurRadius: 20,
+                      color: Colors.white,
+                    ),
+                  ]),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
         actions: [
-          CircleAvatar(
-              backgroundColor: Colors.black,
-              backgroundImage: NetworkImage(targetUser.pictureUrl!)),
+          Container(
+            margin: const EdgeInsets.only(right: 10),
+            child: GestureDetector(
+              onTap: () {
+                getSelectedPage(4);
+              },
+              child: CircleAvatar(
+                  backgroundImage: NetworkImage(targetUser.pictureUrl!)),
+            ),
+          ),
         ],
       ),
       body: Container(

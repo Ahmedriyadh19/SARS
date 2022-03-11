@@ -49,7 +49,7 @@ class DisplayPictureScreen extends StatelessWidget {
             )),
             alignment: Alignment.center,
             child: Center(
-              child: Image.file((imagePath)),
+              child: InteractiveViewer(child: Image.file((imagePath))),
             )));
   }
 }

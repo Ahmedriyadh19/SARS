@@ -1,6 +1,7 @@
 import 'dart:io';
 
 class Ticket {
+  bool? privacy;
   String? userName;
   String userId;
   String type;
@@ -24,10 +25,13 @@ class Ticket {
       required this.attachmentsFilesUrlData,
       required this.feeddback,
       required this.rate,
+      this.privacy,
       this.userName});
+
+  
 
   @override
   String toString() {
-    return 'Ticket(userName: $userName, userId: $userId, type: $type, description: $description, location: $location, feeddback: $feeddback, status: $status, rate: $rate, dateTime: $dateTime, attachmentsFiles: $attachmentsFiles, attachmentsFilesUrlData: $attachmentsFilesUrlData)';
+    return 'Ticket(privacy: $privacy, userName: $userName, userId: $userId, type: $type, description: $description, location: $location, feeddback: $feeddback, status: $status, rate: $rate, dateTime: $dateTime, attachmentsFiles: $attachmentsFiles, attachmentsFilesUrlData: $attachmentsFilesUrlData)';
   }
 }
