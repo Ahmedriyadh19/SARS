@@ -22,7 +22,7 @@ class DatabaseFeatures {
       'role': 'r',
       'phonenumber': u.phone,
       'profilePictureURL':
-          'gs://sars-e6e88.appspot.com/resident/profile/icons8_users_500px.png',
+          'https://firebasestorage.googleapis.com/v0/b/sars-e6e88.appspot.com/o/resident%2Fprofile%2Ficons8_users_500px.png?alt=media&token=8f0b847f-63a1-4463-9761-dcc93c5b7958',
       'gender': u.gander,
       'secret': u.secret,
       'username': u.userName,
@@ -116,18 +116,17 @@ class DatabaseFeatures {
     return snp.docChanges.map(
       (e) {
         return User(
-          address: e.doc['address'] ?? '',
-          name: e.doc['fullname'] ?? '',
-          phone: e.doc['phonenumber'] ?? '',
-          password: e.doc['secret'] ?? '',
-          pictureUrl: e.doc['profilePictureURL'] ?? '',
-          email: e.doc['email'] ?? '',
-          role: e.doc['role'] ?? '',
-          gander: e.doc['gender'] ?? '',
-          secret: e.doc['secret'] ?? '',
-          userName: e.doc['username'] ?? '',
-          uid: e.doc['userID']??''
-        );
+            address: e.doc['address'] ?? '',
+            name: e.doc['fullname'] ?? '',
+            phone: e.doc['phonenumber'] ?? '',
+            password: e.doc['secret'] ?? '',
+            pictureUrl: e.doc['profilePictureURL'] ?? '',
+            email: e.doc['email'] ?? '',
+            role: e.doc['role'] ?? '',
+            gander: e.doc['gender'] ?? '',
+            secret: e.doc['secret'] ?? '',
+            userName: e.doc['username'] ?? '',
+            uid: e.doc['userID'] ?? '');
       },
     ).toList();
   }

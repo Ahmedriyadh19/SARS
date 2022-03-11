@@ -125,47 +125,47 @@ class Registration extends State {
   Widget build(BuildContext context) {
     double? newWidth = MediaQuery.of(context).size.width - 50;
 
-    return loading
-        ? const Loading()
-        : Scaffold(
-            appBar: AppBar(
-              elevation: 20,
-              backgroundColor: const Color.fromARGB(255, 0, 173, 181),
-              title: Container(
-                padding: EdgeInsets.only(left: newWidth - 265),
-                child: const Text(
-                  'Registration',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(5.0, 5.0),
-                          blurRadius: 20,
-                          color: Colors.white,
-                        ),
-                        Shadow(
-                          offset: Offset(5.0, 5.0),
-                          blurRadius: 20,
-                          color: Colors.white,
-                        ),
-                      ]),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            body: Container(
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color.fromRGBO(0, 173, 181, 1),
-                    Color.fromRGBO(0, 57, 60, 1),
-                  ],
-                )),
-                alignment: Alignment.center,
-                child: SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 20,
+        backgroundColor: const Color.fromARGB(255, 0, 173, 181),
+        title: Container(
+          padding: EdgeInsets.only(left: newWidth - 265),
+          child: const Text(
+            'Registration',
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                shadows: [
+                  Shadow(
+                    offset: Offset(5.0, 5.0),
+                    blurRadius: 20,
+                    color: Colors.white,
+                  ),
+                  Shadow(
+                    offset: Offset(5.0, 5.0),
+                    blurRadius: 20,
+                    color: Colors.white,
+                  ),
+                ]),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+      body: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromRGBO(0, 173, 181, 1),
+              Color.fromRGBO(0, 57, 60, 1),
+            ],
+          )),
+          alignment: Alignment.center,
+          child: loading
+              ? const Loading()
+              : SingleChildScrollView(
                   child: Center(
                     child: Container(
                         alignment: Alignment.center,
@@ -408,7 +408,7 @@ class Registration extends State {
                         )),
                   ),
                 )),
-          );
+    );
   }
 }
 

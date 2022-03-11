@@ -20,7 +20,6 @@ class MainPageBuilder extends StatefulWidget {
 class _MainPageBuilderState extends State<MainPageBuilder> {
   int selectedPageIndex = 0;
   String appBarTitle = 'Home';
-
   List<String> appBarTitles = [
     'Home',
     'Announcement',
@@ -39,12 +38,12 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
   @override
   Widget build(BuildContext context) {
     User targetUser = widget.currentUser;
-
+    print(targetUser.toString());
     List<Widget> bodies = [
       const HomePageBuilder(),
       const AnnouncementBuilderStreamListener(),
       HistoryPageBuilder(userID: targetUser.uid!),
-      TicketBuilderPage(currentUser:  targetUser),
+      TicketBuilderPage(currentUser: targetUser),
       SettingsBuilderPage(userID: targetUser)
     ];
     return Scaffold(
@@ -72,6 +71,11 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
             textAlign: TextAlign.center,
           ),
         ),
+        actions: [
+          CircleAvatar(
+              backgroundColor: Colors.black,
+              backgroundImage: NetworkImage(targetUser.pictureUrl!)),
+        ],
       ),
       body: Container(
         height: double.infinity,
