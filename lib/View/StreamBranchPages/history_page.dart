@@ -24,7 +24,7 @@ class _HistoryPageBuilderState extends State<HistoryPageBuilder> {
     List<Ticket> ticketData = [];
     uid = widget.userID;
     _databaseFeatures.uidUser = uid;
-    return StreamProvider<List<Ticket>>.value(
+    return StreamProvider<List<Ticket>?>.value(
         initialData: ticketData,
         value: DatabaseFeatures().ticketFromFirebase,
         child: TicketHistroyBuilderData(uid: uid!));

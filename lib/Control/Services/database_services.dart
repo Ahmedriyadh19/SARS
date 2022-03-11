@@ -20,9 +20,13 @@ class DatabaseFeatures {
       'email': u.email,
       'address': u.address,
       'role': 'r',
-      'pictureUrl': '',
-      'phone': u.phone,
-      'profilePictureURL': u.pictureUrl
+      'phonenumber': u.phone,
+      'profilePictureURL':
+          'gs://sars-e6e88.appspot.com/resident/profile/icons8_users_500px.png',
+      'gender': u.gander,
+      'secret': u.secret,
+      'username': u.userName,
+      'userID': uidUser
     });
   }
 
@@ -61,6 +65,7 @@ class DatabaseFeatures {
       'feedback': t.feeddback,
       'rate': t.rate,
       'userID': uidUser,
+      'userName': t.userName
     });
   }
 
@@ -94,6 +99,7 @@ class DatabaseFeatures {
             status: data.doc['status'] ?? 0,
             type: data.doc['typeOfTicket'] ?? '',
             attachmentsFiles: [],
+            userName: data.doc['userName'],
             userId: data.doc['userID'] ?? '');
       },
     ).toList();
@@ -117,6 +123,10 @@ class DatabaseFeatures {
           pictureUrl: e.doc['profilePictureURL'] ?? '',
           email: e.doc['email'] ?? '',
           role: e.doc['role'] ?? '',
+          gander: e.doc['gender'] ?? '',
+          secret: e.doc['secret'] ?? '',
+          userName: e.doc['username'] ?? '',
+          uid: e.doc['userID']??''
         );
       },
     ).toList();

@@ -4,16 +4,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:profanity_filter/profanity_filter.dart';
 import 'package:sars/Control/Services/database_services.dart';
 import 'package:sars/Model/ticket.dart';
+import 'package:sars/Model/user.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
 import 'package:video_player/video_player.dart';
 import 'package:sars/View/Containers/view_image_builder.dart';
 import 'package:sars/View/Containers/view_video_builder.dart';
 
 class TicketBuilderPage extends StatefulWidget {
-  final String userID;
+  final User currentUser;
   const TicketBuilderPage({
     Key? key,
-    required this.userID,
+    required this.currentUser,
   }) : super(key: key);
 
   @override
@@ -36,11 +37,11 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   int availableTryPictures = -1;
   String? dropMenuValue = 'Plumbing';
   String? errorOther;
-  String? genrlError;
+  String? genrlError = '';
   String? descriptionError;
-  String? uid;
   VideoPlayerController? videoPlayerController;
   ImagePicker imagePicker = ImagePicker();
+  User? targetUser;
   final filter = ProfanityFilter();
 
   final List<TextEditingController> myController =
@@ -62,7 +63,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   @override
   Widget build(BuildContext context) {
     double newWidth = MediaQuery.of(context).size.width - 50;
-    uid = widget.userID;
+    targetUser = widget.currentUser;
     return loading
         ? const Loading()
         : Column(
@@ -748,20 +749,21 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
     Ticket _ticket = Ticket(
         dateTime: DateTime.now(),
         description: cleanString,
-        userId: uid!,
+        userId: targetUser!.uid!,
         type: typeOfIssue,
         status: 0,
         location: myController[2].text,
         attachmentsFiles: images,
         feeddback: '',
         rate: 0,
+        userName: targetUser!.name!,
         attachmentsFilesUrlData: []);
 
     if (isThereVideo) {
       _ticket.attachmentsFiles.add(File(videoFile!.path));
     }
     try {
-      DatabaseFeatures(uidUser: uid).pushNewTicket(_ticket);
+      DatabaseFeatures(uidUser: targetUser!.uid).pushNewTicket(_ticket);
     } catch (e) {
       genrlError = e.toString();
       return false;
@@ -821,6 +823,9 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
       genrlError = null;
       descriptionError = null;
       videoFile = null;
+      if (imageCache != null) {
+        imageCache!.clear();
+      }
 
       for (int i = 0; i < picturesFound.length; i++) {
         picturesFound[i] = false;

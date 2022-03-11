@@ -7,10 +7,10 @@ import 'package:sars/View/StreamBranchPages/history_page.dart';
 import '../StreamBranchPages/home_page.dart';
 
 class MainPageBuilder extends StatefulWidget {
-  final User userId;
+  final User currentUser;
   const MainPageBuilder({
     Key? key,
-    required this.userId,
+    required this.currentUser,
   }) : super(key: key);
 
   @override
@@ -38,14 +38,14 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    User uid = widget.userId;
+    User targetUser = widget.currentUser;
 
     List<Widget> bodies = [
       const HomePageBuilder(),
       const AnnouncementBuilderStreamListener(),
-      HistoryPageBuilder(userID: uid.uid!),
-      TicketBuilderPage(userID: uid.uid!),
-      SettingsBuilderPage(userID: uid)
+      HistoryPageBuilder(userID: targetUser.uid!),
+      TicketBuilderPage(currentUser:  targetUser),
+      SettingsBuilderPage(userID: targetUser)
     ];
     return Scaffold(
       appBar: AppBar(

@@ -62,7 +62,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                   margin: const EdgeInsets.all(4),
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    'Ticket Issuse: ${ticket.type}',
+                    'Ticket Issue: ${ticket.type}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -73,7 +73,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                   margin: const EdgeInsets.all(4),
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    'Ticket description: ${ticket.description}',
+                    'Ticket Description: ${ticket.description}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -85,7 +85,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                       margin: const EdgeInsets.all(4),
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        'Ticket location: ${ticket.location}',
+                        'Ticket Location: ${ticket.location}',
                         style: const TextStyle(
                           fontSize: 20,
                         ),
