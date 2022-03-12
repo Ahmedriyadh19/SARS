@@ -36,8 +36,8 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   int selectedPageIndex = 0;
   int currentStep = 0;
   int availableTryPictures = -1;
-  int? isPrivacy = 1;
-  int val = 1;
+  String? isPrivacy = 'Private';
+  String val = 'Private';
   String? dropMenuValue = 'Plumbing';
   String? errorOther;
   String? genrlError = '';
@@ -88,7 +88,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                         physics: const NeverScrollableScrollPhysics(),
                         controlsBuilder:
                             (BuildContext context, ControlsDetails details) {
-                          if (details.stepIndex < 5) {
+                          if (details.stepIndex < 6) {
                             return Row(
                               children: <Widget>[
                                 TextButton(
@@ -539,59 +539,45 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Text(
-                                        'This option allows others to examine the specifics of your ticket'),
-                                    Row(
+                                        'This option allows others to examine the specifics of your ticket\nBy default it\'s a private.'),
+                                    Column(
                                       children: [
-                                        ListTile(
-                                          title: const Text('Privacy'),
-                                          onTap: () {
-                                            val = 1;
-                                          },
-                                          leading: Radio(
-                                            value: 1,
+                                        Row(children: [
+                                          Radio(
+                                            value: 'Private',
                                             groupValue: val,
                                             activeColor: radioBtn
                                                 ? Colors.black.withOpacity(0.1)
                                                 : Colors.black,
                                             onChanged: (vale) {
                                               setState(() {
-                                                val = vale as int;
+                                                val = vale as String;
                                                 isPrivacy = val;
-                                                print(vale);
-                                                print(isPrivacy);
-                                                print('Privacy');
-                                                print('------------------');
                                               });
                                             },
                                           ),
-                                        ),
+                                          const Text('Private'),
+                                        ]),
                                       ],
                                     ),
                                     Row(
                                       children: [
-                                        ListTile(
-                                          onTap: () {
-                                            val = 0;
-                                          },
-                                          title: const Text('Public'),
-                                          leading: Radio(
-                                            value: 0,
+                                        Row(children: [
+                                          Radio(
+                                            value: 'Public',
                                             groupValue: val,
                                             activeColor: radioBtn
                                                 ? Colors.black.withOpacity(0.1)
                                                 : Colors.black,
                                             onChanged: (vale) {
                                               setState(() {
-                                                val = vale as int;
+                                                val = vale as String;
                                                 isPrivacy = val;
-                                                print(vale);
-                                                print(isPrivacy);
-                                                print('Public');
-                                                print('------------------');
                                               });
                                             },
                                           ),
-                                        ),
+                                          const Text('Public'),
+                                        ]),
                                       ],
                                     )
                                   ]),
@@ -675,6 +661,9 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
       }
       if (currentStep == 4) {
         deleteVideo();
+      }
+      if (currentStep == 5) {
+        val = 'Private';
       }
       if (currentStep != 0) {
         currentStep -= 1;
@@ -823,6 +812,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
         attachmentsFiles: images,
         feeddback: '',
         rate: 0,
+        privacy: isPrivacy,
         userName: targetUser!.name!,
         attachmentsFilesUrlData: []);
 

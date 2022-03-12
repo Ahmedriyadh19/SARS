@@ -9,7 +9,7 @@ class Ticket {
   String feeddback = '';
   int status;
   int rate = 0;
-  int? privacy = 1;
+  String ? privacy= 'Private';
   DateTime dateTime;
   List<File> attachmentsFiles = [];
   List<String> attachmentsFilesUrlData = [];
