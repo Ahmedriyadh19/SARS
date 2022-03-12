@@ -28,10 +28,12 @@ class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
     ticketData.sort((b, a) {
       return a.dateTime.compareTo(b.dateTime);
     });
-
-    ticketData.where(
-      (element) => element.userId == uid,
-    );
+    List filter = [];
+    for (var item in ticketData) {
+      if (item.userId == uid) {
+        filter.add(item);
+      }
+    }
 
     return loading
         ? const Loading()
@@ -41,14 +43,14 @@ class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: ticketData.length,
+                  itemCount: filter.length,
                   itemBuilder: (context, index) {
                     return TicketBuilder(
-                      ticket: ticketData[index],
+                      ticket: filter[index],
                     );
                   },
                 )),
-            ticketData.isEmpty
+            filter.isEmpty
                 ? const Text('No Ticket Yet',
                     style: TextStyle(fontSize: 20, color: Colors.white))
                 : Container()

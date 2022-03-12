@@ -66,7 +66,7 @@ class DatabaseFeatures {
       'rate': t.rate,
       'userID': uidUser,
       'userName': t.userName,
-      'privacy':t.privacy
+      'privacy': t.privacy
     });
   }
 
@@ -100,10 +100,9 @@ class DatabaseFeatures {
             status: data.doc['status'] ?? 0,
             type: data.doc['typeOfTicket'] ?? '',
             attachmentsFiles: [],
-            userName: data.doc['userName'],
+            userName: data.doc['userName'] ?? '',
             userId: data.doc['userID'] ?? '',
-            privacy: data.doc['privacy'] ?? 'Private'
-            );
+            privacy: data.doc['privacy'] ?? 'Private');
       },
     ).toList();
   }

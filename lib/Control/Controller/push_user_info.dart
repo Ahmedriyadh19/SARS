@@ -18,17 +18,12 @@ class PushUserInfo extends StatefulWidget {
 class _PushUserInfoState extends State<PushUserInfo> {
   @override
   Widget build(BuildContext context) {
-    final User curruntUserID = widget.userId;
-    User targetUser = User();
-    final userData = Provider.of<List<User>?>(context);
+    final List<User>? userData = Provider.of<List<User>?>(context);
 
-    if (userData!.isNotEmpty) {
-      targetUser = userData.firstWhere(
-        (element) {
-          return element.uid == curruntUserID.uid;
-        },
-      );
-      return MainPageBuilder(currentUser: targetUser);
+    for (var item in userData!) {
+      if (item.uid == widget.userId.uid) {
+        return MainPageBuilder(currentUser: item);
+      }
     }
     return Container();
   }

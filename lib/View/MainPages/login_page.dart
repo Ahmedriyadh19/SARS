@@ -288,7 +288,7 @@ class _LoginPage extends State {
                             color: Colors.white,
                           )),
                           Text(
-                            "Or Sign in",
+                            "Or Sign in with",
                             style: TextStyle(color: Colors.white),
                           ),
                           Expanded(

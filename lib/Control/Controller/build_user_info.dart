@@ -18,14 +18,13 @@ class BuildUserInfoStream extends StatefulWidget {
 class _BuildUserInfoStreamState extends State<BuildUserInfoStream> {
   @override
   Widget build(BuildContext context) {
-    final user = widget.userId;
-    List<User> announcementData = [];
+    List<User> userData = [];
 
     return StreamProvider<List<User>>.value(
-        initialData: announcementData,
+        initialData: userData,
         value: DatabaseFeatures().getUserInfo,
         child: PushUserInfo(
-          userId: user,
+          userId: widget.userId,
         ));
   }
 }
