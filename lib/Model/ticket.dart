@@ -1,7 +1,6 @@
 import 'dart:io';
 
 class Ticket {
-  bool? privacy;
   String? userName;
   String userId;
   String type;
@@ -10,6 +9,7 @@ class Ticket {
   String feeddback = '';
   int status;
   int rate = 0;
+  int? privacy = 1;
   DateTime dateTime;
   List<File> attachmentsFiles = [];
   List<String> attachmentsFilesUrlData = [];
@@ -27,8 +27,6 @@ class Ticket {
       required this.rate,
       this.privacy,
       this.userName});
-
-  
 
   @override
   String toString() {

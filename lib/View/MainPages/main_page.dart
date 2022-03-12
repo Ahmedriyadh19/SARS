@@ -81,7 +81,8 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
                 getSelectedPage(4);
               },
               child: CircleAvatar(
-                  backgroundImage: NetworkImage(targetUser.pictureUrl!)),
+                  backgroundImage: NetworkImage(targetUser.pictureUrl!),
+                  backgroundColor: Colors.black.withOpacity(0.1)),
             ),
           ),
         ],

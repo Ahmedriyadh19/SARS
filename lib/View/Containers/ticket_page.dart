@@ -24,7 +24,7 @@ class TicketBuilderPage extends StatefulWidget {
 class _TicketBuilderPageState extends State<TicketBuilderPage> {
   bool otherActive = false;
   bool isTherePictures = false;
-  bool isPrivacy = true;
+  bool radioBtn = false;
   static bool chkEverything = false;
   bool isThereVideo = false;
   bool loading = false;
@@ -36,6 +36,8 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   int selectedPageIndex = 0;
   int currentStep = 0;
   int availableTryPictures = -1;
+  int? isPrivacy = 1;
+  int val = 1;
   String? dropMenuValue = 'Plumbing';
   String? errorOther;
   String? genrlError = '';
@@ -136,7 +138,6 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                               content: SingleChildScrollView(
                                 child: Column(children: [
                                   Container(
-                                    //padding: const EdgeInsets.all(5),
                                     margin: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
@@ -534,38 +535,66 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                           Step(
                             title: const Text('Step 6: Privacy (Important !)'),
                             content: SingleChildScrollView(
-                              child: Column(children: [
-                                const Text(
-                                    'This option allows others to examine the specifics of your ticket'),
-                                Row(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Radio(
-                                      value: true,
-                                      groupValue: 'hi',
-                                      onChanged: (val) {
-                                        setState(() {});
-                                      },
+                                    const Text(
+                                        'This option allows others to examine the specifics of your ticket'),
+                                    Row(
+                                      children: [
+                                        ListTile(
+                                          title: const Text('Privacy'),
+                                          onTap: () {
+                                            val = 1;
+                                          },
+                                          leading: Radio(
+                                            value: 1,
+                                            groupValue: val,
+                                            activeColor: radioBtn
+                                                ? Colors.black.withOpacity(0.1)
+                                                : Colors.black,
+                                            onChanged: (vale) {
+                                              setState(() {
+                                                val = vale as int;
+                                                isPrivacy = val;
+                                                print(vale);
+                                                print(isPrivacy);
+                                                print('Privacy');
+                                                print('------------------');
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(
-                                      child: Text('Privacy'),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Radio(
-                                      value: false,
-                                      groupValue: 'hi',
-                                      onChanged: (val) {
-                                        setState(() {});
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      child: Text('Public'),
-                                    ),
-                                  ],
-                                )
-                              ]),
+                                    Row(
+                                      children: [
+                                        ListTile(
+                                          onTap: () {
+                                            val = 0;
+                                          },
+                                          title: const Text('Public'),
+                                          leading: Radio(
+                                            value: 0,
+                                            groupValue: val,
+                                            activeColor: radioBtn
+                                                ? Colors.black.withOpacity(0.1)
+                                                : Colors.black,
+                                            onChanged: (vale) {
+                                              setState(() {
+                                                val = vale as int;
+                                                isPrivacy = val;
+                                                print(vale);
+                                                print(isPrivacy);
+                                                print('Public');
+                                                print('------------------');
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ]),
                             ),
                           ),
                           Step(

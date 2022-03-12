@@ -19,14 +19,16 @@ class _PushUserInfoState extends State<PushUserInfo> {
   @override
   Widget build(BuildContext context) {
     final User curruntUserID = widget.userId;
-
+    User targetUser = User();
     final userData = Provider.of<List<User>?>(context);
 
-    for (var item in userData!) {
-      if (item.uid == curruntUserID.uid) {
-        User getTargetUser = item;
-        return MainPageBuilder(currentUser: getTargetUser);
-      }
+    if (userData!.isNotEmpty) {
+      targetUser = userData.firstWhere(
+        (element) {
+          return element.uid == curruntUserID.uid;
+        },
+      );
+      return MainPageBuilder(currentUser: targetUser);
     }
     return Container();
   }

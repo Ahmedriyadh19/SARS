@@ -15,21 +15,74 @@ class SettingsBuilderPage extends StatefulWidget {
 }
 
 class _SettingsBuilderPageState extends State<SettingsBuilderPage> {
-  
   final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
   final AuthUserMethod _auth = AuthUserMethod();
 
   @override
   Widget build(BuildContext context) {
-   User?  uid = widget.userID;
-    _databaseFeatures.uidUser = uid.uid;
+    User? currentUser = widget.userID;
+    _databaseFeatures.uidUser = currentUser.uid;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        const Text('Settings'),
-        const SizedBox(
-          height: 400,
+        const Text(
+          'Update Profile',
+          style: TextStyle(fontSize: 25),
         ),
+        const SizedBox(height: 25),
+        GestureDetector(
+          child: CircleAvatar(
+              backgroundImage: NetworkImage(currentUser.pictureUrl!),
+              maxRadius: 60,
+              backgroundColor: Colors.black.withOpacity(0.1)),
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              backgroundColor: Colors.black.withOpacity(0.5),
+              elevation: 10,
+              builder: (_) {
+                return Container(
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color.fromRGBO(0, 173, 181, 0.6),
+                        Color.fromRGBO(0, 57, 60, 0.6),
+                      ],
+                    )),
+                    alignment: Alignment.center,
+                    child: SingleChildScrollView(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: const [Icon(Icons.camera_alt_rounded),
+                        Icon(Icons.folder_copy_rounded)
+                      ]),
+                    ));
+              },
+            );
+          },
+        ),
+        const SizedBox(height: 20),
+        Row(children: const [
+          Expanded(
+              child: Divider(
+            indent: 60,
+            endIndent: 20,
+            color: Colors.white,
+          )),
+          Text(
+            "Sign out",
+            style: TextStyle(color: Colors.white),
+          ),
+          Expanded(
+              child: Divider(
+            indent: 20,
+            endIndent: 60,
+            color: Colors.white,
+          )),
+        ]),
+        const SizedBox(height: 30),
         ElevatedButton(
           child: const Text(
             'Sign out',
