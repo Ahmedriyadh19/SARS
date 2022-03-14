@@ -129,9 +129,57 @@ class _TicketBuilderState extends State<TicketBuilder> {
                         icon: const Icon(
                           Icons.cancel_rounded,
                           color: Colors.red,
-                          size: 50,
+                          size: 40,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.black.withOpacity(0.5),
+                            elevation: 10,
+                            builder: (_) {
+                              return Container(
+                                  decoration: const BoxDecoration(
+                                      gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color.fromRGBO(0, 173, 181, 0.6),
+                                      Color.fromRGBO(0, 57, 60, 0.6),
+                                    ],
+                                  )),
+                                  alignment: Alignment.center,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          TextFormField(
+                                            style: TextStyle(
+                                                color: Colors.white
+                                                    .withOpacity(0.7)),
+                                            autocorrect: true,
+                                            decoration: const InputDecoration(
+                                                label: Text(
+                                                  'Why do you want to cancel the ticket?',
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                                hintText: 'Enter your reason'),
+                                            minLines: 1,
+                                            maxLines: 2,
+                                            keyboardType: TextInputType
+                                                .multiline, // user keyboard will have a button to move cursor to next line
+                                            maxLength: 200,
+                                          ),
+                                          ElevatedButton(
+                                            child: const Text('Submit'),
+                                            onPressed: () {},
+                                          ),
+                                        ]),
+                                  ));
+                            },
+                          );
+                        },
                       ),
                     )
                   : Container()

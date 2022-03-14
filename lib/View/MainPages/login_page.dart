@@ -158,7 +158,7 @@ class _LoginPage extends State {
                                       iconColor: Colors.black,
                                       errorText: erorrTexts[0],
                                     ),
-                                    keyboardType: TextInputType.name,
+                                    keyboardType: TextInputType.emailAddress,
                                     controller: myControllerLogin[0],
                                   ),
                                 ),
