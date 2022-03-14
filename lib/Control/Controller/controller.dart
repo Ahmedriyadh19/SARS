@@ -6,14 +6,9 @@ import 'package:sars/View/BuildWidgetsData/loading.dart';
 import 'package:sars/View/MainPages/login_page.dart';
 import 'package:sars/View/MainPages/main_page.dart';
 
-class Controller extends StatefulWidget {
+class Controller extends StatelessWidget {
   const Controller({Key? key}) : super(key: key);
 
-  @override
-  State<Controller> createState() => _ControllerState();
-}
-
-class _ControllerState extends State<Controller> {
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User?>(context);
