@@ -14,14 +14,10 @@ class Controller extends StatefulWidget {
 }
 
 class _ControllerState extends State<Controller> {
-  User? targetUser;
-
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User?>(context);
-    //return either home or login
     if (_user != null) {
-      //return const LoginBuilder();
       return FutureBuilder<User>(
           future: DatabaseFeatures(uidUser: _user.uid).getTarget(),
           builder: ((context, snapshot) {
