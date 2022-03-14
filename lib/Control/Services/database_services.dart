@@ -7,7 +7,6 @@ import 'package:sars/Model/user.dart';
 
 class DatabaseFeatures {
   String? uidUser;
-  static int x = 0;
 
   final database_firestore.FirebaseFirestore _databaseCollection =
       database_firestore.FirebaseFirestore.instance;
@@ -66,7 +65,8 @@ class DatabaseFeatures {
       'rate': t.rate,
       'userID': uidUser,
       'userName': t.userName,
-      'privacy': t.privacy
+      'privacy': t.privacy,
+      'remark': t.remark
     });
   }
 
@@ -114,29 +114,27 @@ class DatabaseFeatures {
         .map(ticketListData);
   }
 
-  List<User> getUserFromFirebase(database_firestore.QuerySnapshot snp) {
-    return snp.docChanges.map(
-      (e) {
-        return User(
-            address: e.doc['address'] ?? '',
-            name: e.doc['fullname'] ?? '',
-            phone: e.doc['phonenumber'] ?? '',
-            password: e.doc['secret'] ?? '',
-            pictureUrl: e.doc['profilePictureURL'] ?? '',
-            email: e.doc['email'] ?? '',
-            role: e.doc['role'] ?? '',
-            gander: e.doc['gender'] ?? '',
-            secret: e.doc['secret'] ?? '',
-            userName: e.doc['username'] ?? '',
-            uid: e.doc['userID'] ?? '');
-      },
-    ).toList();
-  }
-
-  Stream<List<User>> get getUserInfo {
-    return _databaseCollection
+  Future<User> getTarget() async {
+    return await _databaseCollection
         .collection('user')
-        .snapshots()
-        .map(getUserFromFirebase);
+        .doc(uidUser)
+        .get()
+        .then((database_firestore.DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        Map mapingData = Map.castFrom(documentSnapshot.data() as Map);
+        return User(
+            address: mapingData['address'] ?? '',
+            name: mapingData['fullname'] ?? '',
+            phone: mapingData['phonenumber'] ?? '',
+            pictureUrl: mapingData['profilePictureURL'] ?? '',
+            email: mapingData['email'] ?? '',
+            role: mapingData['role'] ?? '',
+            gander: mapingData['gender'] ?? '',
+            secret: mapingData['secret'] ?? '',
+            userName: mapingData['username'] ?? '',
+            uid: mapingData['userID'] ?? '');
+      }
+      return User();
+    });
   }
 }

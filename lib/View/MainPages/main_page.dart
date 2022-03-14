@@ -53,7 +53,7 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
           margin: const EdgeInsets.only(left: 50),
           child: Center(
             child: Text(
-              appBarTitle,
+              targetUser.name!,
               style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,

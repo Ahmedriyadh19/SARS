@@ -2,14 +2,16 @@ import 'dart:io';
 
 class Ticket {
   String? userName;
+  String? remark = '';
   String userId;
   String type;
   String description;
   String location;
   String feeddback = '';
+  
   int status;
   int rate = 0;
-  String ? privacy= 'Private';
+  String? privacy = 'Private';
   DateTime dateTime;
   List<File> attachmentsFiles = [];
   List<String> attachmentsFilesUrlData = [];
@@ -25,6 +27,7 @@ class Ticket {
       required this.attachmentsFilesUrlData,
       required this.feeddback,
       required this.rate,
+      this.remark,
       this.privacy,
       this.userName});
 

@@ -25,6 +25,7 @@ class User {
     this.userName,
   });
 
+
   @override
   String toString() {
     return 'User(uid: $uid, name: $name, email: $email, password: $password, address: $address, role: $role, pictureUrl: $pictureUrl, phone: $phone, gander: $gander, secret: $secret, userName: $userName)';
