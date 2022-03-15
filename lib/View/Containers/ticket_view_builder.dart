@@ -133,7 +133,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                               size: 40,
                             ),
                             onPressed: () {
-                              showBottomBox(0);
+                              showBottomBox(0, context);
                             },
                           ),
                           ticket!.status == 0
@@ -145,7 +145,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                                     size: 40,
                                   ),
                                   onPressed: () {
-                                    showBottomBox(1);
+                                    showBottomBox(1, context);
                                   },
                                 )
                               : Container(),
@@ -161,101 +161,124 @@ class _TicketBuilderState extends State<TicketBuilder> {
     );
   }
 
-  showBottomBox(int option) {
-    return showModalBottomSheet(
+  Future showBottomBox(int option, BuildContext context) async {
+    return await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.black.withOpacity(0.5),
       elevation: 10,
-      builder: (_) {
-        return Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(206, 97, 239, 247),
-                Color.fromARGB(240, 219, 232, 233),
-              ],
-            )),
-            alignment: Alignment.center,
-            child: SingleChildScrollView(
-                child: option == 1
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                            TextFormField(
-                              style: TextStyle(
-                                  color: Colors.white.withOpacity(0.7)),
-                              autocorrect: true,
-                              decoration: const InputDecoration(
-                                  label: Center(
-                                    child: Text(
-                                      'Why do you want to cancel the ticket?',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 20),
+      builder: (
+        context,
+      ) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color.fromARGB(255, 0, 117, 122),
+                    Color.fromARGB(200, 219, 232, 233),
+                  ],
+                )),
+                alignment: Alignment.center,
+                child: SingleChildScrollView(
+                    child: option == 1
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                                TextFormField(
+                                  style: TextStyle(
+                                      color: Colors.white.withOpacity(0.7)),
+                                  autocorrect: true,
+                                  decoration: const InputDecoration(
+                                      label: Center(
+                                        child: Text(
+                                          'Why do you want to cancel the ticket?',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20),
+                                        ),
+                                      ),
+                                      hintText: 'Enter your reason'),
+                                  minLines: 1,
+                                  maxLines: 2,
+                                  keyboardType: TextInputType
+                                      .multiline, // user keyboard will have a button to move cursor to next line
+                                  maxLength: 200,
+                                ),
+                                ElevatedButton(
+                                  child: const Text('Submit'),
+                                  onPressed: () {},
+                                ),
+                              ])
+                        : SingleChildScrollView(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    margin: const EdgeInsets.all(4),
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Text(
+                                      'This option allows others to examine the specifics of your ticket\n'
+                                      'By default it\'s a private.',
+                                      style: TextStyle(fontSize: 20),
                                     ),
                                   ),
-                                  hintText: 'Enter your reason'),
-                              minLines: 1,
-                              maxLines: 2,
-                              keyboardType: TextInputType
-                                  .multiline, // user keyboard will have a button to move cursor to next line
-                              maxLength: 200,
-                            ),
-                            ElevatedButton(
-                              child: const Text('Submit'),
-                              onPressed: () {},
-                            ),
-                          ])
-                    : SingleChildScrollView(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                  'This option allows others to examine the specifics of your ticket\nBy default it\'s a private.'),
-                              Column(
-                                children: [
-                                  Row(children: [
-                                    Radio(
-                                      value: 'Private',
-                                      groupValue: val,
-                                      activeColor: radioBtn
-                                          ? Colors.black.withOpacity(0.1)
-                                          : Colors.black,
-                                      onChanged: (vale) {
-                                        setState(() {
-                                          val = vale as String;
-                                          isPrivacy = val;
-                                        });
-                                      },
-                                    ),
-                                    const Text('Private'),
-                                  ]),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Row(children: [
-                                    Radio(
-                                      value: 'Public',
-                                      groupValue: val,
-                                      activeColor: radioBtn
-                                          ? Colors.black.withOpacity(0.1)
-                                          : Colors.black,
-                                      onChanged: (vale) {
-                                        setState(() {
-                                          val = vale as String;
-                                          isPrivacy = val;
-                                        });
-                                      },
-                                    ),
-                                    const Text('Public'),
-                                  ]),
-                                ],
-                              )
-                            ]),
-                      )));
+                                  Column(
+                                    children: [
+                                      Row(children: [
+                                        Radio(
+                                          value: 'Private',
+                                          groupValue: val,
+                                          activeColor: radioBtn
+                                              ? Colors.black.withOpacity(0.1)
+                                              : Colors.black,
+                                          onChanged: (vale) {
+                                            setState(
+                                              () {
+                                                val = vale as String;
+                                                isPrivacy = val;
+                                              },
+                                            );
+                                          },
+                                        ),
+                                        const Text('Private'),
+                                      ])
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Row(children: [
+                                        Radio(
+                                          value: 'Public',
+                                          groupValue: val,
+                                          activeColor: radioBtn
+                                              ? Colors.black.withOpacity(0.1)
+                                              : Colors.black,
+                                          onChanged: (vale) {
+                                            setState(
+                                              () {
+                                                val = vale as String;
+                                                isPrivacy = val;
+                                              },
+                                            );
+                                          },
+                                        ),
+                                        const Text('Public'),
+                                      ]),
+                                    ],
+                                  ),
+                                  ElevatedButton(
+                                    child: const Text('Update'),
+                                    onPressed: () {},
+                                  ),
+                                ]),
+                          )));
+          },
+        );
       },
     );
   }
@@ -320,7 +343,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
             color: const Color.fromARGB(120, 169, 225, 228)));
   }
 
-  targetStatus(int status) {
+  String targetStatus(int status) {
     List<String> statusText = [
       'Pending',
       'Approved',
@@ -338,7 +361,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
     return statusText.elementAt(status);
   }
 
-  viewImage(int index) {
+  Container viewImage(int index) {
     return Container(
       margin: const EdgeInsets.only(bottom: 3, top: 3),
       decoration: BoxDecoration(
