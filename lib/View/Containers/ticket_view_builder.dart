@@ -18,6 +18,10 @@ class TicketBuilder extends StatefulWidget {
 
 class _TicketBuilderState extends State<TicketBuilder> {
   Ticket? ticket;
+  bool radioBtn = false;
+  String? isPrivacy = 'Private';
+  String val = 'Private';
+
   @override
   Widget build(BuildContext context) {
     ticket = widget.ticket;
@@ -129,7 +133,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                               size: 40,
                             ),
                             onPressed: () {
-                              showBottomBox();
+                              showBottomBox(0);
                             },
                           ),
                           ticket!.status == 0
@@ -141,7 +145,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                                     size: 40,
                                   ),
                                   onPressed: () {
-                                    showBottomBox();
+                                    showBottomBox(1);
                                   },
                                 )
                               : Container(),
@@ -157,7 +161,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
     );
   }
 
-  showBottomBox() {
+  showBottomBox(int option) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -176,33 +180,82 @@ class _TicketBuilderState extends State<TicketBuilder> {
             )),
             alignment: Alignment.center,
             child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextFormField(
-                      style: TextStyle(color: Colors.white.withOpacity(0.7)),
-                      autocorrect: true,
-                      decoration: const InputDecoration(
-                          label: Center(
-                            child: Text(
-                              'Why do you want to cancel the ticket?',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 20),
+                child: option == 1
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                            TextFormField(
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(0.7)),
+                              autocorrect: true,
+                              decoration: const InputDecoration(
+                                  label: Center(
+                                    child: Text(
+                                      'Why do you want to cancel the ticket?',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                    ),
+                                  ),
+                                  hintText: 'Enter your reason'),
+                              minLines: 1,
+                              maxLines: 2,
+                              keyboardType: TextInputType
+                                  .multiline, // user keyboard will have a button to move cursor to next line
+                              maxLength: 200,
                             ),
-                          ),
-                          hintText: 'Enter your reason'),
-                      minLines: 1,
-                      maxLines: 2,
-                      keyboardType: TextInputType
-                          .multiline, // user keyboard will have a button to move cursor to next line
-                      maxLength: 200,
-                    ),
-                    ElevatedButton(
-                      child: const Text('Submit'),
-                      onPressed: () {},
-                    ),
-                  ]),
-            ));
+                            ElevatedButton(
+                              child: const Text('Submit'),
+                              onPressed: () {},
+                            ),
+                          ])
+                    : SingleChildScrollView(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                  'This option allows others to examine the specifics of your ticket\nBy default it\'s a private.'),
+                              Column(
+                                children: [
+                                  Row(children: [
+                                    Radio(
+                                      value: 'Private',
+                                      groupValue: val,
+                                      activeColor: radioBtn
+                                          ? Colors.black.withOpacity(0.1)
+                                          : Colors.black,
+                                      onChanged: (vale) {
+                                        setState(() {
+                                          val = vale as String;
+                                          isPrivacy = val;
+                                        });
+                                      },
+                                    ),
+                                    const Text('Private'),
+                                  ]),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Row(children: [
+                                    Radio(
+                                      value: 'Public',
+                                      groupValue: val,
+                                      activeColor: radioBtn
+                                          ? Colors.black.withOpacity(0.1)
+                                          : Colors.black,
+                                      onChanged: (vale) {
+                                        setState(() {
+                                          val = vale as String;
+                                          isPrivacy = val;
+                                        });
+                                      },
+                                    ),
+                                    const Text('Public'),
+                                  ]),
+                                ],
+                              )
+                            ]),
+                      )));
       },
     );
   }
@@ -275,6 +328,13 @@ class _TicketBuilderState extends State<TicketBuilder> {
       'Rejected',
       'Canceled',
     ];
+    if (status > statusText.length) {
+      int gab = status - statusText.length;
+
+      for (int i = 0; i < gab; i++) {
+        statusText.add('Unknown status');
+      }
+    }
     return statusText.elementAt(status);
   }
 
