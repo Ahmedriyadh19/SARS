@@ -30,12 +30,12 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   bool loading = false;
   bool? cameraGetimage;
   bool? cameraGetvideo;
-  List<bool> picturesFound = [false, false, false, false, false, false];
   List<File> images = [];
   XFile? videoFile;
   int selectedPageIndex = 0;
   int currentStep = 0;
   int availableTryPictures = -1;
+  static const int numberOfimage = 6;
   String? isPrivacy = 'Private';
   String val = 'Private';
   String? dropMenuValue = 'Plumbing';
@@ -235,233 +235,17 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                 child: Column(children: [
                                   isTherePictures
                                       ? Column(children: [
-                                          picturesFound.elementAt(0)
-                                              ? Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 3, top: 3),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                      color: Colors.black
-                                                          .withOpacity(0.1)),
-                                                  child: ListTile(
-                                                    leading: CircleAvatar(
-                                                      backgroundImage:
-                                                          FileImage(images
-                                                              .elementAt(0)),
-                                                      radius: 25.0,
-                                                      backgroundColor: Colors
-                                                          .cyanAccent
-                                                          .withOpacity(0.5),
-                                                    ),
-                                                    title:
-                                                        const Text('Picture 1'),
-                                                    subtitle: const Text(
-                                                        'Click To view it'),
-                                                    trailing: IconButton(
-                                                      icon: const Icon(
-                                                          Icons.delete_rounded),
-                                                      onPressed: () {
-                                                        deletPicture(0);
-                                                      },
-                                                    ),
-                                                    onTap: () {
-                                                      viewPicture(0);
-                                                    },
-                                                  ),
-                                                )
-                                              : Container(),
-                                          picturesFound.elementAt(1)
-                                              ? Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 3, top: 3),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                      color: Colors.black
-                                                          .withOpacity(0.1)),
-                                                  child: ListTile(
-                                                    leading: CircleAvatar(
-                                                      radius: 25.0,
-                                                      backgroundImage:
-                                                          FileImage(images
-                                                              .elementAt(1)),
-                                                      backgroundColor: Colors
-                                                          .cyanAccent
-                                                          .withOpacity(0.5),
-                                                    ),
-                                                    title:
-                                                        const Text('Picture 2'),
-                                                    subtitle: const Text(
-                                                        'Click To view it'),
-                                                    trailing: IconButton(
-                                                      icon: const Icon(
-                                                          Icons.delete_rounded),
-                                                      onPressed: () {
-                                                        deletPicture(1);
-                                                      },
-                                                    ),
-                                                    onTap: () {
-                                                      viewPicture(1);
-                                                    },
-                                                  ),
-                                                )
-                                              : Container(),
-                                          picturesFound.elementAt(2)
-                                              ? Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 3, top: 3),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                      color: Colors.black
-                                                          .withOpacity(0.1)),
-                                                  child: ListTile(
-                                                    leading: CircleAvatar(
-                                                      backgroundImage:
-                                                          FileImage(images
-                                                              .elementAt(2)),
-                                                      radius: 25.0,
-                                                      backgroundColor: Colors
-                                                          .cyanAccent
-                                                          .withOpacity(0.5),
-                                                    ),
-                                                    title:
-                                                        const Text('Picture 3'),
-                                                    subtitle: const Text(
-                                                        'Click To view it'),
-                                                    trailing: IconButton(
-                                                      icon: const Icon(
-                                                          Icons.delete_rounded),
-                                                      onPressed: () {
-                                                        deletPicture(2);
-                                                      },
-                                                    ),
-                                                    onTap: () {
-                                                      viewPicture(2);
-                                                    },
-                                                  ),
-                                                )
-                                              : Container(),
-                                          picturesFound.elementAt(3)
-                                              ? Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 3, top: 3),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                      color: Colors.black
-                                                          .withOpacity(0.1)),
-                                                  child: ListTile(
-                                                    leading: CircleAvatar(
-                                                      backgroundImage:
-                                                          FileImage(images
-                                                              .elementAt(3)),
-                                                      radius: 25.0,
-                                                      backgroundColor: Colors
-                                                          .cyanAccent
-                                                          .withOpacity(0.5),
-                                                    ),
-                                                    title:
-                                                        const Text('Picture 4'),
-                                                    subtitle: const Text(
-                                                        'Click To view it'),
-                                                    trailing: IconButton(
-                                                      icon: const Icon(
-                                                          Icons.delete_rounded),
-                                                      onPressed: () {
-                                                        deletPicture(3);
-                                                      },
-                                                    ),
-                                                    onTap: () {
-                                                      viewPicture(3);
-                                                    },
-                                                  ),
-                                                )
-                                              : Container(),
-                                          picturesFound.elementAt(4)
-                                              ? Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 3, top: 3),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                      color: Colors.black
-                                                          .withOpacity(0.1)),
-                                                  child: ListTile(
-                                                    leading: CircleAvatar(
-                                                      backgroundImage:
-                                                          FileImage(images
-                                                              .elementAt(4)),
-                                                      radius: 25.0,
-                                                      backgroundColor: Colors
-                                                          .cyanAccent
-                                                          .withOpacity(0.5),
-                                                    ),
-                                                    title:
-                                                        const Text('Picture 5'),
-                                                    subtitle: const Text(
-                                                        'Click To view it'),
-                                                    trailing: IconButton(
-                                                      icon: const Icon(
-                                                          Icons.delete_rounded),
-                                                      onPressed: () {
-                                                        deletPicture(4);
-                                                      },
-                                                    ),
-                                                    onTap: () {
-                                                      viewPicture(4);
-                                                    },
-                                                  ),
-                                                )
-                                              : Container(),
-                                          picturesFound.elementAt(5)
-                                              ? Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 3, top: 3),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                      color: Colors.black
-                                                          .withOpacity(0.1)),
-                                                  child: ListTile(
-                                                    leading: CircleAvatar(
-                                                      backgroundImage:
-                                                          FileImage(images
-                                                              .elementAt(5)),
-                                                      radius: 25.0,
-                                                      backgroundColor: Colors
-                                                          .cyanAccent
-                                                          .withOpacity(0.5),
-                                                    ),
-                                                    title:
-                                                        const Text('Picture 6'),
-                                                    subtitle: const Text(
-                                                        'Click To view it'),
-                                                    trailing: IconButton(
-                                                      icon: const Icon(
-                                                          Icons.delete_rounded),
-                                                      onPressed: () {
-                                                        deletPicture(5);
-                                                      },
-                                                    ),
-                                                    onTap: () {
-                                                      viewPicture(5);
-                                                    },
-                                                  ),
-                                                )
-                                              : Container()
+                                          ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount: images.length,
+                                            itemBuilder: (context, index) {
+                                              return viewImage(index);
+                                            },
+                                          )
                                         ])
-                                      : const Text(
-                                          '',
-                                          style: TextStyle(fontSize: 1),
-                                        ),
+                                      : Container(),
                                   Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
@@ -470,15 +254,31 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
-                                            availableTryPictures >= 5
+                                            availableTryPictures >
+                                                    numberOfimage - 2
                                                 ? Container()
-                                                : IconButton(
-                                                    icon: const Icon(
-                                                        Icons.add_a_photo),
-                                                    onPressed: () {
-                                                      takePictures();
-                                                    },
-                                                  ),
+                                                : Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                        IconButton(
+                                                          icon: const Icon(Icons
+                                                              .add_a_photo),
+                                                          onPressed: () {
+                                                            takePictures(0);
+                                                          },
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 30),
+                                                        IconButton(
+                                                          icon: const Icon(Icons
+                                                              .photo_library_rounded),
+                                                          onPressed: () {
+                                                            takePictures(1);
+                                                          },
+                                                        )
+                                                      ]),
                                           ],
                                         ),
                                       ]),
@@ -675,8 +475,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
     setState(() {
       availableTryPictures = -1;
       isTherePictures = false;
-      for (int i = 0; i < picturesFound.length; i++) {
-        picturesFound[i] = false;
+      for (int i = 0; i < images.length; i++) {
         images.clear();
       }
     });
@@ -702,12 +501,16 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
     });
   }
 
-  takePictures() async {
-    await getImageFromCamera();
+  takePictures(int source) async {
+    if (source == 0) {
+      await getImageFromCamera();
+    } else {
+      await getImageFromGallery();
+    }
+
     if (cameraGetimage == true) {
       setState(() {
         availableTryPictures++;
-        picturesFound[availableTryPictures] = true;
         if (availableTryPictures < 0) {
           isTherePictures = false;
         } else {
@@ -749,9 +552,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
 
   deletPicture(int index) {
     setState(() {
-      picturesFound.removeAt(index);
       images.removeAt(index);
-      picturesFound.add(false);
       availableTryPictures--;
       cameraGetimage = false;
     });
@@ -802,6 +603,13 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
     } else {
       typeOfIssue = myController[0].text;
     }
+
+    if (myController[2].text.isEmpty) {
+      setState(() {
+        myController[2].text == targetUser!.address;
+      });
+    }
+
     Ticket _ticket = Ticket(
         dateTime: DateTime.now(),
         description: cleanString,
@@ -809,16 +617,14 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
         type: typeOfIssue,
         status: 0,
         location: myController[2].text,
-        attachmentsFiles: images,
+        attachmentsImages: images,
         feeddback: '',
         rate: 0,
         privacy: isPrivacy,
-        userName: targetUser!.name!,
-        attachmentsFilesUrlData: []);
+        userName: targetUser!.name,
+        attachmentVideo: File(videoFile!.path),
+        attachmentsImagesUrlData: []);
 
-    if (isThereVideo) {
-      _ticket.attachmentsFiles.add(File(videoFile!.path));
-    }
     try {
       DatabaseFeatures(uidUser: targetUser!.uid).pushNewTicket(_ticket);
     } catch (e) {
@@ -884,9 +690,6 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
         imageCache!.clear();
       }
 
-      for (int i = 0; i < picturesFound.length; i++) {
-        picturesFound[i] = false;
-      }
       for (int i = 0; i < myController.length; i++) {
         myController[i].clear();
       }
@@ -904,6 +707,16 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
     }
   }
 
+  Future getImageFromGallery() async {
+    cameraGetimage = false;
+    final image = await (imagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 25));
+    if (image != null && image.path.isNotEmpty) {
+      images.add(File(image.path));
+      cameraGetimage = true;
+    }
+  }
+
   getVideoFromCamara() async {
     cameraGetvideo = false;
     XFile? video = await imagePicker.pickVideo(
@@ -912,5 +725,32 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
       videoFile = video;
       cameraGetvideo = true;
     }
+  }
+
+  viewImage(int index) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 3, top: 3),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: Colors.black.withOpacity(0.1)),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundImage: FileImage(images.elementAt(index)),
+          radius: 25.0,
+          backgroundColor: Colors.cyanAccent.withOpacity(0.5),
+        ),
+        title: Text('Picture ${index + 1}'),
+        subtitle: const Text('Click To view it'),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete_rounded),
+          onPressed: () {
+            deletPicture(index);
+          },
+        ),
+        onTap: () {
+          viewPicture(index);
+        },
+      ),
+    );
   }
 }

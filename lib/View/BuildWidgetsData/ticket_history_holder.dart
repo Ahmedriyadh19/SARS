@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:sars/Model/ticket.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
-import 'package:sars/View/Containers/history_builder.dart';
+import 'package:sars/View/Containers/ticket_view_builder.dart';
 
 class TicketHistroyBuilderData extends StatefulWidget {
   final String uid;
@@ -28,12 +27,19 @@ class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
     ticketData.sort((b, a) {
       return a.dateTime.compareTo(b.dateTime);
     });
-    List filter = [];
-    for (var item in ticketData) {
-      if (item.userId == uid) {
-        filter.add(item);
+
+    ticketData.where(
+      (element) {
+        return element.userId == uid;
+      },
+    );
+
+    setState(() {
+      loading == true;
+      if (ticketData.isEmpty || ticketData.isNotEmpty) {
+        loading = false;
       }
-    }
+    });
 
     return loading
         ? const Loading()
@@ -43,14 +49,15 @@ class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: filter.length,
+                  itemCount: ticketData.length,
                   itemBuilder: (context, index) {
                     return TicketBuilder(
-                      ticket: filter[index],
+                      ticket: ticketData[index],
+                      traget: 'Histroy',
                     );
                   },
                 )),
-            filter.isEmpty
+            ticketData.isEmpty
                 ? const Text('No Ticket Yet',
                     style: TextStyle(fontSize: 20, color: Colors.white))
                 : Container()

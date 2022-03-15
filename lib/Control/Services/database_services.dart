@@ -23,7 +23,6 @@ class DatabaseFeatures {
       'profilePictureURL':
           'https://firebasestorage.googleapis.com/v0/b/sars-e6e88.appspot.com/o/resident%2Fprofile%2Ficons8_users_500px.png?alt=media&token=8f0b847f-63a1-4463-9761-dcc93c5b7958',
       'gender': u.gander,
-      'secret': u.secret,
       'username': u.userName,
       'userID': uidUser
     });
@@ -51,8 +50,11 @@ class DatabaseFeatures {
   }
 
   Future pushNewTicket(Ticket t) async {
-    if (t.attachmentsFiles.isNotEmpty) {
-      t.attachmentsFilesUrlData = await uploadFiles(t.attachmentsFiles);
+    if (t.attachmentsImages.isNotEmpty) {
+      t.attachmentsImagesUrlData = await uploadFiles(t.attachmentsImages);
+    }
+    if (t.attachmentVideo != null) {
+      t.videoURL = await uploadFile(t.attachmentVideo!);
     }
     return await _databaseCollection.collection('ticket').doc().set({
       'dateTime': database_firestore.Timestamp.fromDate(t.dateTime),
@@ -60,7 +62,8 @@ class DatabaseFeatures {
       'typeOfTicket': t.type,
       'status': t.status,
       'location': t.location,
-      'attachments': t.attachmentsFilesUrlData,
+      'attachmentImages': t.attachmentsImagesUrlData,
+      'attachmentvideo': t.videoURL,
       'feedback': t.feeddback,
       'rate': t.rate,
       'userID': uidUser,
@@ -91,7 +94,8 @@ class DatabaseFeatures {
     return snp.docChanges.map(
       (data) {
         return Ticket(
-            attachmentsFilesUrlData: List<String>.from(data.doc['attachments']),
+            attachmentsImagesUrlData:
+                List<String>.from(data.doc['attachmentImages']),
             dateTime: DateTime.parse(data.doc['dateTime'].toDate().toString()),
             description: data.doc['description'] ?? '',
             feeddback: data.doc['feedback'] ?? '',
@@ -99,9 +103,11 @@ class DatabaseFeatures {
             rate: data.doc['rate'] ?? 0,
             status: data.doc['status'] ?? 0,
             type: data.doc['typeOfTicket'] ?? '',
-            attachmentsFiles: [],
+            attachmentsImages: [],
             userName: data.doc['userName'] ?? '',
             userId: data.doc['userID'] ?? '',
+            remark: data.doc['remark'] ?? '',
+            videoURL: data.doc['attachmentvideo'] ?? '',
             privacy: data.doc['privacy'] ?? 'Private');
       },
     ).toList();
@@ -130,7 +136,6 @@ class DatabaseFeatures {
             email: mapingData['email'] ?? '',
             role: mapingData['role'] ?? '',
             gander: mapingData['gender'] ?? '',
-            secret: mapingData['secret'] ?? '',
             userName: mapingData['username'] ?? '',
             uid: mapingData['userID'] ?? '');
       }

@@ -30,7 +30,7 @@ class _AnnouncementBuilderDatatate extends State<AnnouncementBuilderData> {
 
     setState(() {
       loading = true;
-      if (announcementData.isNotEmpty || announcementData.isNotEmpty) {
+      if (announcementData.isNotEmpty || announcementData.isEmpty) {
         loading = false;
       }
     });

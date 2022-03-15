@@ -54,10 +54,11 @@ class _SettingsBuilderPageState extends State<SettingsBuilderPage> {
                     alignment: Alignment.center,
                     child: SingleChildScrollView(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [Icon(Icons.camera_alt_rounded),
-                        Icon(Icons.folder_copy_rounded)
-                      ]),
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: const [
+                            Icon(Icons.camera_alt_rounded),
+                            Icon(Icons.photo_library_rounded)
+                          ]),
                     ));
               },
             );
