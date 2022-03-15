@@ -118,34 +118,40 @@ class _TicketBuilderState extends State<TicketBuilder> {
                   : Container(),
               isHome == 'Home'
                   ? Container()
-                  : ticket!.status == 0
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                              IconButton(
-                                alignment: Alignment.bottomRight,
-                                icon: const Icon(
-                                  Icons.edit,
-                                  color: Colors.black,
-                                  size: 40,
-                                ),
-                                onPressed: () {
-                                  showBottomBox();
-                                },
-                              ),
-                              IconButton(
-                                alignment: Alignment.bottomRight,
-                                icon: const Icon(
-                                  Icons.cancel_rounded,
-                                  color: Colors.red,
-                                  size: 40,
-                                ),
-                                onPressed: () {
-                                  showBottomBox();
-                                },
-                              ),
-                            ])
-                      : Container()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                          IconButton(
+                            alignment: Alignment.bottomRight,
+                            icon: const Icon(
+                              Icons.edit,
+                              color: Colors.black,
+                              size: 40,
+                            ),
+                            onPressed: () {
+                              showBottomBox();
+                            },
+                          ),
+                          ticket!.status == 0
+                              ? IconButton(
+                                  alignment: Alignment.bottomRight,
+                                  icon: const Icon(
+                                    Icons.cancel_rounded,
+                                    color: Colors.red,
+                                    size: 40,
+                                  ),
+                                  onPressed: () {
+                                    showBottomBox();
+                                  },
+                                )
+                              : Container(),
+                        ]),
+              (ticket!.status == 2 && isHome == 'Histroy') &&
+                      (ticket!.rate != 0 || ticket!.feeddback.isEmpty)
+                  ? SingleChildScrollView(
+                      child: Column(),
+                    )
+                  : Container()
             ])),
       )),
     );
