@@ -177,9 +177,12 @@ class _TicketBuilderState extends State<TicketBuilder> {
                       style: TextStyle(color: Colors.white.withOpacity(0.7)),
                       autocorrect: true,
                       decoration: const InputDecoration(
-                          label: Text(
-                            'Why do you want to cancel the ticket?',
-                            style: TextStyle(color: Colors.black),
+                          label: Center(
+                            child: Text(
+                              'Why do you want to cancel the ticket?',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 20),
+                            ),
                           ),
                           hintText: 'Enter your reason'),
                       minLines: 1,
