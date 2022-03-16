@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sars/View/BuildWidgetsData/loading.dart';
 import 'package:video_player/video_player.dart';
 
 class DisplayVideoScreen extends StatefulWidget {
-  final XFile videoFile;
-  const DisplayVideoScreen({
-    Key? key,
-    required this.videoFile,
-  }) : super(key: key);
+  final XFile? videoFile;
+  final String? videoURL;
+  const DisplayVideoScreen({Key? key, this.videoFile, this.videoURL})
+      : super(key: key);
 
   @override
   State<DisplayVideoScreen> createState() => _DisplayVideoScreenState();
@@ -19,14 +19,25 @@ class _DisplayVideoScreenState extends State<DisplayVideoScreen> {
 
   @override
   void initState() {
-    File file = File(widget.videoFile.path);
-
-    super.initState();
-    videoPlayerController = VideoPlayerController.file(file)
-      ..initialize().then((_) {
-        videoPlayerController!.setVolume(1);
-        setState(() {});
-      });
+    File file;
+    String url;
+    if (widget.videoFile != null) {
+      file = File(widget.videoFile!.path);
+      super.initState();
+      videoPlayerController = VideoPlayerController.file(file)
+        ..initialize().then((_) {
+          videoPlayerController!.setVolume(1);
+          setState(() {});
+        });
+    } else {
+      url = widget.videoURL!;
+      super.initState();
+      videoPlayerController = VideoPlayerController.network(url)
+        ..initialize().then((_) {
+          videoPlayerController!.setVolume(1);
+          setState(() {});
+        });
+    }
   }
 
   @override
@@ -87,8 +98,7 @@ class _DisplayVideoScreenState extends State<DisplayVideoScreen> {
                             ),
                           ),
                         )
-                      : const Center(
-                          child: Text('Couldn\'t initialize the video')),
+                      : const Center(child: Loading()),
                   Center(
                     child: IconButton(
                       tooltip: 'Play/Pause',

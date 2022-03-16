@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sars/Model/ticket.dart';
 import 'package:sars/View/Containers/view_image_builder.dart';
+import 'package:sars/View/Containers/view_video_builder.dart';
 
 class TicketBuilder extends StatefulWidget {
   final Ticket ticket;
@@ -21,6 +22,8 @@ class _TicketBuilderState extends State<TicketBuilder> {
   bool radioBtn = false;
   String? isPrivacy = 'Private';
   String val = 'Private';
+  final String videoIcon =
+      'https://firebasestorage.googleapis.com/v0/b/sars-e6e88.appspot.com/o/resident%2Fprofile%2Ficons8_video_96px.png?alt=media&token=2e82595a-2f9b-4339-94fb-26c7f00c06d3';
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,6 @@ class _TicketBuilderState extends State<TicketBuilder> {
       alignment: Alignment.center,
       margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
       padding: const EdgeInsets.all(5),
-      height: 400,
       decoration: targetColorIssue(ticket!.status),
       child: SingleChildScrollView(
           child: Container(
@@ -87,73 +89,103 @@ class _TicketBuilderState extends State<TicketBuilder> {
                       ),
                     ))
                   : Container(),
-              ticket!.attachmentsImagesUrlData.isNotEmpty
+              ticket!.attachmentsImagesUrlData.isNotEmpty ||
+                      ticket!.videoURL!.isNotEmpty
                   ? SingleChildScrollView(
-                      child: getContainerForAll(Column(children: [
+                      child: Column(children: [
                       Container(
-                          alignment: Alignment.topLeft,
+                          alignment: Alignment.topCenter,
+                          margin: const EdgeInsets.all(4),
+                          padding: const EdgeInsets.all(10),
                           child: const Text(
                             'Attachments:',
                             style: TextStyle(
                               fontSize: 20,
                             ),
                           )),
-                      Container(
-                          //if there Is images
-                          alignment: Alignment.topCenter,
-                          margin: const EdgeInsets.all(4),
-                          padding: const EdgeInsets.all(10),
-                          child: SingleChildScrollView(
-                            child: SingleChildScrollView(
-                              child: Column(children: [
-                                ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount:
-                                      ticket!.attachmentsImagesUrlData.length,
-                                  itemBuilder: (context, index) {
-                                    return viewImage(index);
-                                  },
-                                )
-                              ]),
-                            ),
-                          ))
-                    ])))
+                      ticket!.attachmentsImagesUrlData.isNotEmpty
+                          ? getContainerForAll(Container(
+                              //if there Is images
+                              alignment: Alignment.topCenter,
+                              margin: const EdgeInsets.only(
+                                  bottom: 4, left: 4, right: 4, top: 0),
+                              padding: const EdgeInsets.all(10),
+                              child: SingleChildScrollView(
+                                child: Column(children: [
+                                  Container(
+                                      alignment: Alignment.centerLeft,
+                                      margin: const EdgeInsets.all(4),
+                                      padding: const EdgeInsets.all(10),
+                                      child: const Text('Images',
+                                          style: TextStyle(fontSize: 20))),
+                                  ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        ticket!.attachmentsImagesUrlData.length,
+                                    itemBuilder: (context, index) {
+                                      return viewImageORVideo(index, 0);
+                                    },
+                                  )
+                                ]),
+                              )))
+                          : Container(),
+                      ticket!.videoURL!.isNotEmpty
+                          ? getContainerForAll(Column(children: [
+                              Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: const EdgeInsets.all(4),
+                                  padding: const EdgeInsets.all(10),
+                                  child: const Text('Video',
+                                      style: TextStyle(fontSize: 20))),
+                              viewImageORVideo(0, 1)
+                            ]))
+                          : Container()
+                    ]))
                   : Container(),
               isHome == 'Home'
                   ? Container()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                          IconButton(
-                            alignment: Alignment.bottomRight,
-                            icon: const Icon(
-                              Icons.edit,
-                              color: Colors.black,
-                              size: 40,
-                            ),
-                            onPressed: () {
-                              showBottomBox(0, context);
-                            },
-                          ),
-                          ticket!.status == 0
-                              ? IconButton(
-                                  alignment: Alignment.bottomRight,
-                                  icon: const Icon(
-                                    Icons.cancel_rounded,
-                                    color: Colors.red,
-                                    size: 40,
-                                  ),
-                                  onPressed: () {
-                                    showBottomBox(1, context);
-                                  },
-                                )
-                              : Container(),
-                        ]),
+                  : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      IconButton(
+                        alignment: Alignment.bottomRight,
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.black,
+                          size: 40,
+                        ),
+                        onPressed: () {
+                          showBottomBox(0, context);
+                        },
+                      ),
+                      ticket!.status == 0
+                          ? IconButton(
+                              alignment: Alignment.bottomRight,
+                              icon: const Icon(
+                                Icons.cancel_rounded,
+                                color: Colors.red,
+                                size: 40,
+                              ),
+                              onPressed: () {
+                                showBottomBox(1, context);
+                              },
+                            )
+                          : const SizedBox(),
+                    ]),
               (ticket!.status == 2 && isHome == 'Histroy') &&
                       (ticket!.rate != 0 || ticket!.feeddback.isEmpty)
                   ? SingleChildScrollView(
-                      child: Column(),
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            child: const Text('Rate'),
+                          ),
+                          Container(
+                              alignment: Alignment.center,
+                              child: const Text('Rate'))
+                        ],
+                      ),
                     )
                   : Container()
             ])),
@@ -178,105 +210,123 @@ class _TicketBuilderState extends State<TicketBuilder> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color.fromARGB(255, 0, 117, 122),
-                    Color.fromARGB(200, 219, 232, 233),
+                    Color.fromARGB(150, 0, 117, 122),
+                    Color.fromARGB(120, 219, 232, 233),
                   ],
                 )),
                 alignment: Alignment.center,
                 child: SingleChildScrollView(
                     child: option == 1
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                                TextFormField(
-                                  style: TextStyle(
-                                      color: Colors.white.withOpacity(0.7)),
-                                  autocorrect: true,
-                                  decoration: const InputDecoration(
-                                      label: Center(
-                                        child: Text(
-                                          'Why do you want to cancel the ticket?',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20),
+                        ? SingleChildScrollView(
+                          child: Container(
+                            margin: const EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
+                            child: getContainerForAll(
+                              Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    TextFormField(
+                                      style: TextStyle(
+                                          color: Colors.white.withOpacity(0.7)),
+                                      autocorrect: true,
+                                      decoration: const InputDecoration(
+                                          label: Center(
+                                            child: Text(
+                                              'Why do you want to cancel the ticket?',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20),
+                                            ),
+                                          ),
+                                          hintText: 'Enter your reason'),
+                                      minLines: 1,
+                                      maxLines: 5,
+                                      keyboardType: TextInputType
+                                          .multiline, // user keyboard will have a button to move cursor to next line
+                                      maxLength: 250,
+                                    ),
+                                    ElevatedButton(
+                                      child: const Text('Submit'),
+                                      onPressed: () {},
+                                    ),
+                                  ]),
+                            ),
+                          )
+                        )
+                        : SingleChildScrollView(
+                            child: Container(
+                            margin: const EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
+                            child: getContainerForAll(
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text('Edit privacy',
+                                        style: TextStyle(fontSize: 25)),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      margin: const EdgeInsets.all(4),
+                                      padding: const EdgeInsets.all(10),
+                                      child: const Text(
+                                        'This option allows others to examine the specifics of your ticket',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
                                         ),
                                       ),
-                                      hintText: 'Enter your reason'),
-                                  minLines: 1,
-                                  maxLines: 2,
-                                  keyboardType: TextInputType
-                                      .multiline, // user keyboard will have a button to move cursor to next line
-                                  maxLength: 200,
-                                ),
-                                ElevatedButton(
-                                  child: const Text('Submit'),
-                                  onPressed: () {},
-                                ),
-                              ])
-                        : SingleChildScrollView(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    margin: const EdgeInsets.all(4),
-                                    padding: const EdgeInsets.all(10),
-                                    child: const Text(
-                                      'This option allows others to examine the specifics of your ticket\n'
-                                      'By default it\'s a private.',
-                                      style: TextStyle(fontSize: 20),
                                     ),
-                                  ),
-                                  Column(
-                                    children: [
-                                      Row(children: [
-                                        Radio(
-                                          value: 'Private',
-                                          groupValue: val,
-                                          activeColor: radioBtn
-                                              ? Colors.black.withOpacity(0.1)
-                                              : Colors.black,
-                                          onChanged: (vale) {
-                                            setState(
-                                              () {
-                                                val = vale as String;
-                                                isPrivacy = val;
-                                              },
-                                            );
-                                          },
-                                        ),
-                                        const Text('Private'),
-                                      ])
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Row(children: [
-                                        Radio(
-                                          value: 'Public',
-                                          groupValue: val,
-                                          activeColor: radioBtn
-                                              ? Colors.black.withOpacity(0.1)
-                                              : Colors.black,
-                                          onChanged: (vale) {
-                                            setState(
-                                              () {
-                                                val = vale as String;
-                                                isPrivacy = val;
-                                              },
-                                            );
-                                          },
-                                        ),
-                                        const Text('Public'),
-                                      ]),
-                                    ],
-                                  ),
-                                  ElevatedButton(
-                                    child: const Text('Update'),
-                                    onPressed: () {},
-                                  ),
-                                ]),
-                          )));
+                                    Column(
+                                      children: [
+                                        Row(children: [
+                                          Radio(
+                                            value: 'Private',
+                                            groupValue: val,
+                                            activeColor: radioBtn
+                                                ? Colors.black.withOpacity(0.1)
+                                                : Colors.black,
+                                            onChanged: (vale) {
+                                              setState(
+                                                () {
+                                                  val = vale as String;
+                                                  isPrivacy = val;
+                                                },
+                                              );
+                                            },
+                                          ),
+                                          const Text('Private'),
+                                        ])
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Row(children: [
+                                          Radio(
+                                            value: 'Public',
+                                            groupValue: val,
+                                            activeColor: radioBtn
+                                                ? Colors.black.withOpacity(0.1)
+                                                : Colors.black,
+                                            onChanged: (vale) {
+                                              setState(
+                                                () {
+                                                  val = vale as String;
+                                                  isPrivacy = val;
+                                                },
+                                              );
+                                            },
+                                          ),
+                                          const Text('Public'),
+                                        ]),
+                                      ],
+                                    ),
+                                    ElevatedButton(
+                                      child: const Text('Update'),
+                                      onPressed: () {},
+                                    ),
+                                  ]),
+                            ),
+                          ))));
           },
         );
       },
@@ -339,7 +389,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
         padding: const EdgeInsets.all(10),
         child: contentContainer,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(15),
             color: const Color.fromARGB(120, 169, 225, 228)));
   }
 
@@ -361,7 +411,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
     return statusText.elementAt(status);
   }
 
-  Container viewImage(int index) {
+  Container viewImageORVideo(int index, int option) {
     return Container(
       margin: const EdgeInsets.only(bottom: 3, top: 3),
       decoration: BoxDecoration(
@@ -369,15 +419,16 @@ class _TicketBuilderState extends State<TicketBuilder> {
           color: Colors.black.withOpacity(0.1)),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage:
-              NetworkImage(ticket!.attachmentsImagesUrlData.elementAt(index)),
+          backgroundImage: option == 0
+              ? NetworkImage(ticket!.attachmentsImagesUrlData.elementAt(index))
+              : NetworkImage(videoIcon),
           radius: 25.0,
           backgroundColor: Colors.black.withOpacity(0.4),
         ),
-        title: Text('Picture ${index + 1}'),
+        title: option == 0 ? Text('Picture ${index + 1}') : const Text('Video'),
         subtitle: const Text('Click To view it'),
         onTap: () {
-          viewPicture(index);
+          option == 0 ? viewPicture(index) : viewVideo();
         },
       ),
     );
@@ -392,6 +443,20 @@ class _TicketBuilderState extends State<TicketBuilder> {
             number: index,
           ),
         ),
+      );
+    } catch (e) {
+      // If an error occurs, log the error to the console.
+
+    }
+  }
+
+  viewVideo() async {
+    try {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (_) => DisplayVideoScreen(
+                  videoURL: ticket!.videoURL,
+                )),
       );
     } catch (e) {
       // If an error occurs, log the error to the console.

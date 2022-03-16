@@ -29,6 +29,14 @@ class _HomeBuilderDtaState extends State<HomeBuilderDta> {
       }
     });
 
+    List<Ticket> flilter = [];
+
+    for (var item in ticketData) {
+      if (item.privacy == 'Public') {
+        flilter.add(item);
+      }
+    }
+
     return loading
         ? const Loading()
         : Column(children: [
@@ -37,15 +45,15 @@ class _HomeBuilderDtaState extends State<HomeBuilderDta> {
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: ticketData.length,
+                  itemCount: flilter.length,
                   itemBuilder: (context, index) {
                     return TicketBuilder(
-                      ticket: ticketData[index],
+                      ticket: flilter[index],
                       traget: 'Home',
                     );
                   },
                 )),
-            ticketData.isEmpty
+            flilter.isEmpty
                 ? const Text('No Ticket Yet',
                     style: TextStyle(fontSize: 20, color: Colors.white))
                 : Container()

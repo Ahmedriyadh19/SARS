@@ -28,11 +28,13 @@ class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
       return a.dateTime.compareTo(b.dateTime);
     });
 
-    ticketData.where(
-      (element) {
-        return element.userId == uid;
-      },
-    );
+    List<Ticket> flilter = [];
+
+    for (var item in ticketData) {
+      if (item.userId == uid) {
+        flilter.add(item);
+      }
+    }
 
     setState(() {
       loading == true;
@@ -49,15 +51,15 @@ class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: ticketData.length,
+                  itemCount: flilter.length,
                   itemBuilder: (context, index) {
                     return TicketBuilder(
-                      ticket: ticketData[index],
+                      ticket: flilter[index],
                       traget: 'Histroy',
                     );
                   },
                 )),
-            ticketData.isEmpty
+            flilter.isEmpty
                 ? const Text('No Ticket Yet',
                     style: TextStyle(fontSize: 20, color: Colors.white))
                 : Container()

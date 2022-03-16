@@ -209,7 +209,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                 ),
                               )),
                           Step(
-                              title: const Text('Step 3: Location'),
+                              title: const Text('Step 3: Location (Optional)'),
                               content: SingleChildScrollView(
                                 child: TextFormField(
                                   style: TextStyle(
@@ -333,7 +333,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                     ]),
                               )),
                           Step(
-                            title: const Text('Step 6: Privacy (Important !)'),
+                            title: const Text('Step 6: Privacy (Important!)'),
                             content: SingleChildScrollView(
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -597,6 +597,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
   bool getInitialized() {
     String cleanString = filter.censor(myController[1].text);
     String typeOfIssue;
+    Ticket _ticket;
 
     if (myController[0].text.isEmpty) {
       typeOfIssue = dropMenuValue!;
@@ -604,26 +605,41 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
       typeOfIssue = myController[0].text;
     }
 
-    if (myController[2].text.isEmpty) {
+    if (myController[2].text.isNotEmpty) {
       setState(() {
-        myController[2].text == targetUser!.address;
+        targetUser!.address == myController[2].text;
       });
     }
-
-    Ticket _ticket = Ticket(
-        dateTime: DateTime.now(),
-        description: cleanString,
-        userId: targetUser!.uid!,
-        type: typeOfIssue,
-        status: 0,
-        location: myController[2].text,
-        attachmentsImages: images,
-        feeddback: '',
-        rate: 0,
-        privacy: isPrivacy,
-        userName: targetUser!.name,
-        attachmentVideo: File(videoFile!.path),
-        attachmentsImagesUrlData: []);
+    if (videoFile != null) {
+      _ticket = Ticket(
+          dateTime: DateTime.now(),
+          description: cleanString,
+          userId: targetUser!.uid!,
+          type: typeOfIssue,
+          status: 0,
+          location: targetUser!.address!,
+          attachmentsImages: images,
+          feeddback: '',
+          rate: 0,
+          privacy: isPrivacy,
+          userName: targetUser!.name,
+          attachmentVideo: File(videoFile!.path),
+          attachmentsImagesUrlData: []);
+    } else {
+      _ticket = Ticket(
+          dateTime: DateTime.now(),
+          description: cleanString,
+          userId: targetUser!.uid!,
+          type: typeOfIssue,
+          status: 0,
+          location: targetUser!.address!,
+          attachmentsImages: images,
+          feeddback: '',
+          rate: 0,
+          privacy: isPrivacy,
+          userName: targetUser!.name,
+          attachmentsImagesUrlData: []);
+    }
 
     try {
       DatabaseFeatures(uidUser: targetUser!.uid).pushNewTicket(_ticket);
