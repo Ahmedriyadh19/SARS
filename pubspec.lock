@@ -247,6 +247,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  gesture_x_detector:
+    dependency: transitive
+    description:
+      name: gesture_x_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  helpers:
+    dependency: transitive
+    description:
+      name: helpers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.4"
   html:
     dependency: transitive
     description:
@@ -338,13 +352,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  multi_sort:
-    dependency: "direct main"
-    description:
-      name: multi_sort
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   nested:
     dependency: transitive
     description:
@@ -553,6 +560,55 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.7"
+  video_viewer:
+    dependency: "direct main"
+    description:
+      name: video_viewer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.7"
+  volume_watcher:
+    dependency: transitive
+    description:
+      name: volume_watcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
+  wakelock:
+    dependency: transitive
+    description:
+      name: wakelock
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.6"
+  wakelock_macos:
+    dependency: transitive
+    description:
+      name: wakelock_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
+  wakelock_platform_interface:
+    dependency: transitive
+    description:
+      name: wakelock_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
+  wakelock_web:
+    dependency: transitive
+    description:
+      name: wakelock_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
+  wakelock_windows:
+    dependency: transitive
+    description:
+      name: wakelock_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   win32:
     dependency: transitive
     description:

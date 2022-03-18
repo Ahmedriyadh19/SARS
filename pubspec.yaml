@@ -42,7 +42,7 @@ dependencies:
   path_provider: ^2.0.9
   video_player: ^2.2.19
   uuid: ^3.0.6
-  multi_sort: ^3.0.0
+  video_viewer: ^1.2.7
   
 
 dev_dependencies:
