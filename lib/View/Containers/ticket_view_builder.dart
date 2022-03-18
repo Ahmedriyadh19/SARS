@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:reviews_slider/reviews_slider.dart';
 import 'package:sars/Model/ticket.dart';
 import 'package:sars/View/Containers/view_image_builder.dart';
 import 'package:sars/View/Containers/view_video_builder.dart';
@@ -22,12 +23,14 @@ class _TicketBuilderState extends State<TicketBuilder> {
   bool radioBtn = false;
   String? isPrivacy = 'Private';
   String val = 'Private';
+  int selectedValueRate = 3;
   final String videoIcon =
       'https://firebasestorage.googleapis.com/v0/b/sars-e6e88.appspot.com/o/resident%2Fprofile%2Ficons8_video_96px.png?alt=media&token=2e82595a-2f9b-4339-94fb-26c7f00c06d3';
 
   @override
   Widget build(BuildContext context) {
     ticket = widget.ticket;
+    ticket!.status = 2;
     String isHome = widget.traget!;
     return Container(
       alignment: Alignment.center,
@@ -144,6 +147,76 @@ class _TicketBuilderState extends State<TicketBuilder> {
                           : Container()
                     ]))
                   : Container(),
+              (ticket!.status == 2 && isHome == 'Histroy') &&
+                      (ticket!.rate != null || ticket!.feeddback!.isEmpty)
+                  ? SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: const EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(10),
+                              child: const Text(
+                                'Rate & Feedback',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              )),
+                          Container(
+                              margin: const EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color:
+                                      const Color.fromARGB(120, 169, 225, 228)),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'How was the help you received?',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  ReviewSlider(
+                                    circleDiameter: 47,
+                                    onChange: onChangeRate,
+                                  ),
+                                  // const SizedBox(height: 10),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: TextFormField(
+                                      style: TextStyle(
+                                          color: Colors.white.withOpacity(0.7)),
+                                      autocorrect: true,
+                                      decoration: const InputDecoration(
+                                          hintText: 'What\'s Your Feedback'),
+                                      minLines: 1,
+                                      maxLines: 5,
+                                      keyboardType: TextInputType
+                                          .multiline, // user keyboard will have a button to move cursor to next line
+                                      maxLength: 250,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  ElevatedButton(
+                                    child: const Text('Submit'),
+                                    onPressed: () {},
+                                  ),
+                                  const SizedBox(height: 5)
+                                ],
+                              )),
+                        ],
+                      ),
+                    )
+                  : Container(),
               isHome == 'Home'
                   ? Container()
                   : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -172,22 +245,6 @@ class _TicketBuilderState extends State<TicketBuilder> {
                             )
                           : const SizedBox(),
                     ]),
-              (ticket!.status == 2 && isHome == 'Histroy') &&
-                      (ticket!.rate != 0 || ticket!.feeddback.isEmpty)
-                  ? SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            child: const Text('Rate'),
-                          ),
-                          Container(
-                              alignment: Alignment.center,
-                              child: const Text('Rate'))
-                        ],
-                      ),
-                    )
-                  : Container()
             ])),
       )),
     );
@@ -218,7 +275,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                 child: SingleChildScrollView(
                     child: option == 1
                         ? SingleChildScrollView(
-                          child: Container(
+                            child: Container(
                             margin: const EdgeInsets.all(15),
                             padding: const EdgeInsets.all(15),
                             child: getContainerForAll(
@@ -231,15 +288,8 @@ class _TicketBuilderState extends State<TicketBuilder> {
                                           color: Colors.white.withOpacity(0.7)),
                                       autocorrect: true,
                                       decoration: const InputDecoration(
-                                          label: Center(
-                                            child: Text(
-                                              'Why do you want to cancel the ticket?',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20),
-                                            ),
-                                          ),
-                                          hintText: 'Enter your reason'),
+                                          hintText:
+                                              'Why do you want to cancel the ticket?'),
                                       minLines: 1,
                                       maxLines: 5,
                                       keyboardType: TextInputType
@@ -252,8 +302,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                                     ),
                                   ]),
                             ),
-                          )
-                        )
+                          ))
                         : SingleChildScrollView(
                             child: Container(
                             margin: const EdgeInsets.all(15),
@@ -462,5 +511,11 @@ class _TicketBuilderState extends State<TicketBuilder> {
       // If an error occurs, log the error to the console.
 
     }
+  }
+
+  onChangeRate(int value) {
+    setState(() {
+      selectedValueRate = value;
+    });
   }
 }

@@ -62,7 +62,7 @@ class _ForgetPasswordPage extends State {
                 backgroundColor: const Color.fromARGB(255, 0, 188, 212),
                 children: [
                   const Text(
-                    'The link has been send to your Email.\nPlease check your email.',
+                    'The link has been sent to your Email.\nPlease check your email.',
                     style: TextStyle(color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
@@ -92,7 +92,6 @@ class _ForgetPasswordPage extends State {
   @override
   Widget build(BuildContext context) {
     double? newWidth = MediaQuery.of(context).size.width - 50;
-
     return loading
         ? const Loading()
         : Scaffold(

@@ -43,6 +43,7 @@ dependencies:
   video_player: ^2.2.19
   uuid: ^3.0.6
   video_viewer: ^1.2.7
+  reviews_slider: ^2.0.0
   
 
 dev_dependencies:

@@ -634,8 +634,6 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
           status: 0,
           location: targetUser!.address!,
           attachmentsImages: images,
-          feeddback: '',
-          rate: 0,
           privacy: isPrivacy,
           userName: targetUser!.name,
           attachmentsImagesUrlData: []);
