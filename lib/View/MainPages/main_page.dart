@@ -95,8 +95,8 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromRGBO(0, 173, 181, 1),
-            Color.fromRGBO(0, 57, 60, 1),
+            Color.fromARGB(218, 0, 170, 179),
+            Color.fromRGBO(170, 227, 230, 1),
           ],
         )),
         child: Center(

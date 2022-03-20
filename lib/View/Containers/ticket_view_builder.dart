@@ -30,7 +30,6 @@ class _TicketBuilderState extends State<TicketBuilder> {
   @override
   Widget build(BuildContext context) {
     ticket = widget.ticket;
-    ticket!.status = 2;
     String isHome = widget.traget!;
     return Container(
       alignment: Alignment.center,

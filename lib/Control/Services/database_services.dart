@@ -98,7 +98,7 @@ class DatabaseFeatures {
                 List<String>.from(data.doc['attachmentImages']),
             dateTime: DateTime.parse(data.doc['dateTime'].toDate().toString()),
             description: data.doc['description'] ?? '',
-            feeddback: data.doc['feedback'],
+            feeddback: data.doc['feedback'] ?? '',
             location: data.doc['location'] ?? '',
             rate: data.doc['rate'],
             status: data.doc['status'] ?? 0,
@@ -142,6 +142,4 @@ class DatabaseFeatures {
       return User();
     });
   }
-
-
 }

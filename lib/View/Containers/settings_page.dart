@@ -70,17 +70,17 @@ class _SettingsBuilderPageState extends State<SettingsBuilderPage> {
               child: Divider(
             indent: 60,
             endIndent: 20,
-            color: Colors.white,
+            color: Colors.black,
           )),
           Text(
             "Sign out",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
           ),
           Expanded(
               child: Divider(
             indent: 20,
             endIndent: 60,
-            color: Colors.white,
+            color: Colors.black,
           )),
         ]),
         const SizedBox(height: 30),
@@ -93,11 +93,10 @@ class _SettingsBuilderPageState extends State<SettingsBuilderPage> {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(9.0),
-                      side: const BorderSide(
-                          color: Color.fromARGB(255, 141, 218, 221)))),
-              elevation: MaterialStateProperty.all(30),
-              backgroundColor:
-                  MaterialStateProperty.all(const Color.fromARGB(0, 0, 57, 60)),
+                      side: const BorderSide(color: Colors.black))),
+              elevation: MaterialStateProperty.all(0),
+              backgroundColor: MaterialStateProperty.all(
+                  const Color.fromARGB(185, 226, 21, 21)),
               padding: MaterialStateProperty.all(
                   const EdgeInsets.only(left: 112, right: 112)),
               textStyle:

@@ -134,7 +134,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                         elevation: 50,
                         steps: [
                           Step(
-                              title: const Text('Step 1: Type of Issue'),
+                              title: const Text('Step 1: Type of Issue*'),
                               content: SingleChildScrollView(
                                 child: Column(children: [
                                   Container(
@@ -163,13 +163,10 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                   ),
                                   otherActive
                                       ? TextFormField(
-                                          style: TextStyle(
-                                              color: Colors.white
-                                                  .withOpacity(0.7)),
                                           autocorrect: true,
                                           decoration: InputDecoration(
                                             label: const Text(
-                                              'Your Issue',
+                                              'Your Issue*',
                                               style: TextStyle(
                                                   color: Colors.black),
                                             ),
@@ -187,11 +184,9 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                 ]),
                               )),
                           Step(
-                              title: const Text('Step 2: Description'),
+                              title: const Text('Step 2: Description*'),
                               content: SingleChildScrollView(
                                 child: TextFormField(
-                                  style: TextStyle(
-                                      color: Colors.white.withOpacity(0.7)),
                                   autocorrect: true,
                                   decoration: InputDecoration(
                                       label: const Text(
@@ -212,8 +207,6 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                               title: const Text('Step 3: Location (Optional)'),
                               content: SingleChildScrollView(
                                 child: TextFormField(
-                                  style: TextStyle(
-                                      color: Colors.white.withOpacity(0.7)),
                                   autocorrect: true,
                                   decoration: const InputDecoration(
                                       label: Text(
@@ -230,7 +223,8 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                 ),
                               )),
                           Step(
-                              title: const Text('Step 4: Take pictures'),
+                              title: const Text(
+                                  'Step 4: Take pictures (Optional)'),
                               content: SingleChildScrollView(
                                 child: Column(children: [
                                   isTherePictures
@@ -285,7 +279,8 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                 ]),
                               )),
                           Step(
-                              title: const Text('Step 5: Record a video'),
+                              title: const Text(
+                                  'Step 5: Record a video (Optional)'),
                               content: SingleChildScrollView(
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -333,7 +328,7 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
                                     ]),
                               )),
                           Step(
-                            title: const Text('Step 6: Privacy (Important!)'),
+                            title: const Text('Step 6: Privacy (Important!)*'),
                             content: SingleChildScrollView(
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
