@@ -4,19 +4,19 @@ import 'package:sars/Model/ticket.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
 import 'package:sars/View/Containers/ticket_view_builder.dart';
 
-class TicketHistroyBuilderData extends StatefulWidget {
+class HistroyBuilderData extends StatefulWidget {
   final String uid;
-  const TicketHistroyBuilderData({
+  const HistroyBuilderData({
     Key? key,
     required this.uid,
   }) : super(key: key);
 
   @override
-  State<TicketHistroyBuilderData> createState() =>
-      _TicketHistroyBuilderDataState();
+  State<HistroyBuilderData> createState() =>
+      _HistroyBuilderDataState();
 }
 
-class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
+class _HistroyBuilderDataState extends State<HistroyBuilderData> {
   bool loading = false;
 
   @override
@@ -53,7 +53,7 @@ class _TicketHistroyBuilderDataState extends State<TicketHistroyBuilderData> {
                   shrinkWrap: true,
                   itemCount: flilter.length,
                   itemBuilder: (context, index) {
-                    return TicketBuilder(
+                    return TicketViewBuilder(
                       ticket: flilter[index],
                       traget: 'Histroy',
                     );

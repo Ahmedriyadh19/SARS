@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sars/Model/announcement.dart';
 
-class AnnouncementBuilder extends StatelessWidget {
+class AnnouncementContainer extends StatelessWidget {
   final Announcement announcement;
 
-  const AnnouncementBuilder({Key? key, required this.announcement})
+  const AnnouncementContainer({Key? key, required this.announcement})
       : super(key: key);
 
   @override

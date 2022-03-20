@@ -10,18 +10,18 @@ import 'package:video_player/video_player.dart';
 import 'package:sars/View/Containers/view_image_builder.dart';
 import 'package:sars/View/Containers/view_video_builder.dart';
 
-class TicketBuilderPage extends StatefulWidget {
+class TicketContainer extends StatefulWidget {
   final User currentUser;
-  const TicketBuilderPage({
+  const TicketContainer({
     Key? key,
     required this.currentUser,
   }) : super(key: key);
 
   @override
-  State<TicketBuilderPage> createState() => _TicketBuilderPageState();
+  State<TicketContainer> createState() => _TicketBuilderPageState();
 }
 
-class _TicketBuilderPageState extends State<TicketBuilderPage> {
+class _TicketBuilderPageState extends State<TicketContainer> {
   bool otherActive = false;
   bool isTherePictures = false;
   bool radioBtn = false;
@@ -614,8 +614,6 @@ class _TicketBuilderPageState extends State<TicketBuilderPage> {
           status: 0,
           location: targetUser!.address!,
           attachmentsImages: images,
-          feeddback: '',
-          rate: 0,
           privacy: isPrivacy,
           userName: targetUser!.name,
           attachmentVideo: File(videoFile!.path),

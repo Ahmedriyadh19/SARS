@@ -3,18 +3,18 @@ import 'package:sars/Control/Services/auth.dart';
 import 'package:sars/Control/Services/database_services.dart';
 import 'package:sars/Model/user.dart';
 
-class SettingsBuilderPage extends StatefulWidget {
+class Settingscontainer extends StatefulWidget {
   final User userID;
-  const SettingsBuilderPage({
+  const Settingscontainer({
     Key? key,
     required this.userID,
   }) : super(key: key);
 
   @override
-  State<SettingsBuilderPage> createState() => _SettingsBuilderPageState();
+  State<Settingscontainer> createState() => _SettingsBuilderPageState();
 }
 
-class _SettingsBuilderPageState extends State<SettingsBuilderPage> {
+class _SettingsBuilderPageState extends State<Settingscontainer> {
   final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
   final AuthUserMethod _auth = AuthUserMethod();
 
@@ -92,9 +92,10 @@ class _SettingsBuilderPageState extends State<SettingsBuilderPage> {
           style: ButtonStyle(
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(9.0),
-                      side: const BorderSide(color: Colors.black))),
-              elevation: MaterialStateProperty.all(0),
+                borderRadius: BorderRadius.circular(
+                    9.0), /* side: const BorderSide(color: Colors.black) */
+              )),
+              elevation: MaterialStateProperty.all(20),
               backgroundColor: MaterialStateProperty.all(
                   const Color.fromARGB(185, 226, 21, 21)),
               padding: MaterialStateProperty.all(

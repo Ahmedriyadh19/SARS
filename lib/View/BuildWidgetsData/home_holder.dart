@@ -4,14 +4,14 @@ import 'package:sars/Model/ticket.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
 import 'package:sars/View/Containers/ticket_view_builder.dart';
 
-class HomeBuilderDta extends StatefulWidget {
-  const HomeBuilderDta({Key? key}) : super(key: key);
+class HomeBuilderData extends StatefulWidget {
+  const HomeBuilderData({Key? key}) : super(key: key);
 
   @override
-  State<HomeBuilderDta> createState() => _HomeBuilderDtaState();
+  State<HomeBuilderData> createState() => _HomeBuilderDataState();
 }
 
-class _HomeBuilderDtaState extends State<HomeBuilderDta> {
+class _HomeBuilderDataState extends State<HomeBuilderData> {
   bool loading = false;
 
   @override
@@ -47,7 +47,7 @@ class _HomeBuilderDtaState extends State<HomeBuilderDta> {
                   shrinkWrap: true,
                   itemCount: flilter.length,
                   itemBuilder: (context, index) {
-                    return TicketBuilder(
+                    return TicketViewBuilder(
                       ticket: flilter[index],
                       traget: 'Home',
                     );

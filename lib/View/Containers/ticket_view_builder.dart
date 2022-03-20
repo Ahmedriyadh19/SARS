@@ -5,20 +5,20 @@ import 'package:sars/Model/ticket.dart';
 import 'package:sars/View/Containers/view_image_builder.dart';
 import 'package:sars/View/Containers/view_video_builder.dart';
 
-class TicketBuilder extends StatefulWidget {
+class TicketViewBuilder extends StatefulWidget {
   final Ticket ticket;
   final String? traget;
-  const TicketBuilder({
+  const TicketViewBuilder({
     Key? key,
     required this.ticket,
     this.traget,
   }) : super(key: key);
 
   @override
-  State<TicketBuilder> createState() => _TicketBuilderState();
+  State<TicketViewBuilder> createState() => _TicketBuilderState();
 }
 
-class _TicketBuilderState extends State<TicketBuilder> {
+class _TicketBuilderState extends State<TicketViewBuilder> {
   Ticket? ticket;
   bool radioBtn = false;
   String? isPrivacy = 'Private';
@@ -30,6 +30,8 @@ class _TicketBuilderState extends State<TicketBuilder> {
   @override
   Widget build(BuildContext context) {
     ticket = widget.ticket;
+    ticket!.status = 2;
+    ticket!.rate = 2;
     String isHome = widget.traget!;
     return Container(
       alignment: Alignment.center,
@@ -147,7 +149,7 @@ class _TicketBuilderState extends State<TicketBuilder> {
                     ]))
                   : Container(),
               (ticket!.status == 2 && isHome == 'Histroy') &&
-                      (ticket!.rate != null || ticket!.feeddback!.isEmpty)
+                      (ticket!.rate == null && ticket!.feeddback!.isEmpty)
                   ? SingleChildScrollView(
                       child: Column(
                         children: [
@@ -207,7 +209,9 @@ class _TicketBuilderState extends State<TicketBuilder> {
                                   ),
                                   ElevatedButton(
                                     child: const Text('Submit'),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      print(selectedValueRate);
+                                    },
                                   ),
                                   const SizedBox(height: 5)
                                 ],
@@ -215,6 +219,20 @@ class _TicketBuilderState extends State<TicketBuilder> {
                         ],
                       ),
                     )
+                  : Container(),
+              ticket!.rate != null || ticket!.feeddback!.isNotEmpty
+                  ? Column(children: [
+                      Container(
+                          margin: const EdgeInsets.all(4),
+                          padding: const EdgeInsets.all(10),
+                          child: const Text(
+                            'Rate & Feedback',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          )),
+                      getContainerForAll(drowStars(ticket!.rate!))
+                    ])
                   : Container(),
               isHome == 'Home'
                   ? Container()
@@ -516,5 +534,28 @@ class _TicketBuilderState extends State<TicketBuilder> {
     setState(() {
       selectedValueRate = value;
     });
+  }
+
+  drowStars(int s) {
+    List<Widget> stars = [const Text('Rate:    ')];
+    for (int i = 0; i < 5; i++) {
+      if (i <= s) {
+        stars.add(const Icon(
+          Icons.star_outlined,
+          color: Color.fromARGB(255, 255, 149, 41),
+        ));
+      } else {
+        stars.add(const Icon(
+          Icons.star_border_rounded,
+          color: Color.fromARGB(255, 255, 149, 41),
+        ));
+      }
+    }
+    return Column(children: [
+      Row(
+        children: stars,
+      ),
+      const SizedBox(height: 3),
+    ]);
   }
 }

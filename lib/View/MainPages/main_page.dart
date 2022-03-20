@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Model/user.dart';
-import 'package:sars/View/Containers/settings_page.dart';
-import 'package:sars/View/Containers/ticket_page.dart';
-import 'package:sars/View/StreamBranchPages/announcement_page.dart';
-import 'package:sars/View/StreamBranchPages/history_page.dart';
-import '../StreamBranchPages/home_page.dart';
+import 'package:sars/View/Containers/settings_container.dart';
+import 'package:sars/View/Containers/ticket_container.dart';
+import 'package:sars/View/Streams/announcement_stream.dart';
+import 'package:sars/View/Streams/ticket_stream.dart';
 
 class MainPageBuilder extends StatefulWidget {
   final User currentUser;
@@ -39,11 +38,11 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
   Widget build(BuildContext context) {
     User targetUser = widget.currentUser;
     List<Widget> bodies = [
-      const HomePageBuilder(),
+      TicketStreamBuilder(userID: targetUser.uid!, targetPage: 'Home'),
       const AnnouncementBuilderStreamListener(),
-      HistoryPageBuilder(userID: targetUser.uid!),
-      TicketBuilderPage(currentUser: targetUser),
-      SettingsBuilderPage(userID: targetUser)
+      TicketStreamBuilder(userID: targetUser.uid!, targetPage: 'History'),
+      TicketContainer(currentUser: targetUser),
+      Settingscontainer(userID: targetUser)
     ];
     return Scaffold(
       appBar: AppBar(
