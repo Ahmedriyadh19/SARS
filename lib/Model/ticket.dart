@@ -5,6 +5,7 @@ class Ticket {
   String? remark = '';
   String? privacy = 'Private';
   String? videoURL;
+  String? ticketID;
   String userId;
   String type;
   String description;
@@ -32,6 +33,7 @@ class Ticket {
     this.privacy,
     this.userName,
     this.attachmentVideo,
+    this.ticketID,
     this.videoURL,
   });
 

@@ -210,7 +210,7 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                   ElevatedButton(
                                     child: const Text('Submit'),
                                     onPressed: () {
-                                      print(selectedValueRate);
+                                     
                                     },
                                   ),
                                   const SizedBox(height: 5)

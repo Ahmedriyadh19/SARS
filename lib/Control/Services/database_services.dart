@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sars/Model/announcement.dart';
 import 'package:sars/Model/ticket.dart';
 import 'package:sars/Model/user.dart';
+import 'package:uuid/uuid.dart';
 
 class DatabaseFeatures {
   String? uidUser;
@@ -50,6 +51,9 @@ class DatabaseFeatures {
   }
 
   Future pushNewTicket(Ticket t) async {
+    Uuid uuid = const Uuid();
+    var id = uuid.v4;
+    t.ticketID = id as String?;
     if (t.attachmentsImages.isNotEmpty) {
       t.attachmentsImagesUrlData = await uploadFiles(t.attachmentsImages);
     }
@@ -57,6 +61,7 @@ class DatabaseFeatures {
       t.videoURL = await uploadFile(t.attachmentVideo!);
     }
     return await _databaseCollection.collection('ticket').doc().set({
+      'ticketID': t.ticketID,
       'dateTime': database_firestore.Timestamp.fromDate(t.dateTime),
       'description': t.description,
       'typeOfTicket': t.type,
@@ -98,6 +103,7 @@ class DatabaseFeatures {
                 List<String>.from(data.doc['attachmentImages']),
             dateTime: DateTime.parse(data.doc['dateTime'].toDate().toString()),
             description: data.doc['description'] ?? '',
+            ticketID: data.doc['ticketID'],
             feeddback: data.doc['feedback'] ?? '',
             location: data.doc['location'] ?? '',
             rate: data.doc['rate'],
