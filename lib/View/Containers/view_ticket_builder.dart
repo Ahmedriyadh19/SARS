@@ -30,8 +30,6 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
   @override
   Widget build(BuildContext context) {
     ticket = widget.ticket;
-    ticket!.status = 2;
-    ticket!.rate = 2;
     String isHome = widget.traget!;
     return Container(
       alignment: Alignment.center,
@@ -149,7 +147,9 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                     ]))
                   : Container(),
               (ticket!.status == 2 && isHome == 'Histroy') &&
-                      (ticket!.rate == null && ticket!.feeddback!.isEmpty)
+                      (ticket!.rate == null &&
+                          (ticket!.feeddback == null ||
+                              ticket!.feeddback!.isEmpty))
                   ? SingleChildScrollView(
                       child: Column(
                         children: [
@@ -209,9 +209,7 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                   ),
                                   ElevatedButton(
                                     child: const Text('Submit'),
-                                    onPressed: () {
-                                     
-                                    },
+                                    onPressed: () {},
                                   ),
                                   const SizedBox(height: 5)
                                 ],
@@ -220,7 +218,9 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                       ),
                     )
                   : Container(),
-              ticket!.rate != null || ticket!.feeddback!.isNotEmpty
+              ticket!.rate != null ||
+                      (ticket!.feeddback != null &&
+                          ticket!.feeddback!.isNotEmpty)
                   ? Column(children: [
                       Container(
                           margin: const EdgeInsets.all(4),
@@ -231,7 +231,8 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                               fontSize: 20,
                             ),
                           )),
-                      getContainerForAll(drowStars(ticket!.rate!))
+                      getContainerForAll(drowStarsAndFeedback(
+                          stars: ticket!.rate, feedback: ticket!.feeddback))
                     ])
                   : Container(),
               isHome == 'Home'
@@ -500,7 +501,7 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
     );
   }
 
-  viewPicture(int index) async {
+  dynamic viewPicture(int index) async {
     try {
       await Navigator.of(context).push(
         MaterialPageRoute(
@@ -516,7 +517,7 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
     }
   }
 
-  viewVideo() async {
+  dynamic viewVideo() async {
     try {
       await Navigator.of(context).push(
         MaterialPageRoute(
@@ -530,22 +531,26 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
     }
   }
 
-  onChangeRate(int value) {
+  dynamic onChangeRate(int value) {
     setState(() {
       selectedValueRate = value;
     });
   }
 
-  drowStars(int s) {
-    List<Widget> stars = [const Text('Rate:    ')];
+  dynamic drowStarsAndFeedback({int? stars, String? feedback}) {
+    List<Widget> starsWidegt = [
+      const Text('Rate:         ', style: TextStyle(fontSize: 20))
+    ];
     for (int i = 0; i < 5; i++) {
-      if (i <= s) {
-        stars.add(const Icon(
-          Icons.star_outlined,
-          color: Color.fromARGB(255, 255, 149, 41),
-        ));
+      if (stars != null) {
+        if (i <= stars) {
+          starsWidegt.add(const Icon(
+            Icons.star_outlined,
+            color: Color.fromARGB(255, 255, 149, 41),
+          ));
+        }
       } else {
-        stars.add(const Icon(
+        starsWidegt.add(const Icon(
           Icons.star_border_rounded,
           color: Color.fromARGB(255, 255, 149, 41),
         ));
@@ -553,9 +558,23 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
     }
     return Column(children: [
       Row(
-        children: stars,
+        children: starsWidegt,
       ),
-      const SizedBox(height: 3),
+      const SizedBox(height: 8),
+      feedback != null && feedback.isEmpty
+          ? Column(
+              children: [
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'Feedback: ',
+                      style: TextStyle(fontSize: 20),
+                    )),
+                const SizedBox(height: 3),
+                Text(feedback, style: const TextStyle(fontSize: 15)),
+              ],
+            )
+          : Container()
     ]);
   }
 }

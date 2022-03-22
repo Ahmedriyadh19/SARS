@@ -52,7 +52,7 @@ class DatabaseFeatures {
 
   Future pushNewTicket(Ticket t) async {
     Uuid uuid = const Uuid();
-    var id = uuid.v4();
+    String id = uuid.v4();
     t.ticketID = id;
     if (t.attachmentsImages.isNotEmpty) {
       t.attachmentsImagesUrlData = await uploadFiles(t.attachmentsImages);
@@ -104,7 +104,7 @@ class DatabaseFeatures {
             dateTime: DateTime.parse(data.doc['dateTime'].toDate().toString()),
             description: data.doc['description'] ?? '',
             ticketID: data.doc['ticketID'],
-            feeddback: data.doc['feedback'] ?? '',
+            feeddback: data.doc['feedback'],
             location: data.doc['location'] ?? '',
             rate: data.doc['rate'],
             status: data.doc['status'] ?? 0,

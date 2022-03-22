@@ -6,11 +6,11 @@ class Ticket {
   String? privacy = 'Private';
   String? videoURL;
   String? ticketID;
+  String? feeddback;
   String userId;
   String type;
   String description;
   String location;
-  String? feeddback;
   int status = 0;
   int? rate;
   DateTime dateTime;

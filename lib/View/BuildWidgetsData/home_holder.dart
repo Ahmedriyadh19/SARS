@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sars/Model/ticket.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
-import 'package:sars/View/Containers/ticket_view_builder.dart';
+import 'package:sars/View/Containers/view_ticket_builder.dart';
 
 class HomeBuilderData extends StatefulWidget {
   const HomeBuilderData({Key? key}) : super(key: key);
