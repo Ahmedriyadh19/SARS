@@ -51,16 +51,14 @@ class DatabaseFeatures {
   }
 
   Future pushNewTicket(Ticket t) async {
-    Uuid uuid = const Uuid();
-    String id = uuid.v4();
-    t.ticketID = id;
+    t.ticketID = const Uuid().v4().split('-').join();
     if (t.attachmentsImages.isNotEmpty) {
       t.attachmentsImagesUrlData = await uploadFiles(t.attachmentsImages);
     }
     if (t.attachmentVideo != null) {
       t.videoURL = await uploadFile(t.attachmentVideo!);
     }
-    return await _databaseCollection.collection('ticket').doc().set({
+    return await _databaseCollection.collection('ticket').doc(t.ticketID).set({
       'ticketID': t.ticketID,
       'dateTime': database_firestore.Timestamp.fromDate(t.dateTime),
       'description': t.description,
