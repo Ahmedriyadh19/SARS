@@ -24,10 +24,13 @@ class AuthUserMethod {
 // Lgin Email & Password
 
   Future loginUserEmailPass(String e, String p) async {
+    String email = e;
+   email= e.toLowerCase();
+   email= e.trim();
     errorMsg = '';
     try {
       firebase.UserCredential resultAuth =
-          await _auth.signInWithEmailAndPassword(email: e.trim(), password: p);
+          await _auth.signInWithEmailAndPassword(email: email, password: p);
       firebase.User userEmailAndPassFromAuth = resultAuth.user as firebase.User;
       return _userFromFirebase(userEmailAndPassFromAuth);
     } catch (e) {

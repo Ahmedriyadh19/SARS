@@ -17,7 +17,7 @@ class DatabaseFeatures {
   Future createNewUserInfo(User u) async {
     return await _databaseCollection.collection('user').doc(uidUser).set({
       'fullname': u.name,
-      'email': u.email,
+      'email': u.email!.toLowerCase(),
       'address': u.address,
       'role': 'r',
       'phonenumber': u.phone,
@@ -63,7 +63,7 @@ class DatabaseFeatures {
       'dateTime': database_firestore.Timestamp.fromDate(t.dateTime),
       'description': t.description,
       'typeOfTicket': t.type,
-      'status': t.status,
+      'status': '${t.status}',
       'location': t.location,
       'attachmentImages': t.attachmentsImagesUrlData,
       'attachmentvideo': t.videoURL,
@@ -105,7 +105,7 @@ class DatabaseFeatures {
             feeddback: data.doc['feedback'],
             location: data.doc['location'] ?? '',
             rate: data.doc['rate'],
-            status: data.doc['status'] ?? 0,
+            status: int.parse(data.doc['status']),
             type: data.doc['typeOfTicket'] ?? '',
             attachmentsImages: [],
             userName: data.doc['userName'] ?? '',

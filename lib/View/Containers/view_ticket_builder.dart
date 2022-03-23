@@ -30,6 +30,7 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
   @override
   Widget build(BuildContext context) {
     ticket = widget.ticket;
+    ticket!.rate = 2;
     String isHome = widget.traget!;
     return Container(
       alignment: Alignment.center,
@@ -546,6 +547,11 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
         if (i <= stars) {
           starsWidegt.add(const Icon(
             Icons.star_outlined,
+            color: Color.fromARGB(255, 255, 149, 41),
+          ));
+        } else {
+          starsWidegt.add(const Icon(
+            Icons.star_border_rounded,
             color: Color.fromARGB(255, 255, 149, 41),
           ));
         }
