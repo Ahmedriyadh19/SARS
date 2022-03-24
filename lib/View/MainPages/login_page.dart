@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
-import 'package:sars/View/MainPages/forget_password.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
+import 'package:sars/View/MainPages/forget_password.dart';
 import 'package:sars/View/MainPages/registration_page.dart';
 
 class LoginBuilder extends StatefulWidget {
@@ -209,12 +209,9 @@ class _LoginPage extends State {
                                         color:
                                             Color.fromARGB(255, 87, 188, 237)),
                                   ),
-                                  onTap: () => {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (_) =>
-                                          const ForgetPasswordBuilder(),
-                                    ))
+                                  onTap: () async => {
+                                    await ForgetPassword()
+                                        .showBottomBoxForgetPass(context)
                                   },
                                 ),
                                 const SizedBox(height: 4),
@@ -339,156 +336,3 @@ class _LoginPage extends State {
     );
   }
 }
-
-/*   doLogin() {
-    if (checkValidatorLogin()) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (_) => const MainPageBuilder(),
-      ));
-    }
-  } */
-/* 
-      showForgetPasswordPage() {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.black.withOpacity(0.5),
-        elevation: 10,
-        builder: (_) {
-          return Container(
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(0, 173, 181, 0.6),
-                  Color.fromRGBO(0, 57, 60, 0.6),
-                ],
-              )),
-              alignment: Alignment.center,
-              child: SingleChildScrollView(
-                  child: Center(
-                      child: Container(
-                          alignment: Alignment.center,
-                          width: 350,
-                          height: 290,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(45),
-                              color: Colors.black.withOpacity(0.1)),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                const Text(
-                                  'Forget Password',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      color: const Color.fromARGB(
-                                          255, 169, 225, 228)),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      icon: const Icon(
-                                        Icons.email_rounded,
-                                        color: Colors.black,
-                                      ),
-                                      errorText: errorForgetPassword,
-                                      labelText: 'Email',
-                                      hintText: 'Enter Your Email',
-                                      labelStyle:
-                                          const TextStyle(color: Colors.black),
-                                      iconColor: Colors.black,
-                                    ),
-                                    keyboardType: TextInputType.emailAddress,
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 50, right: 50),
-                                  child: ElevatedButton(
-                                    child: const Text('Submit'),
-                                    style: ButtonStyle(
-                                        elevation:
-                                            MaterialStateProperty.all(30),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                side: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 141, 218, 221)))),
-                                        backgroundColor: MaterialStateProperty.all(
-                                            const Color.fromARGB(0, 0, 57, 60)),
-                                        padding: MaterialStateProperty.all(
-                                            const EdgeInsets.only(left: 50, right: 50)),
-                                        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
-                                    onPressed: checkValidatorForgetPassword,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )))));
-        },
-      );
-    } */
-
-    /* 
-  checkValidatorForgetPassword() async {
-    checkerForgetPass == true;
-
-    if (myControllerForgetPass.text.isEmpty) {
-      setState(() {
-        errorForgetPassword = 'Email is required';
-        checkerForgetPass = false;
-      });
-    }
-
-    if (checkerForgetPass == true) {
-      dynamic result =
-          await _auth.userForgetPasswor(myControllerForgetPass.text);
-      if (result == null) {
-        setState(() {
-          errorForgetPassword = _auth.getErrorMsg();
-        });
-      } else {
-        myControllerForgetPass.clear();
-        errorForgetPassword = '';
-        showDialog(
-          context: context,
-          builder: (context) => SimpleDialog(
-            title: const Text('Forget PassWord'),
-            contentPadding: const EdgeInsets.all(20.0),
-            backgroundColor: const Color.fromARGB(255, 85, 200, 205),
-            children: [
-              Text(
-                msg,
-                textAlign: TextAlign.center,
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 15.0),
-                child: TextButton(
-                  child: const Text(
-                    'Close.',
-                    style: TextStyle(color: Color.fromARGB(255, 18, 49, 85)),
-                  ),
-                  onPressed: () => {Navigator.of(context).pop()},
-                ),
-              )
-            ],
-          ),
-        );
-      }
-    }
-  }
- */
