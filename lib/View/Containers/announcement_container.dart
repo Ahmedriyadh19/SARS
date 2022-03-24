@@ -21,27 +21,32 @@ class AnnouncementContainer extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text(
-                    announcement.title,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                  )
-                ]),
-                const SizedBox(height: 10),
                 SingleChildScrollView(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                            (DateFormat.yMMMMEEEEd()
-                                .add_jm()
-                                .format(announcement.dateTime)),
-                            style: const TextStyle(
-                              // color: Color.fromARGB(255, 0, 188, 212),
-                              fontSize: 15,
-                            ))
-                      ]),
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: SelectableText(
+                      announcement.title,
+                      showCursor: true,
+                      toolbarOptions:
+                          const ToolbarOptions(copy: true, selectAll: true),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: SingleChildScrollView(
+                    child: Text(
+                        (DateFormat.yMMMMEEEEd()
+                            .add_jm()
+                            .format(announcement.dateTime)),
+                        style: const TextStyle(
+                          // color: Color.fromARGB(255, 0, 188, 212),
+                          fontSize: 15,
+                        )),
+                  ),
                 ),
                 SingleChildScrollView(
                   child: Container(
