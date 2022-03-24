@@ -98,11 +98,10 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                           )))
                   : Container(),
               ticket!.remark != null && ticket!.remark!.isNotEmpty
-                  ? getContainerForAll(
-                      Text('Ticket Description: ${ticket!.remark}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                          )))
+                  ? getContainerForAll(Text('Remark: ${ticket!.remark}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                      )))
                   : Container(),
               ticket!.attachmentsImagesUrlData.isNotEmpty ||
                       ticket!.videoURL!.isNotEmpty

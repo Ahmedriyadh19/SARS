@@ -25,8 +25,8 @@ class AuthUserMethod {
 
   Future loginUserEmailPass(String e, String p) async {
     String email = e;
-   email= e.toLowerCase();
-   email= e.trim();
+    email = e.toLowerCase();
+    email = e.trim();
     errorMsg = '';
     try {
       firebase.UserCredential resultAuth =
