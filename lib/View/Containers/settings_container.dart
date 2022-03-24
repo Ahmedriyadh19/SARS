@@ -147,6 +147,7 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
             await _auth.signOutUser();
           },
         ),
+        const SizedBox(height: 20)
       ],
     );
   }
@@ -169,12 +170,19 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
             )),
             alignment: Alignment.center,
             child: SingleChildScrollView(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    Icon(Icons.camera_alt_rounded),
-                    Icon(Icons.photo_library_rounded)
-                  ]),
+              child: Container(
+                margin: const EdgeInsets.all(25),
+                padding: const EdgeInsets.all(25),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: const Color.fromARGB(255, 169, 225, 228)),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const [
+                      Icon(Icons.camera_alt_rounded),
+                      Icon(Icons.photo_library_rounded)
+                    ]),
+              ),
             ));
       },
     );
