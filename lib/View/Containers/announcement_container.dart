@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sars/Model/announcement.dart';
-
 class AnnouncementContainer extends StatelessWidget {
   final Announcement announcement;
 

@@ -17,7 +17,7 @@ class DatabaseFeatures {
   Future createNewUserInfo(User u) async {
     return await _databaseCollection.collection('user').doc(uidUser).set({
       'fullname': u.name,
-      'email': u.email!.toLowerCase(),
+      'email': u.email!.trim(),
       'address': u.address,
       'role': 'r',
       'phonenumber': u.phone,

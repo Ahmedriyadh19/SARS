@@ -97,8 +97,8 @@ class ForgetPassword {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color.fromARGB(150, 0, 117, 122),
-                  Color.fromARGB(120, 219, 232, 233),
+                  Color.fromARGB(218, 0, 170, 179),
+                  Color.fromARGB(172, 66, 239, 248),
                 ],
               )),
               alignment: Alignment.center,
@@ -197,7 +197,7 @@ class ForgetPassword {
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                               color: Colors.red,
-                                              fontSize: 15.0)),
+                                              fontSize: 20.0)),
                                     )
                                   ],
                                 ),

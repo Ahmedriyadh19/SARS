@@ -618,16 +618,18 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
       ),
       const SizedBox(height: 8),
       feedback != null && feedback.isNotEmpty
-          ? Column(
+          ? Row(
               children: [
                 Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
                       'Feedback: ',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     )),
                 const SizedBox(height: 3),
-                Text(feedback, style: const TextStyle(fontSize: 15)),
+                Text(feedback, style: const TextStyle(fontSize: 18)),
               ],
             )
           : Container()

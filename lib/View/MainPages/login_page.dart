@@ -92,8 +92,8 @@ class _LoginPage extends State {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromRGBO(0, 173, 181, 1),
-            Color.fromRGBO(0, 57, 60, 1),
+            Color.fromARGB(218, 0, 170, 179),
+            Color.fromARGB(172, 66, 239, 248),
           ],
         )),
         alignment: Alignment.center,
@@ -114,7 +114,7 @@ class _LoginPage extends State {
                           padding: const EdgeInsets.only(top: 15, bottom: 15),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
-                              color: Colors.black.withOpacity(0.1)),
+                              color: Colors.black.withOpacity(0.3)),
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
@@ -206,8 +206,9 @@ class _LoginPage extends State {
                                   child: const Text(
                                     'Forget Password',
                                     style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 87, 188, 237)),
+                                      color: Color.fromARGB(255, 3, 7, 243),
+                                      decoration: TextDecoration.underline,
+                                    ),
                                   ),
                                   onTap: () async => {
                                     await ForgetPassword()
@@ -239,7 +240,7 @@ class _LoginPage extends State {
                                                       255, 141, 218, 221)))),
                                       elevation: MaterialStateProperty.all(30),
                                       backgroundColor: MaterialStateProperty.all(
-                                          const Color.fromARGB(0, 0, 57, 60)),
+                                          const Color.fromARGB(200, 0, 0, 0)),
                                       padding: MaterialStateProperty.all(
                                           const EdgeInsets.only(left: 112, right: 112)),
                                       textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
@@ -261,7 +262,7 @@ class _LoginPage extends State {
                                                   color: Color.fromARGB(
                                                       255, 141, 218, 221)))),
                                       backgroundColor: MaterialStateProperty.all(
-                                          const Color.fromARGB(0, 0, 57, 60)),
+                                          const Color.fromARGB(200, 0, 0, 0)),
                                       padding: MaterialStateProperty.all(
                                           const EdgeInsets.only(left: 105, right: 105)),
                                       textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
@@ -302,7 +303,7 @@ class _LoginPage extends State {
                           height: 70,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(45),
-                              color: Colors.black.withOpacity(0.1)),
+                              color: Colors.black.withOpacity(0.3)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [

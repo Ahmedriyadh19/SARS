@@ -42,7 +42,7 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
       const AnnouncementBuilderStreamListener(),
       TicketStreamBuilder(userID: targetUser.uid!, targetPage: 'History'),
       TicketContainer(currentUser: targetUser),
-      Settingscontainer(userID: targetUser)
+      Settingscontainer(user: targetUser)
     ];
     return Scaffold(
       appBar: AppBar(
@@ -95,7 +95,7 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
           end: Alignment.bottomRight,
           colors: [
             Color.fromARGB(218, 0, 170, 179),
-            Color.fromRGBO(170, 227, 230, 1),
+            Color.fromARGB(172, 66, 239, 248),
           ],
         )),
         child: Center(

@@ -72,7 +72,7 @@ class _TicketBuilderPageState extends State<TicketContainer> {
         : Column(
             children: [
               const SizedBox(
-                height: 250,
+                height: 25,
               ),
               Container(
                 width: newWidth,
@@ -405,7 +405,7 @@ class _TicketBuilderPageState extends State<TicketContainer> {
                 ]),
               ),
               const SizedBox(
-                height: 250,
+                height: 25,
               )
             ],
           );
