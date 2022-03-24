@@ -146,4 +146,26 @@ class DatabaseFeatures {
       return User();
     });
   }
+
+  Future editTicketPrivacy(String idTicket, String val) async {
+    return await _databaseCollection
+        .collection('ticket')
+        .doc(idTicket)
+        .update({'privacy': val});
+  }
+
+  Future cancelTicket(String idTicket, String val) async {
+    return await _databaseCollection
+        .collection('ticket')
+        .doc(idTicket)
+        .update({'status': '${4}', 'remark': val});
+  }
+
+  Future updateRateAndFeedback(
+      {required String? idTicket, String? feedback, int? rate}) async {
+    return await _databaseCollection
+        .collection('ticket')
+        .doc(idTicket)
+        .update({'rate': rate, 'feedback': feedback});
+  }
 }

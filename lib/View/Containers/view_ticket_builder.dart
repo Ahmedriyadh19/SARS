@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:profanity_filter/profanity_filter.dart';
 import 'package:reviews_slider/reviews_slider.dart';
+import 'package:sars/Control/Services/database_services.dart';
 import 'package:sars/Model/ticket.dart';
 import 'package:sars/View/Containers/view_image_builder.dart';
 import 'package:sars/View/Containers/view_video_builder.dart';
@@ -19,10 +21,15 @@ class TicketViewBuilder extends StatefulWidget {
 }
 
 class _TicketBuilderState extends State<TicketViewBuilder> {
+  final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
   Ticket? ticket;
+  TextEditingController cancelTicketField = TextEditingController();
+  TextEditingController feedbackField = TextEditingController();
+  final filter = ProfanityFilter();
   bool radioBtn = false;
-  String? isPrivacy = 'Private';
+  String isPrivacy = 'Private';
   String val = 'Private';
+  String? errorCancel;
   int selectedValueRate = 3;
   final String videoIcon =
       'https://firebasestorage.googleapis.com/v0/b/sars-e6e88.appspot.com/o/resident%2Fprofile%2Ficons8_video_96px.png?alt=media&token=2e82595a-2f9b-4339-94fb-26c7f00c06d3';
@@ -30,7 +37,6 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
   @override
   Widget build(BuildContext context) {
     ticket = widget.ticket;
-    ticket!.rate = 2;
     String isHome = widget.traget!;
     return Container(
       alignment: Alignment.center,
@@ -85,12 +91,18 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                 ),
               )),
               ticket!.location.isNotEmpty
-                  ? getContainerForAll(Text(
-                      'Ticket Location: ${ticket!.location}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ))
+                  ? getContainerForAll(
+                      Text('Ticket Location: ${ticket!.location}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                          )))
+                  : Container(),
+              ticket!.remark != null && ticket!.remark!.isNotEmpty
+                  ? getContainerForAll(
+                      Text('Ticket Description: ${ticket!.remark}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                          )))
                   : Container(),
               ticket!.attachmentsImagesUrlData.isNotEmpty ||
                       ticket!.videoURL!.isNotEmpty
@@ -203,6 +215,7 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                       keyboardType: TextInputType
                                           .multiline, // user keyboard will have a button to move cursor to next line
                                       maxLength: 250,
+                                      controller: feedbackField,
                                     ),
                                   ),
                                   const SizedBox(
@@ -210,7 +223,14 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                   ),
                                   ElevatedButton(
                                     child: const Text('Submit'),
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      String cleanString = filter
+                                          .censor(feedbackField.text.trim());
+                                      _databaseFeatures.updateRateAndFeedback(
+                                          idTicket: ticket!.ticketID,
+                                          feedback: cleanString,
+                                          rate: selectedValueRate);
+                                    },
                                   ),
                                   const SizedBox(height: 5)
                                 ],
@@ -270,6 +290,7 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
   }
 
   Future showBottomBox(int option, BuildContext context) async {
+    cancelTicketField.clear();
     return await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -306,7 +327,8 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                       style: TextStyle(
                                           color: Colors.white.withOpacity(0.7)),
                                       autocorrect: true,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
+                                          errorText: errorCancel,
                                           hintText:
                                               'Why do you want to cancel the ticket?'),
                                       minLines: 1,
@@ -314,10 +336,25 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                       keyboardType: TextInputType
                                           .multiline, // user keyboard will have a button to move cursor to next line
                                       maxLength: 250,
+                                      controller: cancelTicketField,
                                     ),
                                     ElevatedButton(
                                       child: const Text('Submit'),
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        if (chkCancel()) {
+                                          _databaseFeatures.cancelTicket(
+                                              ticket!.ticketID!,
+                                              cancelTicketField.text);
+                                          Navigator.of(context).pop();
+                                        } else {
+                                          setState(
+                                            () {
+                                              errorCancel =
+                                                  'Please tell us your reason';
+                                            },
+                                          );
+                                        }
+                                      },
                                     ),
                                   ]),
                             ),
@@ -390,7 +427,12 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                     ),
                                     ElevatedButton(
                                       child: const Text('Update'),
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        await _databaseFeatures
+                                            .editTicketPrivacy(
+                                                ticket!.ticketID!, isPrivacy);
+                                        Navigator.of(context).pop();
+                                      },
                                     ),
                                   ]),
                             ),
@@ -538,6 +580,15 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
     });
   }
 
+  bool chkCancel() {
+    String val = cancelTicketField.text.trim();
+    if (val.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   dynamic drowStarsAndFeedback({int? stars, String? feedback}) {
     List<Widget> starsWidegt = [
       const Text('Rate:         ', style: TextStyle(fontSize: 20))
@@ -567,7 +618,7 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
         children: starsWidegt,
       ),
       const SizedBox(height: 8),
-      feedback != null && feedback.isEmpty
+      feedback != null && feedback.isNotEmpty
           ? Column(
               children: [
                 Container(
