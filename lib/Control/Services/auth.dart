@@ -44,7 +44,7 @@ class AuthUserMethod {
       return await _auth.sendPasswordResetEmail(email: e.trim());
     } catch (e) {
       errorMsg = e.toString().split('] ')[1];
-      return null;
+      //return null;
     }
   }
 

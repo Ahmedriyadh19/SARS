@@ -16,13 +16,32 @@ class Settingscontainer extends StatefulWidget {
 }
 
 class _SettingsBuilderPageState extends State<Settingscontainer> {
+  User? currentUser;
   final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
   final AuthUserMethod _auth = AuthUserMethod();
+  static String errorMsg = '';
+  static List<String?> erorrTexts = List.generate(4, (i) => null);
+  static final List<TextEditingController> myController =
+      List.generate(4, (i) => TextEditingController());
+
+  static setMsgErrorNull() {
+    for (int i = 0; i < erorrTexts.length; i++) {
+      erorrTexts[i] = null;
+      errorMsg = '';
+    }
+  }
+
+  static setMyControllerNull() {
+    for (int i = 0; i < myController.length; i++) {
+      myController[i].clear();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    User? currentUser = widget.user;
-    _databaseFeatures.uidUser = currentUser.uid;
+    setMyControllerNull();
+    currentUser = widget.user;
+    _databaseFeatures.uidUser = currentUser!.uid;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -36,7 +55,7 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
           child: Stack(alignment: AlignmentDirectional.bottomEnd, children: [
             const Icon(Icons.edit),
             CircleAvatar(
-                backgroundImage: NetworkImage(currentUser.pictureUrl!),
+                backgroundImage: NetworkImage(currentUser!.pictureUrl!),
                 maxRadius: 60,
                 backgroundColor: Colors.black.withOpacity(0.1)),
           ]),
@@ -53,8 +72,10 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
               decoration: TextDecoration.underline,
             ),
           ),
-          onTap: () async =>
-              {await ForgetPassword().showBottomBoxForgetPass(context)},
+          onTap: () async => {
+            await ForgetPassword()
+                .showBottomBoxForgetPass(context, u: currentUser)
+          },
         ),
         const SizedBox(height: 40),
         Container(
@@ -67,42 +88,53 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
             const SizedBox(height: 10),
             lableTemp('Name:'),
             fields(
-              lable: currentUser.name,
-              hints: 'Update your name',
-              icons: const Icon(
-                Icons.person_rounded,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
+                lable: currentUser!.name,
+                hints: 'Update your name',
+                icons: const Icon(
+                  Icons.person_rounded,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+                control: myController[0],
+                error: erorrTexts[0],
+                input: TextInputType.name),
             lableTemp('Email:'),
             fields(
-              lable: currentUser.email,
-              hints: 'Update your email',
-              icons: const Icon(
-                Icons.email_rounded,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
+                lable: currentUser!.email,
+                hints: 'Update your email',
+                icons: const Icon(
+                  Icons.email_rounded,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+                control: myController[1],
+                error: erorrTexts[1],
+                input: TextInputType.emailAddress),
             lableTemp('Phone:'),
             fields(
-              lable: currentUser.phone,
-              hints: 'Update your phone',
-              icons: const Icon(
-                Icons.phone_android_rounded,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
+                lable: currentUser!.phone,
+                hints: 'Update your phone',
+                icons: const Icon(
+                  Icons.phone_android_rounded,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+                control: myController[2],
+                error: erorrTexts[2],
+                input: TextInputType.phone),
             lableTemp('Address:'),
             fields(
-              lable: currentUser.address,
-              hints: 'Update your address',
-              icons: const Icon(
-                Icons.location_city_rounded,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
+                lable: currentUser!.address,
+                hints: 'Update your address',
+                icons: const Icon(
+                  Icons.location_city_rounded,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+                control: myController[3],
+                error: erorrTexts[3],
+                input: TextInputType.name),
             const SizedBox(height: 10),
-            updateBtn()
+            Text(errorMsg),
+            const SizedBox(height: 10),
+            updateBtn(),
+            const SizedBox(height: 10),
           ]),
         ),
         const SizedBox(height: 20),
@@ -125,30 +157,33 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
           )),
         ]),
         const SizedBox(height: 30),
-        ElevatedButton(
-          child: const Text(
-            'Sign out',
-            textAlign: TextAlign.center,
-          ),
-          style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                    9.0), /* side: const BorderSide(color: Colors.black) */
-              )),
-              elevation: MaterialStateProperty.all(20),
-              backgroundColor: MaterialStateProperty.all(
-                  const Color.fromARGB(185, 226, 21, 21)),
-              padding: MaterialStateProperty.all(
-                  const EdgeInsets.only(left: 112, right: 112)),
-              textStyle:
-                  MaterialStateProperty.all(const TextStyle(fontSize: 15))),
-          onPressed: () async {
-            await _auth.signOutUser();
-          },
-        ),
+        signoutBtn(),
         const SizedBox(height: 20)
       ],
+    );
+  }
+
+  signoutBtn() {
+    return ElevatedButton(
+      child: const Text(
+        'Sign out',
+        textAlign: TextAlign.center,
+      ),
+      style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+                9.0), /* side: const BorderSide(color: Colors.black) */
+          )),
+          elevation: MaterialStateProperty.all(20),
+          backgroundColor:
+              MaterialStateProperty.all(const Color.fromARGB(185, 226, 21, 21)),
+          padding: MaterialStateProperty.all(
+              const EdgeInsets.only(left: 112, right: 112)),
+          textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
+      onPressed: () async {
+        await _auth.signOutUser();
+      },
     );
   }
 
@@ -188,7 +223,13 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
     );
   }
 
-  fields({String? lable, String? hints, Icon? icons}) {
+  fields(
+      {String? lable,
+      String? hints,
+      Icon? icons,
+      TextEditingController? control,
+      String? error,
+      TextInputType? input}) {
     return Container(
       margin: const EdgeInsets.all(12),
       padding: const EdgeInsets.only(top: 5),
@@ -205,19 +246,21 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
           icon: icons,
           labelText: lable,
           hintText: hints,
+          errorText: error,
           labelStyle: const TextStyle(color: Colors.black),
           iconColor: Colors.black,
         ),
-        keyboardType: TextInputType.name,
+        keyboardType: input,
+        controller: control,
       ),
     );
   }
 
-  lableTemp(String l) {
+  lableTemp(String val) {
     return Container(
         margin: const EdgeInsets.only(left: 20, bottom: 5, top: 5),
         alignment: Alignment.topLeft,
-        child: Text(l));
+        child: Text(val));
   }
 
   updateBtn() {
@@ -238,7 +281,15 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
           padding: MaterialStateProperty.all(
               const EdgeInsets.only(left: 112, right: 112)),
           textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
-      onPressed: () {},
+      onPressed: () {
+        validity();
+      },
     );
+  }
+
+  validity() {
+    setState(() {
+      setMsgErrorNull();
+    });
   }
 }

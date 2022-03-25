@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sars/Control/Services/auth.dart';
+import 'package:sars/Model/user.dart';
 import 'package:sars/View/BuildWidgetsData/loading.dart';
 
 class ForgetPassword {
@@ -12,74 +13,80 @@ class ForgetPassword {
   TextEditingController myControllerForgetPass = TextEditingController();
 
   checkValidatorForgetPassword(
-      StateSetter setStateForgetPassword, BuildContext context) async {
+      StateSetter setStateForgetPassword, BuildContext context,
+      {User? u}) async {
     chk = true;
     dynamic result;
     errorForgetPassword = null;
     errorMsg = '';
 
-    if (myControllerForgetPass.text.isEmpty) {
+    if (u != null) {
+      if (myControllerForgetPass.text != u.email) {
+        setStateForgetPassword(() {
+          errorForgetPassword = 'Email does not belong to you';
+          chk = false;
+        });
+      }
+    } else if (myControllerForgetPass.text.isEmpty) {
       setStateForgetPassword(() {
         errorForgetPassword = 'Email is required';
         chk = false;
       });
     } else if (myControllerForgetPass.text.isNotEmpty) {
-      {
+      setStateForgetPassword(() {
+        loading = true;
+      });
+      result = await _auth.userForgetPasswor(myControllerForgetPass.text);
+      if (result == null) {
         setStateForgetPassword(() {
-          loading = true;
+          errorMsg = _auth.getErrorMsg();
+          loading = false;
+          chk = true;
         });
-        result = await _auth.userForgetPasswor(myControllerForgetPass.text);
-        if (result == null) {
-          setStateForgetPassword(() {
-            errorMsg = _auth.getErrorMsg();
-            loading = false;
-            chk = true;
-          });
-        }
+      }
 
-        if (chk == true && errorMsg.isEmpty) {
-          setStateForgetPassword(() {
-            myControllerForgetPass.clear();
-            errorForgetPassword = null;
-            errorMsg = '';
-            showDialog(
-              context: context,
-              builder: (context) => SimpleDialog(
-                title: const Text(
-                  'Forget Password',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
+      if (chk == true && errorMsg.isEmpty) {
+        setStateForgetPassword(() {
+          myControllerForgetPass.clear();
+          errorForgetPassword = null;
+          errorMsg = '';
+          showDialog(
+            context: context,
+            builder: (context) => SimpleDialog(
+              title: const Text(
+                'Forget Password',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              contentPadding: const EdgeInsets.all(20.0),
+              backgroundColor: const Color.fromARGB(255, 0, 188, 212),
+              children: [
+                const Text(
+                  'The link has been sent to your Email.\nPlease check your email.',
+                  style: TextStyle(color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
-                contentPadding: const EdgeInsets.all(20.0),
-                backgroundColor: const Color.fromARGB(255, 0, 188, 212),
-                children: [
-                  const Text(
-                    'The link has been sent to your Email.\nPlease check your email.',
-                    style: TextStyle(color: Colors.black),
-                    textAlign: TextAlign.center,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15.0),
-                    child: TextButton(
-                      child: const Text(
-                        'Close.',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onPressed: () => {Navigator.of(context).pop()},
+                Container(
+                  margin: const EdgeInsets.only(top: 15.0),
+                  child: TextButton(
+                    child: const Text(
+                      'Close.',
+                      style: TextStyle(color: Colors.black),
                     ),
-                  )
-                ],
-              ),
-            );
-          });
-        }
+                    onPressed: () => {Navigator.of(context).pop()},
+                  ),
+                )
+              ],
+            ),
+          );
+        });
       }
     }
   }
 
-  Future showBottomBoxForgetPass(BuildContext context) async {
+  Future showBottomBoxForgetPass(BuildContext context, {User? u}) async {
     double? newWidth = MediaQuery.of(context).size.width - 50;
     return await showModalBottomSheet(
       context: context,
@@ -186,8 +193,8 @@ class ForgetPassword {
                                               textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 15))),
                                           onPressed: () async {
                                             await checkValidatorForgetPassword(
-                                                setStateForgetPassword,
-                                                context);
+                                                setStateForgetPassword, context,
+                                                u: u);
                                           }),
                                     ),
                                     const SizedBox(height: 15),

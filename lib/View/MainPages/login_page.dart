@@ -303,7 +303,7 @@ class _LoginPage extends State {
                           height: 70,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(45),
-                              color: Colors.black.withOpacity(0.3)),
+                              color: Colors.black.withOpacity(0.08)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
