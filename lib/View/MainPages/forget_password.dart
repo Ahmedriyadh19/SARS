@@ -61,7 +61,7 @@ class ForgetPassword {
                 textAlign: TextAlign.center,
               ),
               contentPadding: const EdgeInsets.all(20.0),
-              backgroundColor: const Color.fromARGB(255, 0, 188, 212),
+              backgroundColor: const Color.fromARGB(255, 0, 173, 181),
               children: [
                 const Text(
                   'The link has been sent to your Email.\nPlease check your email.',

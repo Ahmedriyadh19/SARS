@@ -44,6 +44,12 @@ class _MainPageBuilderState extends State<MainPageBuilder> {
       TicketContainer(currentUser: targetUser),
       Settingscontainer(user: targetUser)
     ];
+    setState(() {
+      User? x = SettingsBuilderPageState().getUpdateUser();
+      if (x != null) {
+        targetUser = x;
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         elevation: 20,

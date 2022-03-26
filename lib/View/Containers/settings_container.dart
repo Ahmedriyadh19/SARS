@@ -12,10 +12,10 @@ class Settingscontainer extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<Settingscontainer> createState() => _SettingsBuilderPageState();
+  State<Settingscontainer> createState() => SettingsBuilderPageState();
 }
 
-class _SettingsBuilderPageState extends State<Settingscontainer> {
+class SettingsBuilderPageState extends State<Settingscontainer> {
   User? currentUser;
   final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
   final AuthUserMethod _auth = AuthUserMethod();
@@ -39,8 +39,10 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
 
   @override
   Widget build(BuildContext context) {
-    setMyControllerNull();
-    currentUser = widget.user;
+    setState(() {
+      currentUser = widget.user;
+    });
+
     _databaseFeatures.uidUser = currentUser!.uid;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -287,9 +289,67 @@ class _SettingsBuilderPageState extends State<Settingscontainer> {
     );
   }
 
-  validity() {
-    setState(() {
-      setMsgErrorNull();
-    });
+  validity() async {
+    if (currentUser!.name != myController[0].text &&
+        myController[0].text.trim().isNotEmpty) {
+      await _databaseFeatures.updateUserName(myController[0].text.trim());
+      currentUser!.name = myController[0].text.trim();
+    }
+    if (currentUser!.phone != myController[2].text &&
+        myController[2].text.trim().isNotEmpty) {
+      await _databaseFeatures.updateUserPhone(myController[2].text);
+      currentUser!.phone = myController[2].text;
+    }
+    if (currentUser!.address != myController[3].text &&
+        myController[3].text.trim().isNotEmpty) {
+      await _databaseFeatures.updateUserAddress(myController[3].text);
+      currentUser!.address = myController[3].text.trim();
+    }
+    await updateUserDialog();
+  }
+
+  getUpdateUser() {
+    return currentUser;
+  }
+
+  updateUserDialog() async {
+    await showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: const Text(
+          'Update Info',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        contentPadding: const EdgeInsets.all(20.0),
+        backgroundColor: const Color.fromARGB(255, 0, 173, 181),
+        children: [
+          const Text(
+            'Your profile has updated successfully',
+            style: TextStyle(color: Colors.black),
+            textAlign: TextAlign.center,
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 15.0),
+            child: TextButton(
+              child: const Text(
+                'Close.',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                setState(() {
+                  setMsgErrorNull();
+                  setMyControllerNull();
+                });
+
+                Navigator.of(context).pop();
+              },
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

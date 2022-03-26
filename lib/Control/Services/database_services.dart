@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart' as database_firestore;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sars/Model/announcement.dart';
 import 'package:sars/Model/ticket.dart';
@@ -124,10 +125,10 @@ class DatabaseFeatures {
         .map(ticketListData);
   }
 
-  Future<User> getTarget() async {
+  Future<User> getTarget(String id) async {
     return await _databaseCollection
         .collection('user')
-        .doc(uidUser)
+        .doc(id)
         .get()
         .then((database_firestore.DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
@@ -168,4 +169,70 @@ class DatabaseFeatures {
         .doc(idTicket)
         .update({'rate': rate, 'feedback': feedback});
   }
+
+  Future updateUserNameForUser(String newVal) async {
+    return await _databaseCollection
+        .collection('user')
+        .doc(uidUser)
+        .update({'fullname': newVal});
+  }
+
+  Future updateUserName(String newVal) async {
+    await updateUserNameForUser(newVal);
+    _databaseCollection.collection('ticket').get().then(
+      (value) {
+        for (int i = 0; i < value.docs.length; i++) {
+          if (value.docs.elementAt(i).data()['userID'].toString() == uidUser) {
+            updateUserNameForTicket(value.docs.elementAt(i).id, newVal);
+          }
+        }
+      },
+    );
+  }
+
+  Future updateUserNameForTicket(String tickitIDt, String newVal) async {
+    return await _databaseCollection
+        .collection('ticket')
+        .doc(tickitIDt)
+        .update({'userName': newVal});
+  }
+
+  Future updateUserPhone(String newVal) async {
+    return await _databaseCollection
+        .collection('user')
+        .doc(uidUser)
+        .update({'phonenumber': newVal});
+  }
+
+  Future updateUserAddress(String newVal) async {
+    return await _databaseCollection
+        .collection('user')
+        .doc(uidUser)
+        .update({'address': newVal});
+  }
+/* 
+  List<User> userListData(database_firestore.QuerySnapshot snp) {
+    return snp.docChanges.map(
+      (data) {
+        return User(
+          address: data.doc['address'],
+          email: data.doc['email'],
+          gander: data.doc['gender'],
+          name: data.doc['fullname'],
+          phone: data.doc['phonenumber'],
+          pictureUrl: data.doc['profilePictureURL'],
+          role: data.doc['role'],
+          uid: data.doc['userID'],
+          userName: data.doc['username'],
+        );
+      },
+    ).toList();
+  }
+
+  Stream<List<User>> get usersFromFirebase {
+    return _databaseCollection
+        .collection('ticket')
+        .snapshots()
+        .map(userListData);
+  } */
 }

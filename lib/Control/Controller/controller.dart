@@ -11,10 +11,11 @@ class Controller extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DatabaseFeatures _databaseFeatures = DatabaseFeatures();
     final _user = Provider.of<User?>(context);
     if (_user != null) {
       return FutureBuilder<User>(
-          future: DatabaseFeatures(uidUser: _user.uid).getTarget(),
+          future: _databaseFeatures.getTarget(_user.uid!),
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
               return MainPageBuilder(currentUser: snapshot.data!);
