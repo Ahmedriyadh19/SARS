@@ -343,7 +343,6 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
                   setMsgErrorNull();
                   setMyControllerNull();
                 });
-
                 Navigator.of(context).pop();
               },
             ),

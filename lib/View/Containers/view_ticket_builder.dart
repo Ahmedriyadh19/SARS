@@ -204,8 +204,8 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     child: TextFormField(
-                                      style: TextStyle(
-                                          color: Colors.white.withOpacity(0.7)),
+                                      style:
+                                          const TextStyle(color: Colors.black),
                                       autocorrect: true,
                                       decoration: const InputDecoration(
                                           hintText: 'What\'s Your Feedback'),
@@ -341,9 +341,10 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                       child: const Text('Submit'),
                                       onPressed: () async {
                                         if (chkCancel()) {
+                                          String cleanString = filter.censor(
+                                              cancelTicketField.text.trim());
                                           _databaseFeatures.cancelTicket(
-                                              ticket!.ticketID!,
-                                              cancelTicketField.text);
+                                              ticket!.ticketID!, cleanString);
                                           Navigator.of(context).pop();
                                         } else {
                                           setState(
