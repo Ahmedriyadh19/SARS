@@ -36,7 +36,7 @@ class Controller extends StatelessWidget {
                     alignment: Alignment.center,
                     child: snapshot.connectionState == ConnectionState.waiting
                         ? const Loading()
-                        : Container()));
+                        : const LoginBuilder()));
           }));
     }
     return const LoginBuilder();
