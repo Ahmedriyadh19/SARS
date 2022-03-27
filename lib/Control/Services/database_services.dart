@@ -8,6 +8,7 @@ import 'package:uuid/uuid.dart';
 
 class DatabaseFeatures {
   String? uidUser;
+  String urlImage = '';
 
   final database_firestore.FirebaseFirestore _databaseCollection =
       database_firestore.FirebaseFirestore.instance;
@@ -31,16 +32,23 @@ class DatabaseFeatures {
 
   Future<List<String>> uploadFiles(List<File> _attachmentsTicket) async {
     List<String> imageUrls = await Future.wait(
-        _attachmentsTicket.map((_attachment) => uploadFile(_attachment)));
+        _attachmentsTicket.map((_attachment) => uploadFile(_attachment, 0)));
     return imageUrls;
   }
 
-  Future<String> uploadFile(File _attachment) async {
+  Future<String> uploadFile(File _attachment, int op) async {
     String shortenPath = _attachment.path.split('com.services.sars/cache')[1];
     dynamic storageReference;
     if (shortenPath.contains('.jpg')) {
-      storageReference =
-          FirebaseStorage.instance.ref().child('/resident/images/$shortenPath');
+      if (op == 0) {
+        storageReference = FirebaseStorage.instance
+            .ref()
+            .child('/resident/images/$shortenPath');
+      } else {
+        storageReference = FirebaseStorage.instance
+            .ref()
+            .child('/resident/profile/$shortenPath');
+      }
     } else {
       storageReference =
           FirebaseStorage.instance.ref().child('/resident/video/$shortenPath');
@@ -56,7 +64,7 @@ class DatabaseFeatures {
       t.attachmentsImagesUrlData = await uploadFiles(t.attachmentsImages);
     }
     if (t.attachmentVideo != null) {
-      t.videoURL = await uploadFile(t.attachmentVideo!);
+      t.videoURL = await uploadFile(t.attachmentVideo!, 0);
     }
     return await _databaseCollection.collection('ticket').doc(t.ticketID).set({
       'ticketID': t.ticketID,
@@ -209,29 +217,16 @@ class DatabaseFeatures {
         .doc(uidUser)
         .update({'address': newVal});
   }
-/* 
-  List<User> userListData(database_firestore.QuerySnapshot snp) {
-    return snp.docChanges.map(
-      (data) {
-        return User(
-          address: data.doc['address'],
-          email: data.doc['email'],
-          gander: data.doc['gender'],
-          name: data.doc['fullname'],
-          phone: data.doc['phonenumber'],
-          pictureUrl: data.doc['profilePictureURL'],
-          role: data.doc['role'],
-          uid: data.doc['userID'],
-          userName: data.doc['username'],
-        );
-      },
-    ).toList();
+
+  updateUserIMageProfile(File image) async {
+    urlImage = await uploadFile(image, 1);
+    return await _databaseCollection
+        .collection('user')
+        .doc(uidUser)
+        .update({'profilePictureURL': urlImage});
   }
 
-  Stream<List<User>> get usersFromFirebase {
-    return _databaseCollection
-        .collection('ticket')
-        .snapshots()
-        .map(userListData);
-  } */
+  getURlImage() {
+    return urlImage;
+  }
 }

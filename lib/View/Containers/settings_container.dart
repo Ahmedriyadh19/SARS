@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sars/Control/Services/auth.dart';
 import 'package:sars/Control/Services/database_services.dart';
 import 'package:sars/Model/user.dart';
@@ -19,6 +22,7 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
   User? currentUser;
   final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
   final AuthUserMethod _auth = AuthUserMethod();
+  ImagePicker imagePicker = ImagePicker();
   static String errorMsg = '';
   static List<String?> erorrTexts = List.generate(4, (i) => null);
   static final List<TextEditingController> myController =
@@ -53,18 +57,7 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
           style: TextStyle(fontSize: 25),
         ),
         const SizedBox(height: 25),
-        GestureDetector(
-          child: Stack(alignment: AlignmentDirectional.bottomEnd, children: [
-            const Icon(Icons.edit),
-            CircleAvatar(
-                backgroundImage: NetworkImage(currentUser!.pictureUrl!),
-                maxRadius: 60,
-                backgroundColor: Colors.black.withOpacity(0.1)),
-          ]),
-          onTap: () async {
-            await showUpdateSheet();
-          },
-        ),
+        imageContainer(),
         const SizedBox(height: 15),
         InkWell(
           child: const Text(
@@ -189,38 +182,137 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
     );
   }
 
-  Future showUpdateSheet() async {
+  Future showUpdateImageSheet(BuildContext context) async {
+    bool imageHasforUpd = false;
+    File? updateImage;
+
+    Future getImageFromCamera() async {
+      imageHasforUpd = false;
+      final image = await (imagePicker.pickImage(
+          source: ImageSource.camera, imageQuality: 25));
+      if (image != null && image.path.isNotEmpty) {
+        updateImage = File(image.path);
+        imageHasforUpd = true;
+      }
+    }
+
+    Future getImageFromGallery() async {
+      imageHasforUpd = false;
+      final image = await (imagePicker.pickImage(
+          source: ImageSource.gallery, imageQuality: 25));
+      if (image != null && image.path.isNotEmpty) {
+        updateImage = File(image.path);
+        imageHasforUpd = true;
+      }
+    }
+
+    getUpdateImageContainer(StateSetter x) {
+      return GestureDetector(
+        child: Stack(alignment: AlignmentDirectional.bottomEnd, children: [
+          const Icon(Icons.remove_circle_rounded),
+          CircleAvatar(
+              backgroundImage: FileImage(updateImage!),
+              maxRadius: 60,
+              backgroundColor: Colors.black.withOpacity(0.1)),
+        ]),
+        onTap: () {
+          x(() {
+            imageHasforUpd = false;
+          });
+        },
+      );
+    }
+
+    updateBtnImage() {
+      return ElevatedButton(
+        child: const Text(
+          'Update',
+          textAlign: TextAlign.center,
+        ),
+        style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(9.0),
+                    side: const BorderSide(
+                        color: Color.fromARGB(255, 141, 218, 221)))),
+            elevation: MaterialStateProperty.all(30),
+            backgroundColor:
+                MaterialStateProperty.all(const Color.fromARGB(200, 0, 0, 0)),
+            padding: MaterialStateProperty.all(
+                const EdgeInsets.only(left: 112, right: 112)),
+            textStyle:
+                MaterialStateProperty.all(const TextStyle(fontSize: 15))),
+        onPressed: () async {
+          await _databaseFeatures.updateUserIMageProfile(updateImage!);
+          setState(() {
+            currentUser!.pictureUrl = _databaseFeatures.getURlImage();
+          });
+        },
+      );
+    }
+
     return await showModalBottomSheet(
       context: context,
       backgroundColor: Colors.black.withOpacity(0.1),
       elevation: 10,
-      builder: (_) {
-        return Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(218, 0, 170, 179),
-                Color.fromARGB(172, 66, 239, 248),
-              ],
-            )),
-            alignment: Alignment.center,
-            child: SingleChildScrollView(
-              child: Container(
-                margin: const EdgeInsets.all(25),
-                padding: const EdgeInsets.all(25),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: const Color.fromARGB(255, 169, 225, 228)),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Icon(Icons.camera_alt_rounded),
-                      Icon(Icons.photo_library_rounded)
-                    ]),
-              ),
-            ));
+      builder: (context) {
+        return StatefulBuilder(builder: (
+          BuildContext context,
+          StateSetter setStateUpdate,
+        ) {
+          return Container(
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(218, 0, 170, 179),
+                  Color.fromARGB(172, 66, 239, 248),
+                ],
+              )),
+              alignment: Alignment.center,
+              child: SingleChildScrollView(
+                  child: imageHasforUpd == false
+                      ? Container(
+                          margin: const EdgeInsets.all(25),
+                          padding: const EdgeInsets.all(25),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: const Color.fromARGB(255, 169, 225, 228)),
+                          child: Column(children: [
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  IconButton(
+                                      icon:
+                                          const Icon(Icons.camera_alt_rounded),
+                                      onPressed: () async {
+                                        await getImageFromCamera();
+                                        setStateUpdate(
+                                            () => (imageHasforUpd = true));
+                                      }),
+                                  IconButton(
+                                      icon: const Icon(
+                                          Icons.photo_library_rounded),
+                                      onPressed: () async {
+                                        await getImageFromGallery();
+                                        setStateUpdate(
+                                            () => (imageHasforUpd = true));
+                                      }),
+                                ]),
+                          ]),
+                        )
+                      : imageHasforUpd == true
+                          ? Column(
+                              children: [
+                                getUpdateImageContainer(setStateUpdate),
+                                const SizedBox(height: 10),
+                                updateBtnImage()
+                              ],
+                            )
+                          : Container()));
+        });
       },
     );
   }
@@ -349,6 +441,21 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
           )
         ],
       ),
+    );
+  }
+
+  imageContainer() {
+    return GestureDetector(
+      child: Stack(alignment: AlignmentDirectional.bottomEnd, children: [
+        const Icon(Icons.edit),
+        CircleAvatar(
+            backgroundImage: NetworkImage(currentUser!.pictureUrl!),
+            maxRadius: 60,
+            backgroundColor: Colors.black.withOpacity(0.1)),
+      ]),
+      onTap: () async {
+        await showUpdateImageSheet(context);
+      },
     );
   }
 }
