@@ -24,7 +24,8 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
   final DatabaseFeatures _databaseFeatures = DatabaseFeatures();
   final AuthUserMethod _auth = AuthUserMethod();
   ImagePicker imagePicker = ImagePicker();
-  bool waitingForPassword = false;
+  bool done = true;
+  int waitingForPassword = 0;
   static String errorMsg = '';
   static List<String?> erorrTexts = List.generate(5, (i) => null);
   static final List<TextEditingController> myController =
@@ -47,10 +48,6 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
   Widget build(BuildContext context) {
     setState(() {
       currentUser = widget.user;
-    });
-    setState(() {
-      setMsgErrorNull();
-      setMyControllerNull();
     });
 
     _databaseFeatures.uidUser = currentUser!.uid;
@@ -389,44 +386,69 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
   }
 
   validity() async {
+    waitingForPassword = 0;
+    done = false;
     if (currentUser!.name != myController[0].text &&
         myController[0].text.trim().isNotEmpty) {
       await _databaseFeatures.updateUserName(myController[0].text.trim());
       setState(() {
         currentUser!.name = myController[0].text.trim();
+        done = true;
       });
     }
+    if (currentUser!.address != myController[4].text &&
+        myController[4].text.trim().isNotEmpty) {
+      await _databaseFeatures.updateUserAddress(myController[4].text.trim());
+      setState(() {
+        currentUser!.address = myController[4].text;
+        done = true;
+      });
+    }
+
+    if (currentUser!.phone != myController[3].text &&
+        myController[3].text.trim().isNotEmpty) {
+      if (myController[3].text.trim().length < 15 &&
+          myController[3].text.trim().length > 8) {
+        await _databaseFeatures.updateUserPhone(myController[3].text);
+        setState(() {
+          currentUser!.phone = myController[3].text;
+          done = true;
+        });
+      } else {
+        setState(() {
+          erorrTexts[3] = 'Phone is invalid';
+          waitingForPassword = 2;
+          done = false;
+        });
+      }
+    }
+
     if (currentUser!.email != myController[1].text &&
         myController[1].text.trim().isNotEmpty) {
       String email = myController[1].text.trim();
       final bool isValid = EmailValidator.validate(email);
       if (isValid) {
-        await askUserPasswordDialog();
         setState(() {
-          waitingForPassword = true;
+          waitingForPassword = 1;
+          done = true;
         });
       } else {
         setState(() {
           erorrTexts[1] = 'Email is invalid';
-          waitingForPassword = true;
+          waitingForPassword = 2;
+          done = false;
         });
       }
     }
-    if (currentUser!.phone != myController[3].text &&
-        myController[3].text.trim().isNotEmpty) {
-      await _databaseFeatures.updateUserPhone(myController[3].text);
-      setState(() {
-        currentUser!.phone = myController[3].text;
-      });
+
+    if (waitingForPassword == 0 && done) {
+      await updateUserDialog();
+    } else if ((waitingForPassword == 1 && done) &&
+        (myController[3].text.isEmpty)) {
+      await askUserPasswordDialog();
+    } else {
+      null;
     }
-    if (currentUser!.address != myController[4].text &&
-        myController[4].text.isNotEmpty) {
-      await _databaseFeatures.updateUserAddress(myController[4].text);
-      setState(() {
-        currentUser!.address = myController[4].text;
-      });
-    }
-    waitingForPassword == false ? await updateUserDialog() : null;
   }
 
   getUpdateUser() {
@@ -460,11 +482,10 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () {
-                setState(() {
-                  setMsgErrorNull();
-                  setMyControllerNull();
-                });
                 Navigator.of(context).pop();
+                if (done) {
+                  setNull();
+                }
               },
             ),
           )
@@ -540,15 +561,21 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
                     onPressed: () async {
                       if (myController[2].text.isNotEmpty) {
                         try {
-                          dynamic result = await _auth.updateUserEmail(
+                          await _auth.updateUserEmail(
                               currentUser!.email!,
                               myController[2].text,
                               myController[1].text.trim());
-                          if (result == null) {
+                          if (_auth.getErrorMsg().isNotEmpty) {
                             setState(() {
+                              done = false;
                               erorMSG2 = _auth.getErrorMsg().split('] ')[1];
                             });
                           } else {
+                            setState(
+                              () {
+                                done = true;
+                              },
+                            );
                             await _databaseFeatures
                                 .updateUserEmail(myController[1].text.trim());
                             setState(() {
@@ -558,7 +585,7 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
                             Navigator.of(context).pop();
                           }
                         } catch (e) {
-                          erorMSG2 = e.toString().split('] ')[1];
+                          erorMSG2 = _auth.getErrorMsg().split('] ')[1];
                         }
                       }
                     },
@@ -585,5 +612,12 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
         await showUpdateImageSheet(context);
       },
     );
+  }
+
+  setNull() {
+    setState(() {
+      setMsgErrorNull();
+      setMyControllerNull();
+    });
   }
 }

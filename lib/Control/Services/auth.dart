@@ -91,7 +91,9 @@ class AuthUserMethod {
   updateUserEmail(String e, String p, String newEmail) async {
     errorMsg = '';
     try {
-      await _auth.signInWithEmailAndPassword(email: e.trim(), password: p).then(
+      return await _auth
+          .signInWithEmailAndPassword(email: e.trim(), password: p)
+          .then(
         (userCredential) {
           userCredential.user!.updateEmail(newEmail);
         },
