@@ -88,8 +88,23 @@ class AuthUserMethod {
     return errorMsg!;
   }
 
+  updateUserEmail(String e, String p, String newEmail) async {
+    errorMsg = '';
+    try {
+      await _auth.signInWithEmailAndPassword(email: e.trim(), password: p).then(
+        (userCredential) {
+          userCredential.user!.updateEmail(newEmail);
+        },
+      );
+    } catch (e) {
+      errorMsg = e.toString();
+      return null;
+    }
+  }
+}
+
 // Sign with google
 
 // Sign with facebook
 
-}
+

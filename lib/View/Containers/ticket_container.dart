@@ -180,7 +180,7 @@ class _TicketBuilderPageState extends State<TicketContainer> {
                                           maxLength: 50,
                                           controller: myController[0],
                                         )
-                                      : const Text(''),
+                                      : Container(),
                                 ]),
                               )),
                           Step(

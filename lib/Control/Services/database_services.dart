@@ -226,6 +226,13 @@ class DatabaseFeatures {
         .update({'profilePictureURL': urlImage});
   }
 
+  updateUserEmail(String newVal) async {
+    return await _databaseCollection
+        .collection('user')
+        .doc(uidUser)
+        .update({'email': newVal});
+  }
+
   getURlImage() {
     return urlImage;
   }

@@ -8,7 +8,6 @@ class User {
   String? pictureUrl;
   String? phone;
   String? gander;
-  String? secret;
   String? userName;
 
   User({
@@ -21,13 +20,11 @@ class User {
     this.pictureUrl,
     this.phone,
     this.gander,
-    this.secret,
     this.userName,
   });
 
-
   @override
   String toString() {
-    return 'User(uid: $uid, name: $name, email: $email, password: $password, address: $address, role: $role, pictureUrl: $pictureUrl, phone: $phone, gander: $gander, secret: $secret, userName: $userName)';
+    return 'User(uid: $uid, name: $name, email: $email, password: $password, address: $address, role: $role, pictureUrl: $pictureUrl, phone: $phone, gander: $gander,  userName: $userName)';
   }
 }
