@@ -323,8 +323,6 @@ class _TicketBuilderState extends State<TicketViewBuilder> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     TextFormField(
-                                      style: TextStyle(
-                                          color: Colors.white.withOpacity(0.7)),
                                       autocorrect: true,
                                       decoration: InputDecoration(
                                           errorText: errorCancel,
