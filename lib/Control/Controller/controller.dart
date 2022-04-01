@@ -29,8 +29,8 @@ class Controller extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Color.fromRGBO(0, 173, 181, 1),
-                        Color.fromRGBO(0, 57, 60, 1),
+                        Color.fromARGB(180, 0, 170, 179),
+                        Color.fromARGB(230, 0, 117, 122),
                       ],
                     )),
                     alignment: Alignment.center,

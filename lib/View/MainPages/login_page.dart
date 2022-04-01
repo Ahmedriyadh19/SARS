@@ -92,8 +92,8 @@ class _LoginPage extends State {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromARGB(218, 0, 170, 179),
-            Color.fromARGB(172, 66, 239, 248),
+            Color.fromARGB(180, 0, 170, 179),
+            Color.fromARGB(230, 0, 117, 122),
           ],
         )),
         alignment: Alignment.center,
