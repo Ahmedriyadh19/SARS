@@ -278,7 +278,7 @@ class _LoginPage extends State {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Row(children: const [
+                        /*     Row(children: const [
                           Expanded(
                               child: Divider(
                             indent: 60,
@@ -295,8 +295,8 @@ class _LoginPage extends State {
                             endIndent: 60,
                             color: Colors.white,
                           )),
-                        ]),
-                        const SizedBox(height: 20),
+                        ]), 
+                         const SizedBox(height: 20),
                         Container(
                           alignment: Alignment.center,
                           width: 350,
@@ -327,7 +327,7 @@ class _LoginPage extends State {
                               ),
                             ],
                           ),
-                        ),
+                        ), */
                       ])),
                     )
                   ],
