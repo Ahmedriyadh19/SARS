@@ -27,7 +27,7 @@ class ForgetPassword {
           chk = false;
         });
       }
-    } else if (myControllerForgetPass.text.isEmpty) {
+    }  if (myControllerForgetPass.text.isEmpty) {
       setStateForgetPassword(() {
         errorForgetPassword = 'Email is required';
         chk = false;

@@ -196,6 +196,8 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
       if (image != null && image.path.isNotEmpty) {
         updateImage = File(image.path);
         imageHasforUpd = true;
+      } else {
+        imageHasforUpd = false;
       }
     }
 
@@ -206,6 +208,8 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
       if (image != null && image.path.isNotEmpty) {
         updateImage = File(image.path);
         imageHasforUpd = true;
+      } else {
+        imageHasforUpd = false;
       }
     }
 
@@ -276,46 +280,75 @@ class SettingsBuilderPageState extends State<Settingscontainer> {
               )),
               alignment: Alignment.center,
               child: SingleChildScrollView(
-                  child: updateImage == null
-                      ? Container(
-                          margin: const EdgeInsets.all(25),
-                          padding: const EdgeInsets.all(25),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: const Color.fromARGB(255, 169, 225, 228)),
-                          child: Column(children: [
-                            updateImage == null
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                        IconButton(
-                                            icon: const Icon(
-                                                Icons.camera_alt_rounded),
-                                            onPressed: () async {
-                                              await getImageFromCamera();
-                                              setStateUpdate(() =>
-                                                  (imageHasforUpd = true));
-                                            }),
-                                        IconButton(
-                                            icon: const Icon(
-                                                Icons.photo_library_rounded),
-                                            onPressed: () async {
-                                              await getImageFromGallery();
-                                              setStateUpdate(() =>
-                                                  (imageHasforUpd = true));
-                                            }),
-                                      ])
-                                : Column(
-                                    children: [
-                                      getUpdateImageContainer(setStateUpdate),
-                                      const SizedBox(height: 10),
-                                      updateBtnImage()
-                                    ],
-                                  ),
-                          ]),
-                        )
-                      : Container()));
+                child: imageHasforUpd == false
+                    ? Container(
+                        margin: const EdgeInsets.all(25),
+                        padding: const EdgeInsets.all(25),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color.fromARGB(255, 169, 225, 228)),
+                        child: Column(children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                IconButton(
+                                    icon: const Icon(Icons.camera_alt_rounded),
+                                    onPressed: () async {
+                                      await getImageFromCamera();
+                                      setStateUpdate(
+                                          () => (imageHasforUpd = true));
+                                    }),
+                                IconButton(
+                                    icon:
+                                        const Icon(Icons.photo_library_rounded),
+                                    onPressed: () async {
+                                      await getImageFromGallery();
+                                      setStateUpdate(
+                                          () => (imageHasforUpd = true));
+                                    }),
+                              ]),
+                        ]),
+                      )
+                    : updateImage != null && updateImage!.path.isNotEmpty
+                        ? Column(
+                            children: [
+                              getUpdateImageContainer(setStateUpdate),
+                              const SizedBox(height: 10),
+                              updateBtnImage()
+                            ],
+                          )
+                        : Container(
+                            margin: const EdgeInsets.all(25),
+                            padding: const EdgeInsets.all(25),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color:
+                                    const Color.fromARGB(255, 169, 225, 228)),
+                            child: Column(children: [
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    IconButton(
+                                        icon: const Icon(
+                                            Icons.camera_alt_rounded),
+                                        onPressed: () async {
+                                          await getImageFromCamera();
+                                          setStateUpdate(
+                                              () => (imageHasforUpd = true));
+                                        }),
+                                    IconButton(
+                                        icon: const Icon(
+                                            Icons.photo_library_rounded),
+                                        onPressed: () async {
+                                          await getImageFromGallery();
+                                          setStateUpdate(
+                                              () => (imageHasforUpd = true));
+                                        }),
+                                  ]),
+                            ]),
+                          ),
+              ));
         });
       },
     );
